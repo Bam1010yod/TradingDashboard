@@ -3,10 +3,10 @@
 # Navigate to the project directory
 cd /c/TradingDashboard
 
-# Add all changes to Git
+# Add all changes to Git (including new files and folders)
 git add .
 
-# Commit the changes
+# Commit the changes with a timestamped message
 git commit -m "Automated backup - $(date +'%Y-%m-%d %H:%M:%S')"
 
 # Push to GitHub
