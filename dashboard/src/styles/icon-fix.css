@@ -1,0 +1,141 @@
+/* ========= COMPREHENSIVE ICON SIZE FIX ========= */
+/* This CSS fixes oversized icons from multiple React icon libraries */
+
+/* === General Icon Constraints === */
+svg,
+img.icon,
+.icon,
+.icon svg,
+.icon img,
+i.icon,
+span.icon,
+[class*="icon"],
+[class*="Icon"] {
+    max-width: 24px !important;
+    max-height: 24px !important;
+    width: auto !important;
+    height: auto !important;
+    font-size: 24px !important;
+}
+
+/* === Material UI Icons Fix === */
+.MuiSvgIcon-root {
+    font-size: 24px !important;
+    width: 24px !important;
+    height: 24px !important;
+}
+
+/* === React Icons Fix === */
+[class*="react-icons"],
+[class^="ri-"],
+[class^="fi-"],
+[class^="hi-"],
+[class^="bi-"],
+[class^="si-"],
+[class^="pi-"],
+[class^="gi-"],
+[class^="wi-"],
+[class^="di-"],
+[class^="ai-"],
+[class^="bs-"],
+[class^="md-"],
+[class^="io-"],
+[class^="go-"],
+[class^="fa-"] {
+    font-size: 24px !important;
+    width: 24px !important;
+    height: 24px !important;
+}
+
+/* === Font Awesome Fix === */
+.svg-inline--fa,
+.fa-icon,
+[class*="fa-"] {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 24px !important;
+}
+
+/* === Bootstrap Icons Fix === */
+.bi {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+/* === Heroicons Fix === */
+.heroicon {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+/* === Fix for specific home/dashboard icons === */
+.home-icon,
+.dashboard-icon,
+.house-icon,
+.menu-icon,
+.nav-icon {
+    max-width: 24px !important;
+    max-height: 24px !important;
+    width: 24px !important;
+    height: 24px !important;
+}
+
+/* === Direct SVG Fix === */
+svg {
+    max-width: 24px !important;
+    max-height: 24px !important;
+}
+
+    /* === Override inline styles (strongest approach) === */
+    svg[style],
+    img[style],
+    i[style],
+    span[style],
+    div[style*="width"][style*="height"] {
+        max-width: 24px !important;
+        max-height: 24px !important;
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 24px !important;
+    }
+
+/* === Container constraints === */
+.icon-container,
+.nav-icon,
+.menu-icon,
+.icon-wrapper,
+[class*="iconContainer"],
+[class*="IconContainer"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 32px !important;
+    max-height: 32px !important;
+    overflow: hidden !important;
+}
+
+/* === Special Case: Huge House Icon Fix === */
+svg[viewBox*="0 0 576 512"], /* Font Awesome house */
+svg[viewBox*="0 0 24 24"], /* Material/Heroicons house */
+svg[viewBox*="0 0 16 16"], /* Bootstrap icons house */
+svg[viewBox*="0 0 1024 1024"] /* Ant Design house */ {
+    max-width: 24px !important;
+    max-height: 24px !important;
+    width: 24px !important;
+    height: 24px !important;
+}
+
+/* === Extreme case for large purple house === */
+svg[fill="#663399"],
+svg[fill="purple"],
+svg[fill="#5a2ca0"],
+svg[style*="fill:purple"],
+svg[style*="fill:#663399"],
+svg[style*="fill:#5a2ca0"] {
+    max-width: 24px !important;
+    max-height: 24px !important;
+    width: 24px !important;
+    height: 24px !important;
+}
