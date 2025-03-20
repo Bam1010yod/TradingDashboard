@@ -1,5 +1,6 @@
 const fs = require('fs');
 const xml2js = require('xml2js');
+const path = require('path');
 
 /**
  * Parse an XML file into a JavaScript object
@@ -16,6 +17,52 @@ const parseXmlFile = async (filePath) => {
         console.error('Error parsing XML file:', error);
         throw error;
     }
+};
+
+/**
+ * Detects the template type based on XML content
+ * @param {Object} parsedXML - The parsed XML object
+ * @returns {string} - Template type ('ATM' or 'Flazh')
+ */
+const detectTemplateType = (parsedXML) => {
+    if (parsedXML.NinjaTrader && parsedXML.NinjaTrader.AtmStrategy) {
+        return 'ATM';
+    } else if (parsedXML.NinjaTrader && parsedXML.NinjaTrader.RenkoKings_FlazhInfinity) {
+        return 'Flazh';
+    } else {
+        throw new Error('Unknown template type');
+    }
+};
+
+/**
+ * Extracts market condition from template name
+ * @param {string} templateName - The template name
+ * @returns {string} - The detected market condition
+ */
+const detectMarketCondition = (templateName) => {
+    // Map of known condition identifiers in template names
+    const conditionMap = {
+        'OPEN': 'Opening',
+        'MORN': 'Morning',
+        'LUNCH': 'Lunch',
+        'EA': 'Early_Afternoon',
+        'LA': 'Late_Afternoon',
+        'EVE': 'Evening',
+        'NIGHT': 'Overnight',
+        'HIGH': 'High_Volatility',
+        'LOW': 'Low_Volatility',
+        'NORM': 'Normal_Volatility'
+    };
+
+    // Check template name for market condition identifiers
+    for (const [key, value] of Object.entries(conditionMap)) {
+        if (templateName.includes(key)) {
+            return value;
+        }
+    }
+
+    // Default to normal volatility if no condition is detected
+    return 'Normal_Volatility';
 };
 
 /**
@@ -84,6 +131,9 @@ const extractFlazhParameters = async (filePath) => {
 
 module.exports = {
     parseXmlFile,
+    detectTemplateType,
+    detectMarketCondition,
     extractAtmParameters,
+    parseBracket,
     extractFlazhParameters
 };
