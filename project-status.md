@@ -1,5 +1,5 @@
 # TradingDashboard Project Status 
-Last updated: Wed 03/19/2025 23:06:21.15 
+Last updated: Thu 03/20/2025  3:03:21.21 
  
 ## Project Description 
 This is a trading system for recommending Flazh Infinity parameters and ATM settings based on market conditions for NinjaTrader 8, focusing on NQ futures. 
@@ -13,6 +13,16 @@ IMPORTANT - Please read these notes carefully before helping:
 - Do not overload me with multiple blocks of code all at once 
 - Always include the exact full file path when I need to create new files 
 - Be explicit about file locations and command line instructions 
+- After completing a task, I will show you a list of newly created files to verify correct locations 
+- After task completion, we will run system tests to ensure everything is functioning properly 
+ 
+## Post-Task Verification 
+For each completed task: 
+1. Run 'dir [new_directory] /s /b' to verify new files are in the correct location 
+2. Run appropriate system tests (when applicable): 
+   - For server components: 'npm test' or 'node server.js' to verify functionality 
+   - For database updates: Verify MongoDB connections and data integrity 
+   - For API endpoints: Test with Postman or curl commands 
  
 ## Project Structure 
 The project is organized in a modular architecture with server components. 
@@ -41,11 +51,25 @@ The project is organized in a modular architecture with server components.
 - MongoDB running locally at mongodb://localhost:27017/trading-dashboard 
 - Requires the database to be running for full functionality 
  
+## System Test Commands 
+```text 
+# Start MongoDB (if not running as a service) 
+mongod --dbpath C:\data\db 
+ 
+# Start the server 
+cd C:\TradingDashboard\server 
+npm start 
+ 
+# Test API endpoints 
+curl http://localhost:3001/api/templates 
+``` 
+ 
 ## Current Directory Structure 
 ```text 
 .env
 config
 docs
+import-all.js
 models
 node_modules
 package-lock.json
@@ -63,7 +87,9 @@ server\config:
 database.js
  
 server\models: 
+atmStrategy.js
 atmTemplate.js
+flazhInfinity.js
 flazhTemplate.js
 performanceRecord.js
  
@@ -71,6 +97,7 @@ server\routes:
 templates.js
  
 server\services: 
+templateImport.js
 templateService.js
  
 server\utils: 

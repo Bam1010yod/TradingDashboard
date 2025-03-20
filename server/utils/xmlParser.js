@@ -1,3 +1,4 @@
+const validator = require('../utils/validation/templateValidator');
 const fs = require('fs');
 const xml2js = require('xml2js');
 const path = require('path');
@@ -111,10 +112,10 @@ const extractFlazhParameters = async (filePath) => {
 
     return {
         barsPeriod: {
-            type: flazhConfig.BarsPeriodSerializable.BarsPeriodTypeSerialize,
-            value: flazhConfig.BarsPeriodSerializable.Value,
-            value2: flazhConfig.BarsPeriodSerializable.Value2
-        },
+    periodType: flazhConfig.BarsPeriodSerializable.BarsPeriodTypeSerialize,
+    value: parseInt(flazhConfig.BarsPeriodSerializable.Value),
+    value2: parseInt(flazhConfig.BarsPeriodSerializable.Value2)
+},
         maType: flazhConfig.MAType,
         fastPeriod: parseInt(flazhConfig.FastPeriod),
         fastRange: parseInt(flazhConfig.FastRange),

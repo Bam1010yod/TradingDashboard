@@ -56,7 +56,7 @@ async function importTemplate(filePath) {
             await template.save();
             console.log(`Imported ATM template: ${atmParams.template}`);
             return { success: true, type: 'ATM', name: atmParams.template };
-        } else if (fileName.includes('FLAZH')) {
+        } else if (fileName.toUpperCase().includes('FLAZH')) {
             const flazhParams = await xmlParser.extractFlazhParameters(filePath);
             const rawXml = await fs.readFile(filePath, 'utf-8');
 

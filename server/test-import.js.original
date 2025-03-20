@@ -2,28 +2,22 @@ const path = require('path');
 require('dotenv').config();
 const connectDB = require('./config/database');
 const templateService = require('./services/templateService');
-
-const testImport = async () => {
+const testImport = async () =
     try {
         // Connect to database
         await connectDB();
-        
         // Path to your XML files
         const templateDir = path.join(__dirname, 'test/real');
-        
         // Import templates
         const result = await templateService.importTemplatesFromDirectory(templateDir);
         console.log('Import result:', result);
-        
         // Get all templates
         const templates = await templateService.getAllTemplates();
         console.log('All templates:', JSON.stringify(templates, null, 2));
-        
         process.exit(0);
     } catch (error) {
         console.error('Error:', error);
         process.exit(1);
     }
 };
-
 testImport();

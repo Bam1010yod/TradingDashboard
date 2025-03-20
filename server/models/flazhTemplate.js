@@ -7,10 +7,10 @@ const flazhTemplateSchema = new mongoose.Schema({
         unique: true
     },
     barsPeriod: {
-        type: Number,
-        value: Number,
-        value2: Number
-    },
+    periodType: String,
+    value: Number,
+    value2: Number
+},
     maType: String,
     fastPeriod: Number,
     fastRange: Number,

@@ -7,18 +7,18 @@ const testImport = async () => {
     try {
         // Connect to database
         await connectDB();
-        
+
         // Path to your XML files
-        const templateDir = path.join(__dirname, 'test/real');
-        
+        const templateDir = path.join(__dirname, 'test');
+
         // Import templates
         const result = await templateService.importTemplatesFromDirectory(templateDir);
         console.log('Import result:', result);
-        
+
         // Get all templates
         const templates = await templateService.getAllTemplates();
         console.log('All templates:', JSON.stringify(templates, null, 2));
-        
+
         process.exit(0);
     } catch (error) {
         console.error('Error:', error);

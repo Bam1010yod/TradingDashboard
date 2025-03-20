@@ -20,17 +20,6 @@ echo - Take things slow and easy, focusing on one task at a time >> %STATUS_FILE
 echo - Do not overload me with multiple blocks of code all at once >> %STATUS_FILE%
 echo - Always include the exact full file path when I need to create new files >> %STATUS_FILE%
 echo - Be explicit about file locations and command line instructions >> %STATUS_FILE%
-echo - After completing a task, I will show you a list of newly created files to verify correct locations >> %STATUS_FILE%
-echo - After task completion, we will run system tests to ensure everything is functioning properly >> %STATUS_FILE%
-echo. >> %STATUS_FILE%
-
-echo ## Post-Task Verification >> %STATUS_FILE%
-echo For each completed task: >> %STATUS_FILE%
-echo 1. Run 'dir [new_directory] /s /b' to verify new files are in the correct location >> %STATUS_FILE%
-echo 2. Run appropriate system tests (when applicable): >> %STATUS_FILE%
-echo    - For server components: 'npm test' or 'node server.js' to verify functionality >> %STATUS_FILE%
-echo    - For database updates: Verify MongoDB connections and data integrity >> %STATUS_FILE%
-echo    - For API endpoints: Test with Postman or curl commands >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
 echo ## Project Structure >> %STATUS_FILE%
@@ -65,20 +54,6 @@ echo - MongoDB running locally at mongodb://localhost:27017/trading-dashboard >>
 echo - Requires the database to be running for full functionality >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
-echo ## System Test Commands >> %STATUS_FILE%
-echo ```text >> %STATUS_FILE%
-echo # Start MongoDB (if not running as a service) >> %STATUS_FILE%
-echo mongod --dbpath C:\data\db >> %STATUS_FILE%
-echo. >> %STATUS_FILE%
-echo # Start the server >> %STATUS_FILE%
-echo cd C:\TradingDashboard\server >> %STATUS_FILE%
-echo npm start >> %STATUS_FILE%
-echo. >> %STATUS_FILE%
-echo # Test API endpoints >> %STATUS_FILE%
-echo curl http://localhost:3001/api/templates >> %STATUS_FILE%
-echo ``` >> %STATUS_FILE%
-echo. >> %STATUS_FILE%
-
 echo ## Current Directory Structure >> %STATUS_FILE%
 echo ```text >> %STATUS_FILE%
 dir C:\TradingDashboard\server /b >> %STATUS_FILE%
@@ -106,17 +81,5 @@ start notepad %STATUS_FILE%
 
 echo.
 echo You can share this status file with the next assistant to help them understand the project.
-echo.
-echo ---------------------------------------
-echo Post-Task Verification Instructions:
-echo ---------------------------------------
-echo 1. After completing a task, run: dir C:\TradingDashboard\[new_directory] /s /b
-echo    to verify files are in the correct location
-echo.
-echo 2. Test the system when applicable:
-echo    - Start MongoDB: mongod --dbpath C:\data\db
-echo    - Start server: cd C:\TradingDashboard\server ^& npm start
-echo    - Test API: curl http://localhost:3001/api/templates
-echo ---------------------------------------
 echo.
 pause
