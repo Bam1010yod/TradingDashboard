@@ -34,7 +34,7 @@ echo    - For API endpoints: Test with Postman or curl commands >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
 echo ## Project Structure >> %STATUS_FILE%
-echo The project is organized in a modular architecture with server components. >> %STATUS_FILE%
+echo The project is organized in a modular architecture with server components and integration with NinjaTrader. >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
 echo ## Completed Components >> %STATUS_FILE%
@@ -44,24 +44,39 @@ echo - [x] MongoDB connection and integration >> %STATUS_FILE%
 echo - [x] Template model schemas (ATM and Flazh) >> %STATUS_FILE%
 echo - [x] Basic API endpoints for template management >> %STATUS_FILE%
 echo - [x] GitHub backup integration >> %STATUS_FILE%
+echo - [x] MarketDataExporter indicator for NinjaTrader (preexisting) >> %STATUS_FILE%
+echo - [x] Market data service for integration with NinjaTrader >> %STATUS_FILE%
+echo - [x] Prop firm monitoring service >> %STATUS_FILE%
+echo - [x] Market news monitoring service >> %STATUS_FILE%
+echo - [x] Backtesting module for strategy testing >> %STATUS_FILE%
+echo - [x] Risk management dashboard API >> %STATUS_FILE%
+echo - [x] Trading journal integration >> %STATUS_FILE%
+echo - [x] Performance analytics >> %STATUS_FILE%
+echo - [x] Alert system >> %STATUS_FILE%
+echo - [x] System health monitoring >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
 echo ## In Progress >> %STATUS_FILE%
 echo - [ ] Template import and validation functionality >> %STATUS_FILE%
 echo - [ ] Trading session analysis components >> %STATUS_FILE%
 echo - [ ] Parameter optimization logic >> %STATUS_FILE%
+echo - [ ] React dashboard with control buttons >> %STATUS_FILE%
+echo - [ ] Integration of market data, prop firm rules, and news into recommendation engine >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
 echo ## Next Steps >> %STATUS_FILE%
 echo 1. Create test XML files to verify template import functionality >> %STATUS_FILE%
 echo 2. Implement market condition analysis for different trading sessions >> %STATUS_FILE%
 echo 3. Develop parameter recommendation algorithms >> %STATUS_FILE%
-echo 4. Begin building React frontend for recommendations display >> %STATUS_FILE%
+echo 4. Begin building React frontend with control buttons for NinjaTrader interaction >> %STATUS_FILE%
+echo 5. Connect market data, prop firm rules, and news services to the recommendation engine >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
 echo ## Environment Setup >> %STATUS_FILE%
 echo - Node.js server at C:\TradingDashboard\server >> %STATUS_FILE%
 echo - MongoDB running locally at mongodb://localhost:27017/trading-dashboard >> %STATUS_FILE%
+echo - NinjaTrader with MarketDataExporter indicator installed >> %STATUS_FILE%
+echo - MarketDataExporter writes to C:\NinjaTraderData\VolatilityMetrics.json >> %STATUS_FILE%
 echo - Requires the database to be running for full functionality >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
@@ -76,6 +91,33 @@ echo npm start >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test API endpoints >> %STATUS_FILE%
 echo curl http://localhost:3001/api/templates >> %STATUS_FILE%
+echo. >> %STATUS_FILE%
+echo # Test market data service >> %STATUS_FILE%
+echo curl http://localhost:3001/api/market-data >> %STATUS_FILE%
+echo. >> %STATUS_FILE%
+echo # Test prop firm rules >> %STATUS_FILE%
+echo curl http://localhost:3001/api/prop-firm-rules >> %STATUS_FILE%
+echo. >> %STATUS_FILE%
+echo # Test market news >> %STATUS_FILE%
+echo curl http://localhost:3001/api/market-news >> %STATUS_FILE%
+echo. >> %STATUS_FILE%
+echo # Test backtesting module >> %STATUS_FILE%
+echo curl http://localhost:3001/api/backtest >> %STATUS_FILE%
+echo. >> %STATUS_FILE%
+echo # Test risk management >> %STATUS_FILE%
+echo curl http://localhost:3001/api/risk/dashboard >> %STATUS_FILE%
+echo. >> %STATUS_FILE%
+echo # Test trading journal >> %STATUS_FILE%
+echo curl http://localhost:3001/api/journal >> %STATUS_FILE%
+echo. >> %STATUS_FILE%
+echo # Test performance analytics >> %STATUS_FILE%
+echo curl http://localhost:3001/api/analytics/performance >> %STATUS_FILE%
+echo. >> %STATUS_FILE%
+echo # Test alert system >> %STATUS_FILE%
+echo curl http://localhost:3001/api/alerts >> %STATUS_FILE%
+echo. >> %STATUS_FILE%
+echo # Test system health >> %STATUS_FILE%
+echo curl http://localhost:3001/api/health >> %STATUS_FILE%
 echo ``` >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
@@ -94,6 +136,9 @@ dir C:\TradingDashboard\server\routes /b >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo server\services: >> %STATUS_FILE%
 dir C:\TradingDashboard\server\services /b >> %STATUS_FILE%
+echo. >> %STATUS_FILE%
+echo server\test: >> %STATUS_FILE%
+dir C:\TradingDashboard\server\test /b >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo server\utils: >> %STATUS_FILE%
 dir C:\TradingDashboard\server\utils /b >> %STATUS_FILE%
