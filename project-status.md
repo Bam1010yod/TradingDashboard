@@ -1,5 +1,5 @@
 # TradingDashboard Project Status 
-Last updated: Fri 03/21/2025  4:29:05.50 
+Last updated: Fri 03/21/2025  7:47:44.55 
  
 ## Project Description 
 This is a trading system for recommending Flazh Infinity parameters and ATM settings based on market conditions for NinjaTrader 8, focusing on NQ futures. 
@@ -116,9 +116,11 @@ models
 node_modules
 package-lock.json
 package.json
+public
 routes
 server.js
 server.js.bak
+server.log
 services
 src
 test
@@ -149,6 +151,7 @@ analytics.js
 backtest.js
 health.js
 journal.js
+marketConditions.js
 marketData.js
 marketNews.js
 propFirm.js
@@ -162,6 +165,7 @@ analyticsService.js
 backtestService.js
 healthService.js
 journalService.js
+marketConditionsService.js
 marketDataService.js
 marketNewsService.js
 propFirmService.js
@@ -175,6 +179,7 @@ analyticsTest.js
 backtestTest.js
 healthTest.js
 journalTest.js
+marketConditionsTest.js
 real
 riskManagementTest.js
 riskManagementTestSimple.js
@@ -183,6 +188,7 @@ sample-flazh.xml
 sample.xml
  
 server\utils: 
+ensureDirectories.js
 validation
 xmlParser.js
 ``` 

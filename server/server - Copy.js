@@ -25,7 +25,6 @@ const riskManagementService = require('./services/riskManagementService');
 const journalService = require('./services/journalService');
 const analyticsService = require('./services/analyticsService');
 const alertService = require('./services/alertService');
-const tradingSessionService = require('./services/tradingSessionService');
 
 // Import routes
 const templateRoutes = require('./routes/templates');
@@ -33,7 +32,6 @@ const marketDataRoutes = require('./routes/marketData');
 const propFirmRoutes = require('./routes/propFirm');
 const marketNewsRoutes = require('./routes/marketNews');
 const marketConditionsRoutes = require('./routes/marketConditions'); // Add this line
-const tradingSessionRoutes = require('./routes/tradingSession');
 
 // Initialize Express app
 const app = express();
@@ -69,7 +67,6 @@ app.use('/api/health', require('./routes/health'));
 app.use('/api/backtest', require('./routes/backtest'));
 app.use('/api/templates', require('./routes/templates'));
 app.use('/api/market-conditions', marketConditionsRoutes); // Add this line
-app.use('/api/session', tradingSessionRoutes);
 
 // Home route
 app.get('/', (req, res) => {
@@ -98,31 +95,8 @@ io.on('connection', (socket) => {
         await analyticsService.initialize();
         await alertService.initialize();
 
-        // Initialize the trading session service
-        console.log('Initializing trading session service...');
-        // No initialization needed for trading session service since it's stateless
-
         // Start periodic health check (every 5 minutes)
         healthService.startPeriodicHealthCheck(5);
-
-        // Perform initial session analysis for all sessions
-        try {
-            const sessions = ['preMarket', 'regularHours', 'postMarket', 'overnight'];
-            console.log('Performing initial session analysis...');
-
-            for (const session of sessions) {
-                try {
-                    await tradingSessionService.analyzeSession(session);
-                    console.log(`Initial analysis for ${session} session completed`);
-                } catch (sessionError) {
-                    console.error(`Error in initial analysis for ${session} session:`, sessionError);
-                    // Continue with other sessions even if one fails
-                }
-            }
-        } catch (analysisError) {
-            console.error('Error in initial session analysis:', analysisError);
-            // Continue server initialization even if initial analysis fails
-        }
 
         console.log('All services initialized successfully');
     } catch (error) {
