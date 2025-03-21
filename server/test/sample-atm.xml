@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ATMTemplate>
+  <Name>NQ Conservative</Name>
+  <Description>Conservative ATM strategy for NQ futures</Description>
+  <StopLoss>10</StopLoss>
+  <ProfitTarget>15</ProfitTarget>
+  <Quantity>1</Quantity>
+  <Author>System</Author>
+  <MarketConditions>
+    <Condition>LowVolatility</Condition>
+    <Condition>RangeMarket</Condition>
+  </MarketConditions>
+</ATMTemplate>

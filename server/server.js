@@ -64,6 +64,7 @@ app.use('/api/analytics', require('./routes/analytics'));
 app.use('/api/alerts', require('./routes/alerts'));
 app.use('/api/health', require('./routes/health'));
 app.use('/api/backtest', require('./routes/backtest'));
+app.use('/api/templates', require('./routes/templates'));
 
 // Home route
 app.get('/', (req, res) => {

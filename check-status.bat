@@ -54,10 +54,10 @@ echo - [x] Trading journal integration >> %STATUS_FILE%
 echo - [x] Performance analytics >> %STATUS_FILE%
 echo - [x] Alert system >> %STATUS_FILE%
 echo - [x] System health monitoring >> %STATUS_FILE%
+echo - [x] Template import and validation functionality >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
 echo ## In Progress >> %STATUS_FILE%
-echo - [ ] Template import and validation functionality >> %STATUS_FILE%
 echo - [ ] Trading session analysis components >> %STATUS_FILE%
 echo - [ ] Parameter optimization logic >> %STATUS_FILE%
 echo - [ ] React dashboard with control buttons >> %STATUS_FILE%
@@ -155,7 +155,8 @@ echo.
 echo ---------------------------------------
 echo Post-Task Verification Instructions:
 echo ---------------------------------------
-echo 1. After completing a task, run: dir C:\TradingDashboard\[new_directory] /s /b
+echo 1. After completing a task, run: dir C:\TradingDashboard\server /s /b
+echo    (Or replace "server" with a specific subdirectory you want to check)
 echo    to verify files are in the correct location
 echo.
 echo 2. Test the system when applicable:

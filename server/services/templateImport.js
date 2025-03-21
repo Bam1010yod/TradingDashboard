@@ -7,6 +7,11 @@ const AtmStrategy = require('../models/atmStrategy');
 const FlazhInfinity = require('../models/flazhInfinity');
 
 /**
+ * Template Import Service
+ * Handles the importing and validation of Flazh Infinity and ATM Strategy templates
+ */
+
+/**
  * Detects the template type based on XML content
  * @param {Object} parsedXML - The parsed XML object
  * @returns {string} - Template type ('ATM' or 'Flazh')
@@ -108,6 +113,11 @@ const importAtmTemplate = async (filePath, parsedXML) => {
             xmlContent
         };
 
+        // Validate template - ensure required fields are present
+        if (!atmDocument.templateName) {
+            throw new Error('Template name is required');
+        }
+
         // Save to database (update if exists, create if not)
         const existingTemplate = await AtmStrategy.findOne({ templateName });
 
@@ -115,13 +125,27 @@ const importAtmTemplate = async (filePath, parsedXML) => {
             // Update existing template
             Object.assign(existingTemplate, atmDocument);
             existingTemplate.lastModified = Date.now();
-            return await existingTemplate.save();
+            const savedTemplate = await existingTemplate.save();
+            return {
+                success: true,
+                message: `ATM template updated successfully: ${templateName}`,
+                template: savedTemplate
+            };
         } else {
             // Create new template
-            return await AtmStrategy.create(atmDocument);
+            const newTemplate = await AtmStrategy.create(atmDocument);
+            return {
+                success: true,
+                message: `ATM template imported successfully: ${templateName}`,
+                template: newTemplate
+            };
         }
     } catch (error) {
-        throw new Error(`Error importing ATM template: ${error.message}`);
+        return {
+            success: false,
+            message: `Error importing ATM template: ${error.message}`,
+            error: error.message
+        };
     }
 };
 
@@ -207,6 +231,11 @@ const importFlazhTemplate = async (filePath, parsedXML) => {
             xmlContent
         };
 
+        // Validate template - ensure required fields are present
+        if (!flazhDocument.templateName) {
+            throw new Error('Template name is required');
+        }
+
         // Save to database (update if exists, create if not)
         const existingTemplate = await FlazhInfinity.findOne({ templateName });
 
@@ -214,13 +243,27 @@ const importFlazhTemplate = async (filePath, parsedXML) => {
             // Update existing template
             Object.assign(existingTemplate, flazhDocument);
             existingTemplate.lastModified = Date.now();
-            return await existingTemplate.save();
+            const savedTemplate = await existingTemplate.save();
+            return {
+                success: true,
+                message: `Flazh template updated successfully: ${templateName}`,
+                template: savedTemplate
+            };
         } else {
             // Create new template
-            return await FlazhInfinity.create(flazhDocument);
+            const newTemplate = await FlazhInfinity.create(flazhDocument);
+            return {
+                success: true,
+                message: `Flazh template imported successfully: ${templateName}`,
+                template: newTemplate
+            };
         }
     } catch (error) {
-        throw new Error(`Error importing Flazh template: ${error.message}`);
+        return {
+            success: false,
+            message: `Error importing Flazh template: ${error.message}`,
+            error: error.message
+        };
     }
 };
 
@@ -231,6 +274,15 @@ const importFlazhTemplate = async (filePath, parsedXML) => {
  */
 const importTemplate = async (filePath) => {
     try {
+        // Check if file exists
+        if (!fs.existsSync(filePath)) {
+            return {
+                success: false,
+                message: `File not found: ${filePath}`,
+                error: 'File not found'
+            };
+        }
+
         // Parse the XML file using your existing function
         const parsedXML = await xmlParser.parseXmlFile(filePath);
 
@@ -243,10 +295,18 @@ const importTemplate = async (filePath) => {
         } else if (templateType === 'Flazh') {
             return await importFlazhTemplate(filePath, parsedXML);
         } else {
-            throw new Error(`Unsupported template type: ${templateType}`);
+            return {
+                success: false,
+                message: `Unsupported template type: ${templateType}`,
+                error: 'Unsupported template type'
+            };
         }
     } catch (error) {
-        throw new Error(`Error importing template: ${error.message}`);
+        return {
+            success: false,
+            message: `Error importing template: ${error.message}`,
+            error: error.message
+        };
     }
 };
 
@@ -259,25 +319,36 @@ const importTemplatesFromDirectory = async (directoryPath) => {
     try {
         // Check if directory exists
         if (!fs.existsSync(directoryPath)) {
-            throw new Error(`Directory does not exist: ${directoryPath}`);
+            return {
+                success: false,
+                message: `Directory does not exist: ${directoryPath}`,
+                total: 0,
+                successful: 0,
+                failed: 0,
+                results: []
+            };
         }
 
         // Read all XML files from the directory
         const files = fs.readdirSync(directoryPath);
         const xmlFiles = files.filter(file => path.extname(file).toLowerCase() === '.xml');
 
-        // Initialize results object
+        // Initialize results
         const results = {
             total: xmlFiles.length,
             successful: 0,
             failed: 0,
-            errors: []
+            details: []
         };
 
         // Skip if no XML files found
         if (xmlFiles.length === 0) {
-            console.log(`No XML files found in directory: ${directoryPath}`);
-            return results;
+            return {
+                success: true,
+                message: `No XML files found in directory: ${directoryPath}`,
+                ...results,
+                results: []
+            };
         }
 
         // Process each XML file
@@ -285,32 +356,136 @@ const importTemplatesFromDirectory = async (directoryPath) => {
             const filePath = path.join(directoryPath, file);
 
             try {
-                // Check if the file actually exists
-                if (!fs.existsSync(filePath)) {
-                    throw new Error('File does not exist');
+                // Import the template
+                const importResult = await importTemplate(filePath);
+
+                if (importResult.success) {
+                    results.successful++;
+                } else {
+                    results.failed++;
                 }
 
-                // Import the template
-                await importTemplate(filePath);
-                results.successful++;
-                console.log(`Successfully imported template: ${file}`);
+                results.details.push({
+                    file,
+                    ...importResult
+                });
+
+                console.log(`${importResult.success ? 'Successfully' : 'Failed to'} import template: ${file}`);
             } catch (error) {
                 results.failed++;
-                results.errors.push({
+                results.details.push({
                     file,
+                    success: false,
+                    message: `Error importing template: ${error.message}`,
                     error: error.message
                 });
                 console.error(`Failed to import template ${file}: ${error.message}`);
             }
         }
 
-        return results;
+        return {
+            success: results.successful > 0,
+            message: `Imported ${results.successful} templates, ${results.failed} failed`,
+            ...results
+        };
     } catch (error) {
-        throw new Error(`Error importing templates from directory: ${error.message}`);
+        return {
+            success: false,
+            message: `Error importing templates from directory: ${error.message}`,
+            total: 0,
+            successful: 0,
+            failed: 0,
+            error: error.message,
+            details: []
+        };
+    }
+};
+
+/**
+ * Validate if an XML file is a valid template
+ * @param {string} filePath - Path to the XML file
+ * @returns {Promise<Object>} - Validation result
+ */
+const validateTemplate = async (filePath) => {
+    try {
+        // Check if file exists
+        if (!fs.existsSync(filePath)) {
+            return {
+                success: false,
+                message: `File not found: ${filePath}`,
+                error: 'File not found'
+            };
+        }
+
+        // Parse the XML file
+        const parsedXML = await xmlParser.parseXmlFile(filePath);
+
+        // Try to detect template type
+        try {
+            const templateType = detectTemplateType(parsedXML);
+
+            // Perform basic validation based on template type
+            if (templateType === 'ATM') {
+                const atmData = parsedXML.NinjaTrader.AtmStrategy;
+
+                if (!atmData) {
+                    return {
+                        success: false,
+                        message: 'Invalid ATM template: Missing ATM strategy data',
+                        error: 'Missing ATM strategy data'
+                    };
+                }
+
+                return {
+                    success: true,
+                    message: 'Valid ATM template',
+                    templateType,
+                    templateName: atmData.Template || path.basename(filePath, '.xml')
+                };
+            } else if (templateType === 'Flazh') {
+                const flazhData = parsedXML.NinjaTrader.RenkoKings_FlazhInfinity.RenkoKings_FlazhInfinity;
+
+                if (!flazhData) {
+                    return {
+                        success: false,
+                        message: 'Invalid Flazh template: Missing Flazh Infinity data',
+                        error: 'Missing Flazh Infinity data'
+                    };
+                }
+
+                return {
+                    success: true,
+                    message: 'Valid Flazh template',
+                    templateType,
+                    templateName: flazhData.UserNote ?
+                        flazhData.UserNote.split(' ')[0] :
+                        path.basename(filePath, '.xml')
+                };
+            }
+
+            return {
+                success: false,
+                message: `Unknown template type: ${templateType}`,
+                error: 'Unknown template type'
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: `Invalid template: ${error.message}`,
+                error: error.message
+            };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: `Error validating template: ${error.message}`,
+            error: error.message
+        };
     }
 };
 
 module.exports = {
     importTemplate,
-    importTemplatesFromDirectory
+    importTemplatesFromDirectory,
+    validateTemplate
 };

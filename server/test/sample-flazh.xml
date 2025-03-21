@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlazhTemplate>
+  <Name>NQ Morning Breakout</Name>
+  <Description>Template for morning session breakout strategy on NQ futures</Description>
+  <Author>System</Author>
+  <Parameters>
+    <Parameter>
+      <Name>Volatility</Name>
+      <Value>35</Value>
+      <Description>Volatility threshold for breakout detection</Description>
+    </Parameter>
+    <Parameter>
+      <Name>EntryOffset</Name>
+      <Value>3</Value>
+      <Description>Ticks above/below breakout level for entry</Description>
+    </Parameter>
+    <Parameter>
+      <Name>VolumeTrigger</Name>
+      <Value>250</Value>
+      <Description>Volume level to confirm breakout</Description>
+    </Parameter>
+  </Parameters>
+  <MarketConditions>
+    <Condition>MorningSession</Condition>
+    <Condition>LowVolatility</Condition>
+  </MarketConditions>
+</FlazhTemplate>

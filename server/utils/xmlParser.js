@@ -1,4 +1,3 @@
-const validator = require('../utils/validation/templateValidator');
 const fs = require('fs');
 const xml2js = require('xml2js');
 const path = require('path');
@@ -11,12 +10,55 @@ const path = require('path');
 const parseXmlFile = async (filePath) => {
     try {
         const xmlData = fs.readFileSync(filePath, 'utf-8');
-        const parser = new xml2js.Parser({ explicitArray: false });
+        const parser = new xml2js.Parser({
+            explicitArray: false,
+            mergeAttrs: true
+        });
         const result = await parser.parseStringPromise(xmlData);
         return result;
     } catch (error) {
         console.error('Error parsing XML file:', error);
         throw error;
+    }
+};
+
+/**
+ * Parse an XML string into a JavaScript object
+ * @param {string} xmlString - XML content as string
+ * @returns {Promise<Object>} - Parsed XML as JavaScript object
+ */
+const parseXML = async (xmlString) => {
+    try {
+        const parser = new xml2js.Parser({
+            explicitArray: false,
+            mergeAttrs: true,
+            normalizeTags: false,
+            explicitRoot: false
+        });
+
+        return await parser.parseStringPromise(xmlString);
+    } catch (error) {
+        throw new Error(`XML parsing error: ${error.message}`);
+    }
+};
+
+/**
+ * Convert JavaScript object to XML string
+ * @param {Object} jsObject - JavaScript object to convert
+ * @param {string} rootElement - Root element name
+ * @returns {Promise<string>} - XML string
+ */
+const generateXML = async (jsObject, rootElement) => {
+    try {
+        const builder = new xml2js.Builder({
+            rootName: rootElement,
+            headless: false,
+            renderOpts: { pretty: true, indent: '  ', newline: '\n' }
+        });
+
+        return builder.buildObject(jsObject);
+    } catch (error) {
+        throw new Error(`XML generation error: ${error.message}`);
     }
 };
 
@@ -29,6 +71,10 @@ const detectTemplateType = (parsedXML) => {
     if (parsedXML.NinjaTrader && parsedXML.NinjaTrader.AtmStrategy) {
         return 'ATM';
     } else if (parsedXML.NinjaTrader && parsedXML.NinjaTrader.RenkoKings_FlazhInfinity) {
+        return 'Flazh';
+    } else if (parsedXML.ATMTemplate) {
+        return 'ATM';
+    } else if (parsedXML.FlazhTemplate) {
         return 'Flazh';
     } else {
         throw new Error('Unknown template type');
@@ -112,10 +158,10 @@ const extractFlazhParameters = async (filePath) => {
 
     return {
         barsPeriod: {
-    periodType: flazhConfig.BarsPeriodSerializable.BarsPeriodTypeSerialize,
-    value: parseInt(flazhConfig.BarsPeriodSerializable.Value),
-    value2: parseInt(flazhConfig.BarsPeriodSerializable.Value2)
-},
+            periodType: flazhConfig.BarsPeriodSerializable.BarsPeriodTypeSerialize,
+            value: parseInt(flazhConfig.BarsPeriodSerializable.Value),
+            value2: parseInt(flazhConfig.BarsPeriodSerializable.Value2)
+        },
         maType: flazhConfig.MAType,
         fastPeriod: parseInt(flazhConfig.FastPeriod),
         fastRange: parseInt(flazhConfig.FastRange),
@@ -130,11 +176,63 @@ const extractFlazhParameters = async (filePath) => {
     };
 };
 
+/**
+ * Validate XML structure
+ * @param {Object} parsedXML - Parsed XML object
+ * @returns {Object} - Validation result
+ */
+const validateXmlStructure = (parsedXML) => {
+    try {
+        // Try to detect template type
+        const templateType = detectTemplateType(parsedXML);
+
+        // Check basic structure based on type
+        if (templateType === 'ATM') {
+            if (parsedXML.NinjaTrader && parsedXML.NinjaTrader.AtmStrategy) {
+                return {
+                    valid: true,
+                    templateType
+                };
+            } else if (parsedXML.ATMTemplate) {
+                return {
+                    valid: true,
+                    templateType
+                };
+            }
+        } else if (templateType === 'Flazh') {
+            if (parsedXML.NinjaTrader && parsedXML.NinjaTrader.RenkoKings_FlazhInfinity) {
+                return {
+                    valid: true,
+                    templateType
+                };
+            } else if (parsedXML.FlazhTemplate) {
+                return {
+                    valid: true,
+                    templateType
+                };
+            }
+        }
+
+        return {
+            valid: false,
+            error: 'Invalid template structure'
+        };
+    } catch (error) {
+        return {
+            valid: false,
+            error: error.message
+        };
+    }
+};
+
 module.exports = {
     parseXmlFile,
+    parseXML,
+    generateXML,
     detectTemplateType,
     detectMarketCondition,
     extractAtmParameters,
     parseBracket,
-    extractFlazhParameters
+    extractFlazhParameters,
+    validateXmlStructure
 };
