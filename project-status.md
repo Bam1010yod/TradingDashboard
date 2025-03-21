@@ -1,5 +1,5 @@
 # TradingDashboard Project Status 
-Last updated: Fri 03/21/2025  4:23:10.82 
+Last updated: Fri 03/21/2025  4:29:05.50 
  
 ## Project Description 
 This is a trading system for recommending Flazh Infinity parameters and ATM settings based on market conditions for NinjaTrader 8, focusing on NQ futures. 

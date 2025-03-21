@@ -31,6 +31,7 @@ const templateRoutes = require('./routes/templates');
 const marketDataRoutes = require('./routes/marketData');
 const propFirmRoutes = require('./routes/propFirm');
 const marketNewsRoutes = require('./routes/marketNews');
+const marketConditionsRoutes = require('./routes/marketConditions'); // Add this line
 
 // Initialize Express app
 const app = express();
@@ -65,6 +66,7 @@ app.use('/api/alerts', require('./routes/alerts'));
 app.use('/api/health', require('./routes/health'));
 app.use('/api/backtest', require('./routes/backtest'));
 app.use('/api/templates', require('./routes/templates'));
+app.use('/api/market-conditions', marketConditionsRoutes); // Add this line
 
 // Home route
 app.get('/', (req, res) => {
