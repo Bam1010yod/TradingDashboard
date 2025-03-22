@@ -41,3 +41,10 @@ Error checking for market data updates: SyntaxError: Unexpected end of JSON inpu
 Market data saved to database
 Market data updated: NQ - Volatility: LOW
 Market data update emitted to clients
+Health check warning: System is warning
+Health check warning: System is degraded
+Health check warning: System is degraded
+Health check warning: System is warning
+Health check warning: System is degraded
+Health check warning: System is degraded
+Health check warning: System is warning

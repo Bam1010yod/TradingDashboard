@@ -1,0 +1,16 @@
+COMPREHENSIVE MARKET DATA TEST SUMMARY
+=======================================
+
+Test Date: 3/22/2025, 4:21:16 PM
+Number of Test Files: 1
+
+Success Rate: 100.00%
+
+INDIVIDUAL TEST RESULTS
+------------------------
+
+Test #1: sample-nq-data.json
+  Status: SUCCESS
+  Market Conditions: {"currentTime":"2025-03-22T21:21:16.560Z","currentSession":"OVERNIGHT","volatilityCategory":"MEDIUM_VOLATILITY","volatilityData":{"timestamp":"2025-03-22T15:35:25.9440465-05:00","symbol":"NQ","atr":2.95080008959903,"overnightRange":0.25,"volatilityScore":0.0829473823391774,"volatilityLevel":"LOW"},"recommendations":{"sessionInfo":{"name":"Overnight","timeRange":{"start":"16:00:00","end":"19:00:00"},"typicalVolatility":"low","typicalVolume":"low","noteableFeatures":["Thinner markets","Can be choppy","Often retraces day session"]},"flazhParams":{"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"FilterMultiplier":10,"MinRetracementPercent":40},"atmParams":{"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10},"timestamp":"2025-03-22T21:21:16.560Z","rationale":"Parameters optimized for Overnight with medium volatility"}}
+  Recommended Templates: undefined
+

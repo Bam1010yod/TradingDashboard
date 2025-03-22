@@ -1,0 +1,40 @@
+{
+  "instrument": "NQ",
+  "timestamp": "2025-03-22T10:30:00Z",
+  "price": 21356.75,
+  "volatility": {
+    "intraday": 0.82,
+    "hourly": 0.64,
+    "daily": 1.23
+  },
+  "volume": 12450,
+  "marketPhase": "regular",
+  "timeOfDay": "morning",
+  "priceAction": {
+    "trend": "uptrend",
+    "momentum": "strong",
+    "support": 21250.0,
+    "resistance": 21400.0
+  },
+  "indicators": {
+    "rsi": 62.5,
+    "macd": {
+      "macdLine": 15.3,
+      "signalLine": 10.2,
+      "histogram": 5.1
+    },
+    "bollingerBands": {
+      "upper": 21450.25,
+      "middle": 21325.75,
+      "lower": 21201.25
+    }
+  },
+  "recentNews": [
+    {
+      "title": "Tech sector rallies on positive earnings",
+      "timestamp": "2025-03-22T09:15:00Z",
+      "sentiment": "positive",
+      "impact": "moderate"
+    }
+  ]
+}

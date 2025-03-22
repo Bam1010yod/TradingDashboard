@@ -1,5 +1,5 @@
 # TradingDashboard Project Status 
-Last updated: Sat 03/22/2025 15:21:12.05 
+Last updated: Sat 03/22/2025 15:59:01.44 
  
 ## Project Description 
 This is a trading system for recommending Flazh Infinity parameters and ATM settings based on market conditions for NinjaTrader 8, focusing on NQ futures. 
@@ -15,6 +15,14 @@ IMPORTANT - Please read these notes carefully before helping:
 - Be explicit about file locations and command line instructions 
 - After completing a task, I will show you a list of newly created files to verify correct locations 
 - After task completion, we will run system tests to ensure everything is functioning properly 
+- I want to work on one item at a time - please don't try to implement multiple features simultaneously 
+- When providing code, list the file name, path, and complete code block 
+- If a file's code is very long, separate it into 2 or more logical blocks with clear instructions on where to place each block 
+- This prevents chat sessions from stopping mid-code and makes implementation easier 
+- Before making changes to existing files, ask to see the current file contents first to ensure compatibility 
+- Review the current project structure and state before suggesting new implementations 
+- Suggest any necessary preparation steps before adding new features to avoid system errors 
+- Remember I am not even a novice coder, so explain concepts very simply and proceed carefully 
  
 ## Post-Task Verification 
 For each completed task: 
@@ -52,6 +60,12 @@ The project is organized in a modular architecture with server components and in
 - [x] Integration of market data and news into recommendation engine 
  
 ## Next Steps 
+1. Conduct comprehensive system testing with real market data 
+2. Refine recommendation algorithms based on backtesting results 
+3. Develop user documentation and usage guides 
+4. Implement multi-instrument support beyond NQ futures 
+5. Create data archiving and cleanup routines for database maintenance 
+6. Enhance mobile access and notifications 
  
 ## Environment Setup 
 - Node.js server at C:\TradingDashboard\server 
