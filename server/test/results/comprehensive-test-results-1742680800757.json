@@ -1,0 +1,1938 @@
+[
+  {
+    "testFile": "afterHoursVolatility-1742680704091.json",
+    "timestamp": "2025-03-22T22:00:00.649Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.609Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.609Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.609Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.609Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.640Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.648Z"
+    },
+    "success": true,
+    "error": null
+  },
+  {
+    "testFile": "fomc-1742680704093.json",
+    "timestamp": "2025-03-22T22:00:00.661Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.650Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.650Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.650Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.650Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.656Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.660Z"
+    },
+    "success": true,
+    "error": null
+  },
+  {
+    "testFile": "highVolatility-1742680704078.json",
+    "timestamp": "2025-03-22T22:00:00.670Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.661Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.661Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.661Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.661Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.666Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.669Z"
+    },
+    "success": true,
+    "error": null
+  },
+  {
+    "testFile": "holidayThinVolume-1742680704094.json",
+    "timestamp": "2025-03-22T22:00:00.679Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.671Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.671Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.671Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.671Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.676Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.679Z"
+    },
+    "success": true,
+    "error": null
+  },
+  {
+    "testFile": "lowVolatility-1742680704085.json",
+    "timestamp": "2025-03-22T22:00:00.690Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.680Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.680Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.680Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.680Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.685Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.689Z"
+    },
+    "success": true,
+    "error": null
+  },
+  {
+    "testFile": "nfpDay-1742680704092.json",
+    "timestamp": "2025-03-22T22:00:00.698Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.690Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.690Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.690Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.690Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.694Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.697Z"
+    },
+    "success": true,
+    "error": null
+  },
+  {
+    "testFile": "preMarketGap-1742680704090.json",
+    "timestamp": "2025-03-22T22:00:00.712Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.699Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.699Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.699Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.699Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.703Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.711Z"
+    },
+    "success": true,
+    "error": null
+  },
+  {
+    "testFile": "rangebound-1742680704089.json",
+    "timestamp": "2025-03-22T22:00:00.725Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.713Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.713Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.713Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.713Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.719Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.724Z"
+    },
+    "success": true,
+    "error": null
+  },
+  {
+    "testFile": "sample-nq-data.json",
+    "timestamp": "2025-03-22T22:00:00.738Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.726Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.726Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.726Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.726Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.732Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.737Z"
+    },
+    "success": true,
+    "error": null
+  },
+  {
+    "testFile": "strongDowntrend-1742680704087.json",
+    "timestamp": "2025-03-22T22:00:00.747Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.738Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.738Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.738Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.738Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.743Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.746Z"
+    },
+    "success": true,
+    "error": null
+  },
+  {
+    "testFile": "strongUptrend-1742680704086.json",
+    "timestamp": "2025-03-22T22:00:00.757Z",
+    "marketConditions": {
+      "currentTime": "2025-03-22T22:00:00.748Z",
+      "currentSession": "OVERNIGHT",
+      "volatilityCategory": "MEDIUM_VOLATILITY",
+      "volatilityData": {
+        "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+        "symbol": "NQ",
+        "atr": 2.95080008959903,
+        "overnightRange": 0.25,
+        "volatilityScore": 0.0829473823391774,
+        "volatilityLevel": "LOW"
+      },
+      "recommendations": {
+        "sessionInfo": {
+          "name": "Overnight",
+          "timeRange": {
+            "start": "16:00:00",
+            "end": "19:00:00"
+          },
+          "typicalVolatility": "low",
+          "typicalVolume": "low",
+          "noteableFeatures": [
+            "Thinner markets",
+            "Can be choppy",
+            "Often retraces day session"
+          ]
+        },
+        "flazhParams": {
+          "FastPeriod": 21,
+          "FastRange": 3,
+          "MediumPeriod": 41,
+          "MediumRange": 4,
+          "SlowPeriod": 70,
+          "SlowRange": 5,
+          "FilterMultiplier": 10,
+          "MinRetracementPercent": 40
+        },
+        "atmParams": {
+          "StopLoss": 21,
+          "Target": 42,
+          "AutoBreakEvenProfitTrigger": 21,
+          "AutoBreakEvenPlus": 10
+        },
+        "timestamp": "2025-03-22T22:00:00.748Z",
+        "rationale": "Parameters optimized for Overnight with medium volatility"
+      }
+    },
+    "optimizedParameters": {
+      "flazhParameters": {
+        "entryOffset": 3,
+        "stopLoss": 8,
+        "targetProfit": 16,
+        "trailingStop": 4,
+        "contractSize": 1,
+        "timeFrame": "5min"
+      },
+      "atmParameters": {
+        "stopLoss": 12,
+        "target1": 12,
+        "target2": 24,
+        "breakEvenLevel": 6,
+        "autoBreakEven": true,
+        "activeStrategy": "Standard"
+      },
+      "confidence": "low"
+    },
+    "recommendations": {
+      "timeOfDay": {
+        "currentTime": "2025-03-22T22:00:00.748Z",
+        "currentSession": "OVERNIGHT",
+        "volatilityCategory": "MEDIUM_VOLATILITY",
+        "volatilityData": {
+          "timestamp": "2025-03-22T15:35:25.9440465-05:00",
+          "symbol": "NQ",
+          "atr": 2.95080008959903,
+          "overnightRange": 0.25,
+          "volatilityScore": 0.0829473823391774,
+          "volatilityLevel": "LOW"
+        },
+        "recommendations": {
+          "sessionInfo": {
+            "name": "Overnight",
+            "timeRange": {
+              "start": "16:00:00",
+              "end": "19:00:00"
+            },
+            "typicalVolatility": "low",
+            "typicalVolume": "low",
+            "noteableFeatures": [
+              "Thinner markets",
+              "Can be choppy",
+              "Often retraces day session"
+            ]
+          },
+          "flazhParams": {
+            "FastPeriod": 21,
+            "FastRange": 3,
+            "MediumPeriod": 41,
+            "MediumRange": 4,
+            "SlowPeriod": 70,
+            "SlowRange": 5,
+            "FilterMultiplier": 10,
+            "MinRetracementPercent": 40
+          },
+          "atmParams": {
+            "StopLoss": 21,
+            "Target": 42,
+            "AutoBreakEvenProfitTrigger": 21,
+            "AutoBreakEvenPlus": 10
+          },
+          "timestamp": "2025-03-22T22:00:00.748Z",
+          "rationale": "Parameters optimized for Overnight with medium volatility"
+        }
+      },
+      "sessionType": {
+        "flazhParameters": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atmParameters": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "marketConditions": {
+        "data": {
+          "timestamp": "2025-03-22T22:00:00.752Z",
+          "symbol": "NQ",
+          "atr": 35,
+          "overnightRange": 50,
+          "volatilityScore": 7.5,
+          "volatilityLevel": "Medium",
+          "currentPrice": 19245,
+          "dailyVolatility": 1.8,
+          "volume": 12500,
+          "trend": "neutral",
+          "priceRange": 65
+        }
+      },
+      "recommendations": {
+        "flazh": {
+          "entryOffset": 3,
+          "stopLoss": 8,
+          "targetProfit": 16,
+          "trailingStop": 4,
+          "contractSize": 1,
+          "timeFrame": "5min"
+        },
+        "atm": {
+          "stopLoss": 12,
+          "target1": 12,
+          "target2": 24,
+          "breakEvenLevel": 6,
+          "autoBreakEven": true,
+          "activeStrategy": "Standard"
+        },
+        "confidence": "low"
+      },
+      "relevantNews": [],
+      "generatedAt": "2025-03-22T22:00:00.756Z"
+    },
+    "success": true,
+    "error": null
+  }
+]

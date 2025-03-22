@@ -1,0 +1,114 @@
+TRADING SYSTEM RECOMMENDATION PERFORMANCE COMPARISON
+====================================================
+
+Report Date: 3/22/2025, 5:00:09 PM
+Total Market Condition Types: 10
+Total Scenarios Analyzed: 10
+
+MARKET CONDITION ANALYSIS
+------------------------
+
+Market Condition: afterHoursVolatility
+  Scenarios Analyzed: 1
+  Volatility Range: Infinity - -Infinity (avg: 0.00)
+
+  Recommended Flazh Infinity Settings:
+
+  Recommended ATM Settings:
+
+Market Condition: fomc
+  Scenarios Analyzed: 1
+  Volatility Range: Infinity - -Infinity (avg: 0.00)
+
+  Recommended Flazh Infinity Settings:
+
+  Recommended ATM Settings:
+
+Market Condition: highVolatility
+  Scenarios Analyzed: 1
+  Volatility Range: Infinity - -Infinity (avg: 0.00)
+
+  Recommended Flazh Infinity Settings:
+
+  Recommended ATM Settings:
+
+Market Condition: holidayThinVolume
+  Scenarios Analyzed: 1
+  Volatility Range: Infinity - -Infinity (avg: 0.00)
+
+  Recommended Flazh Infinity Settings:
+
+  Recommended ATM Settings:
+
+Market Condition: lowVolatility
+  Scenarios Analyzed: 1
+  Volatility Range: Infinity - -Infinity (avg: 0.00)
+
+  Recommended Flazh Infinity Settings:
+
+  Recommended ATM Settings:
+
+Market Condition: nfpDay
+  Scenarios Analyzed: 1
+  Volatility Range: Infinity - -Infinity (avg: 0.00)
+
+  Recommended Flazh Infinity Settings:
+
+  Recommended ATM Settings:
+
+Market Condition: preMarketGap
+  Scenarios Analyzed: 1
+  Volatility Range: Infinity - -Infinity (avg: 0.00)
+
+  Recommended Flazh Infinity Settings:
+
+  Recommended ATM Settings:
+
+Market Condition: rangebound
+  Scenarios Analyzed: 1
+  Volatility Range: Infinity - -Infinity (avg: 0.00)
+
+  Recommended Flazh Infinity Settings:
+
+  Recommended ATM Settings:
+
+Market Condition: strongDowntrend
+  Scenarios Analyzed: 1
+  Volatility Range: Infinity - -Infinity (avg: 0.00)
+
+  Recommended Flazh Infinity Settings:
+
+  Recommended ATM Settings:
+
+Market Condition: strongUptrend
+  Scenarios Analyzed: 1
+  Volatility Range: Infinity - -Infinity (avg: 0.00)
+
+  Recommended Flazh Infinity Settings:
+
+  Recommended ATM Settings:
+
+CROSS-CONDITION COMPARISON
+-------------------------
+
+Volatility Comparison:
+  afterHoursVolatility: 0.00 (range: Infinity - -Infinity)
+  fomc: 0.00 (range: Infinity - -Infinity)
+  highVolatility: 0.00 (range: Infinity - -Infinity)
+  holidayThinVolume: 0.00 (range: Infinity - -Infinity)
+  lowVolatility: 0.00 (range: Infinity - -Infinity)
+  nfpDay: 0.00 (range: Infinity - -Infinity)
+  preMarketGap: 0.00 (range: Infinity - -Infinity)
+  rangebound: 0.00 (range: Infinity - -Infinity)
+  strongDowntrend: 0.00 (range: Infinity - -Infinity)
+  strongUptrend: 0.00 (range: Infinity - -Infinity)
+
+Setting Recommendations by Market Condition:
+
+  Flazh range:
+
+  Flazh sensitivity:
+
+  ATM stopLoss:
+
+  ATM profitTarget:

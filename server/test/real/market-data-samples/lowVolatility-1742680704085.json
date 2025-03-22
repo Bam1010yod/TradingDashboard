@@ -1,0 +1,36 @@
+{
+  "instrument": "NQ",
+  "timestamp": "2025-03-22T21:58:24.077Z",
+  "price": 18622.25,
+  "volatility": {
+    "intraday": 0.7,
+    "hourly": 0.3,
+    "daily": 0.9,
+    "weekly": 1.4
+  },
+  "volume": {
+    "current": 95000,
+    "average": 180000,
+    "ratio": 0.53
+  },
+  "indicators": {
+    "trendStrength": "very weak",
+    "priceAction": "choppy",
+    "rangeExpansion": false,
+    "supportResistance": {
+      "broken": false,
+      "strength": "strong"
+    }
+  },
+  "marketContext": {
+    "sessionType": "regular",
+    "timeOfDay": "midday",
+    "dayOfWeek": 6,
+    "vix": 12.6,
+    "news": {
+      "impact": "low",
+      "sentiment": "neutral",
+      "type": "no significant announcements"
+    }
+  }
+}

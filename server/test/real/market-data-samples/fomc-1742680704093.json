@@ -1,0 +1,36 @@
+{
+  "instrument": "NQ",
+  "timestamp": "2025-03-22T21:58:24.077Z",
+  "price": 18645.75,
+  "volatility": {
+    "intraday": 2.7,
+    "hourly": 1.3,
+    "daily": 3.2,
+    "weekly": 3.8
+  },
+  "volume": {
+    "current": 255000,
+    "average": 180000,
+    "ratio": 1.42
+  },
+  "indicators": {
+    "trendStrength": "uncertain",
+    "priceAction": "whipsaw",
+    "rangeExpansion": true,
+    "supportResistance": {
+      "broken": true,
+      "strength": "temporarily irrelevant"
+    }
+  },
+  "marketContext": {
+    "sessionType": "regular",
+    "timeOfDay": "afternoon",
+    "dayOfWeek": 3,
+    "vix": 24.8,
+    "news": {
+      "impact": "very high",
+      "sentiment": "depends on announcement",
+      "type": "FOMC Rate Decision"
+    }
+  }
+}

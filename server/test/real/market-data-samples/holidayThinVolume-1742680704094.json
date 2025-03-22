@@ -1,0 +1,36 @@
+{
+  "instrument": "NQ",
+  "timestamp": "2025-03-22T21:58:24.077Z",
+  "price": 18668.25,
+  "volatility": {
+    "intraday": 1,
+    "hourly": 0.4,
+    "daily": 1.4,
+    "weekly": 1.9
+  },
+  "volume": {
+    "current": 75000,
+    "average": 180000,
+    "ratio": 0.42
+  },
+  "indicators": {
+    "trendStrength": "weak",
+    "priceAction": "drifting",
+    "rangeExpansion": false,
+    "supportResistance": {
+      "broken": false,
+      "strength": "untested"
+    }
+  },
+  "marketContext": {
+    "sessionType": "holiday-shortened",
+    "timeOfDay": "various",
+    "dayOfWeek": 6,
+    "vix": 13.5,
+    "news": {
+      "impact": "low",
+      "sentiment": "neutral",
+      "type": "holiday trading session"
+    }
+  }
+}

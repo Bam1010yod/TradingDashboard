@@ -1,0 +1,138 @@
+{
+  "summary": {
+    "totalScenarios": 10,
+    "conditionTypes": 10
+  },
+  "conditionAnalysis": {
+    "afterHoursVolatility": {
+      "scenarioCount": 1,
+      "recommendations": {
+        "flazhSettings": {},
+        "atmSettings": {}
+      },
+      "volatilityRange": {
+        "min": null,
+        "max": null,
+        "avg": 0
+      },
+      "recommendationPatterns": []
+    },
+    "fomc": {
+      "scenarioCount": 1,
+      "recommendations": {
+        "flazhSettings": {},
+        "atmSettings": {}
+      },
+      "volatilityRange": {
+        "min": null,
+        "max": null,
+        "avg": 0
+      },
+      "recommendationPatterns": []
+    },
+    "highVolatility": {
+      "scenarioCount": 1,
+      "recommendations": {
+        "flazhSettings": {},
+        "atmSettings": {}
+      },
+      "volatilityRange": {
+        "min": null,
+        "max": null,
+        "avg": 0
+      },
+      "recommendationPatterns": []
+    },
+    "holidayThinVolume": {
+      "scenarioCount": 1,
+      "recommendations": {
+        "flazhSettings": {},
+        "atmSettings": {}
+      },
+      "volatilityRange": {
+        "min": null,
+        "max": null,
+        "avg": 0
+      },
+      "recommendationPatterns": []
+    },
+    "lowVolatility": {
+      "scenarioCount": 1,
+      "recommendations": {
+        "flazhSettings": {},
+        "atmSettings": {}
+      },
+      "volatilityRange": {
+        "min": null,
+        "max": null,
+        "avg": 0
+      },
+      "recommendationPatterns": []
+    },
+    "nfpDay": {
+      "scenarioCount": 1,
+      "recommendations": {
+        "flazhSettings": {},
+        "atmSettings": {}
+      },
+      "volatilityRange": {
+        "min": null,
+        "max": null,
+        "avg": 0
+      },
+      "recommendationPatterns": []
+    },
+    "preMarketGap": {
+      "scenarioCount": 1,
+      "recommendations": {
+        "flazhSettings": {},
+        "atmSettings": {}
+      },
+      "volatilityRange": {
+        "min": null,
+        "max": null,
+        "avg": 0
+      },
+      "recommendationPatterns": []
+    },
+    "rangebound": {
+      "scenarioCount": 1,
+      "recommendations": {
+        "flazhSettings": {},
+        "atmSettings": {}
+      },
+      "volatilityRange": {
+        "min": null,
+        "max": null,
+        "avg": 0
+      },
+      "recommendationPatterns": []
+    },
+    "strongDowntrend": {
+      "scenarioCount": 1,
+      "recommendations": {
+        "flazhSettings": {},
+        "atmSettings": {}
+      },
+      "volatilityRange": {
+        "min": null,
+        "max": null,
+        "avg": 0
+      },
+      "recommendationPatterns": []
+    },
+    "strongUptrend": {
+      "scenarioCount": 1,
+      "recommendations": {
+        "flazhSettings": {},
+        "atmSettings": {}
+      },
+      "volatilityRange": {
+        "min": null,
+        "max": null,
+        "avg": 0
+      },
+      "recommendationPatterns": []
+    }
+  }
+}

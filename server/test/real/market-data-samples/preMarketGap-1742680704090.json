@@ -1,0 +1,36 @@
+{
+  "instrument": "NQ",
+  "timestamp": "2025-03-22T21:58:24.077Z",
+  "price": 18892.75,
+  "volatility": {
+    "intraday": 1.9,
+    "hourly": 0.7,
+    "daily": 2.2,
+    "weekly": 2.5
+  },
+  "volume": {
+    "current": 75000,
+    "average": 60000,
+    "ratio": 1.25
+  },
+  "indicators": {
+    "trendStrength": "moderate",
+    "priceAction": "gapping",
+    "rangeExpansion": true,
+    "supportResistance": {
+      "broken": true,
+      "strength": "uncertain"
+    }
+  },
+  "marketContext": {
+    "sessionType": "pre-market",
+    "timeOfDay": "pre-open",
+    "dayOfWeek": 6,
+    "vix": 17.5,
+    "news": {
+      "impact": "moderate",
+      "sentiment": "positive",
+      "type": "earnings announcement"
+    }
+  }
+}
