@@ -1,7 +1,11 @@
+### 2. Updated check-status.bat:
+
+```batch
 @echo off
 echo Generating project status...
 
 set STATUS_FILE=C:\TradingDashboard\project-status.md
+set PORT=3008
 
 rem Create or overwrite the status file
 echo # TradingDashboard Project Status > %STATUS_FILE%
@@ -55,21 +59,80 @@ echo - [x] Performance analytics >> %STATUS_FILE%
 echo - [x] Alert system >> %STATUS_FILE%
 echo - [x] System health monitoring >> %STATUS_FILE%
 echo - [x] Template import and validation functionality >> %STATUS_FILE%
+
+rem Check if dashboard directory exists and has files to determine if React dashboard is complete
+if exist "C:\TradingDashboard\dashboard\src\components\TemplateRecommendation.js" (
+    echo - [x] React dashboard with template recommendations >> %STATUS_FILE%
+) else (
+    echo - [ ] React dashboard with control buttons >> %STATUS_FILE%
+)
+
 echo. >> %STATUS_FILE%
 
 echo ## In Progress >> %STATUS_FILE%
-echo - [ ] Trading session analysis components >> %STATUS_FILE%
-echo - [ ] Parameter optimization logic >> %STATUS_FILE%
-echo - [ ] React dashboard with control buttons >> %STATUS_FILE%
-echo - [ ] Integration of market data, prop firm rules, and news into recommendation engine >> %STATUS_FILE%
+
+rem Check for trading session analysis components
+if exist "C:\TradingDashboard\server\services\tradingSessionService.js" (
+    if exist "C:\TradingDashboard\server\routes\tradingSession.js" (
+        echo - [x] Trading session analysis components >> %STATUS_FILE%
+    ) else (
+        echo - [ ] Trading session analysis components >> %STATUS_FILE%
+    )
+) else (
+    echo - [ ] Trading session analysis components >> %STATUS_FILE%
+)
+
+rem Check for parameter optimization logic
+if exist "C:\TradingDashboard\server\services\parameterOptimizationService.js" (
+    echo - [x] Parameter optimization logic >> %STATUS_FILE%
+) else (
+    echo - [ ] Parameter optimization logic >> %STATUS_FILE%
+)
+
+rem Check for market data integration into recommendation engine
+if exist "C:\TradingDashboard\server\services\recommendationEngine.js" (
+    echo - [x] Integration of market data, prop firm rules, and news into recommendation engine >> %STATUS_FILE%
+) else (
+    echo - [ ] Integration of market data, prop firm rules, and news into recommendation engine >> %STATUS_FILE%
+)
+
 echo. >> %STATUS_FILE%
 
 echo ## Next Steps >> %STATUS_FILE%
-echo 1. Create test XML files to verify template import functionality >> %STATUS_FILE%
-echo 2. Implement market condition analysis for different trading sessions >> %STATUS_FILE%
-echo 3. Develop parameter recommendation algorithms >> %STATUS_FILE%
-echo 4. Begin building React frontend with control buttons for NinjaTrader interaction >> %STATUS_FILE%
-echo 5. Connect market data, prop firm rules, and news services to the recommendation engine >> %STATUS_FILE%
+
+rem Check for test XML files
+if exist "C:\TradingDashboard\server\test\sample-atm.xml" (
+    if exist "C:\TradingDashboard\server\test\sample-flazh.xml" (
+        rem Skip this step as it's completed
+    ) else (
+        echo 1. Create test XML files to verify template import functionality >> %STATUS_FILE%
+    )
+) else (
+    echo 1. Create test XML files to verify template import functionality >> %STATUS_FILE%
+)
+
+rem Check for market condition analysis
+if not exist "C:\TradingDashboard\server\services\marketConditionsService.js" (
+    echo 2. Implement market condition analysis for different trading sessions >> %STATUS_FILE%
+) else if not exist "C:\TradingDashboard\server\routes\marketConditions.js" (
+    echo 2. Implement market condition analysis for different trading sessions >> %STATUS_FILE%
+)
+
+rem Check for parameter recommendation algorithms
+if not exist "C:\TradingDashboard\server\services\parameterOptimizationService.js" (
+    echo 3. Develop parameter recommendation algorithms >> %STATUS_FILE%
+)
+
+rem Check for React dashboard
+if not exist "C:\TradingDashboard\dashboard\src\components\TemplateRecommendation.js" (
+    echo 4. Begin building React frontend with control buttons for NinjaTrader interaction >> %STATUS_FILE%
+)
+
+rem Check for integrated recommendation engine
+if not exist "C:\TradingDashboard\server\services\recommendationEngine.js" (
+    echo 5. Connect market data, prop firm rules, and news services to the recommendation engine >> %STATUS_FILE%
+)
+
 echo. >> %STATUS_FILE%
 
 echo ## Environment Setup >> %STATUS_FILE%
@@ -90,34 +153,34 @@ echo cd C:\TradingDashboard\server >> %STATUS_FILE%
 echo npm start >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test API endpoints >> %STATUS_FILE%
-echo curl http://localhost:3001/api/templates >> %STATUS_FILE%
+echo curl http://localhost:%PORT%/api/templates >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test market data service >> %STATUS_FILE%
-echo curl http://localhost:3001/api/market-data >> %STATUS_FILE%
+echo curl http://localhost:%PORT%/api/market-data >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test prop firm rules >> %STATUS_FILE%
-echo curl http://localhost:3001/api/prop-firm-rules >> %STATUS_FILE%
+echo curl http://localhost:%PORT%/api/prop-firm-rules >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test market news >> %STATUS_FILE%
-echo curl http://localhost:3001/api/market-news >> %STATUS_FILE%
+echo curl http://localhost:%PORT%/api/market-news >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test backtesting module >> %STATUS_FILE%
-echo curl http://localhost:3001/api/backtest >> %STATUS_FILE%
+echo curl http://localhost:%PORT%/api/backtest >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test risk management >> %STATUS_FILE%
-echo curl http://localhost:3001/api/risk/dashboard >> %STATUS_FILE%
+echo curl http://localhost:%PORT%/api/risk/dashboard >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test trading journal >> %STATUS_FILE%
-echo curl http://localhost:3001/api/journal >> %STATUS_FILE%
+echo curl http://localhost:%PORT%/api/journal >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test performance analytics >> %STATUS_FILE%
-echo curl http://localhost:3001/api/analytics/performance >> %STATUS_FILE%
+echo curl http://localhost:%PORT%/api/analytics/performance >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test alert system >> %STATUS_FILE%
-echo curl http://localhost:3001/api/alerts >> %STATUS_FILE%
+echo curl http://localhost:%PORT%/api/alerts >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 echo # Test system health >> %STATUS_FILE%
-echo curl http://localhost:3001/api/health >> %STATUS_FILE%
+echo curl http://localhost:%PORT%/api/health >> %STATUS_FILE%
 echo ``` >> %STATUS_FILE%
 echo. >> %STATUS_FILE%
 
@@ -162,7 +225,7 @@ echo.
 echo 2. Test the system when applicable:
 echo    - Start MongoDB: mongod --dbpath C:\data\db
 echo    - Start server: cd C:\TradingDashboard\server ^& npm start
-echo    - Test API: curl http://localhost:3001/api/templates
+echo    - Test API: curl http://localhost:%PORT%/api/templates
 echo ---------------------------------------
 echo.
 pause

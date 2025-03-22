@@ -27,37 +27,6 @@ const detectTemplateType = (parsedXML) => {
 };
 
 /**
- * Extracts market condition from template name
- * @param {string} templateName - The template name
- * @returns {string} - The detected market condition
- */
-const detectMarketCondition = (templateName) => {
-    // Map of known condition identifiers in template names
-    const conditionMap = {
-        'OPEN': 'Opening',
-        'MORN': 'Morning',
-        'LUNCH': 'Lunch',
-        'EA': 'Early_Afternoon',
-        'LA': 'Late_Afternoon',
-        'EVE': 'Evening',
-        'NIGHT': 'Overnight',
-        'HIGH': 'High_Volatility',
-        'LOW': 'Low_Volatility',
-        'NORM': 'Normal_Volatility'
-    };
-
-    // Check template name for market condition identifiers
-    for (const [key, value] of Object.entries(conditionMap)) {
-        if (templateName.includes(key)) {
-            return value;
-        }
-    }
-
-    // Default to normal volatility if no condition is detected
-    return 'Normal_Volatility';
-};
-
-/**
  * Import an ATM strategy template from XML
  * @param {string} filePath - Path to the XML file
  * @param {Object} parsedXML - The parsed XML content
@@ -92,7 +61,7 @@ const importAtmTemplate = async (filePath, parsedXML) => {
         }
 
         // Detect market condition from template name
-        const marketCondition = detectMarketCondition(templateName);
+        const marketConditionData = xmlParser.detectMarketCondition(templateName);
 
         // Create ATM document
         const atmDocument = {
@@ -108,7 +77,10 @@ const importAtmTemplate = async (filePath, parsedXML) => {
             isTargetChase: atmData.IsTargetChase === 'true',
             reverseAtStop: atmData.ReverseAtStop === 'true',
             reverseAtTarget: atmData.ReverseAtTarget === 'true',
-            marketCondition,
+            marketCondition: marketConditionData.marketCondition,
+            session: marketConditionData.details.session,
+            volatility: marketConditionData.details.volatility,
+            dayOfWeek: marketConditionData.details.dayOfWeek,
             description: `${templateName} ATM Strategy Template`,
             xmlContent
         };
@@ -168,7 +140,7 @@ const importFlazhTemplate = async (filePath, parsedXML) => {
             path.basename(filePath, '.xml');
 
         // Detect market condition from template name
-        const marketCondition = detectMarketCondition(templateName);
+        const marketConditionData = xmlParser.detectMarketCondition(templateName);
 
         // Extract bars period information
         const barsPeriod = {
@@ -225,7 +197,10 @@ const importFlazhTemplate = async (filePath, parsedXML) => {
             barsPeriod,
 
             // Metadata
-            marketCondition,
+            marketCondition: marketConditionData.marketCondition,
+            session: marketConditionData.details.session,
+            volatility: marketConditionData.details.volatility,
+            dayOfWeek: marketConditionData.details.dayOfWeek,
             description: `${templateName} Flazh Infinity Template`,
             userNote: flazhData.UserNote || '',
             xmlContent
@@ -283,28 +258,87 @@ const importTemplate = async (filePath) => {
             };
         }
 
-        // Parse the XML file using your existing function
-        const parsedXML = await xmlParser.parseXmlFile(filePath);
+        // Read the XML content
+        const xmlContent = fs.readFileSync(filePath, 'utf8');
+        const fileName = path.basename(filePath);
 
-        // Detect template type
-        const templateType = detectTemplateType(parsedXML);
-
-        // Import based on template type
-        if (templateType === 'ATM') {
-            return await importAtmTemplate(filePath, parsedXML);
-        } else if (templateType === 'Flazh') {
-            return await importFlazhTemplate(filePath, parsedXML);
-        } else {
-            return {
-                success: false,
-                message: `Unsupported template type: ${templateType}`,
-                error: 'Unsupported template type'
-            };
-        }
+        // Import using the XML content
+        return await importFromXML(xmlContent, null, fileName);
     } catch (error) {
         return {
             success: false,
             message: `Error importing template: ${error.message}`,
+            error: error.message
+        };
+    }
+};
+
+/**
+ * Import a template directly from XML content string
+ * @param {string} xmlContent - XML content as a string
+ * @param {string} templateType - Optional type hint ('atm' or 'flazh')
+ * @param {string} fileName - Optional filename for reference
+ * @returns {Promise<Object>} - The imported template
+ */
+const importFromXML = async (xmlContent, templateType = null, fileName = 'imported-template.xml') => {
+    try {
+        // Create a temporary file
+        const tempFilePath = path.join(__dirname, '..', 'temp-' + fileName);
+        fs.writeFileSync(tempFilePath, xmlContent);
+
+        try {
+            // Parse the XML
+            const parsedXML = await xmlParser.parseXmlFile(tempFilePath);
+
+            // Detect template type (if not provided)
+            let detectedType = templateType;
+            if (!detectedType) {
+                try {
+                    detectedType = detectTemplateType(parsedXML);
+                } catch (error) {
+                    // Clean up temp file
+                    fs.unlinkSync(tempFilePath);
+                    return {
+                        success: false,
+                        message: `Unable to detect template type: ${error.message}`,
+                        error: error.message
+                    };
+                }
+            }
+
+            // Standardize the detected type to uppercase for comparison
+            const normalizedType = detectedType ? detectedType.toUpperCase() : null;
+
+            // Import based on template type
+            let result;
+            if (normalizedType === 'ATM') {
+                result = await importAtmTemplate(tempFilePath, parsedXML);
+            } else if (normalizedType === 'FLAZH') {
+                result = await importFlazhTemplate(tempFilePath, parsedXML);
+            } else {
+                // Clean up temp file
+                fs.unlinkSync(tempFilePath);
+                return {
+                    success: false,
+                    message: `Unsupported template type: ${normalizedType}`,
+                    error: 'Unsupported template type'
+                };
+            }
+
+            // Clean up temp file
+            fs.unlinkSync(tempFilePath);
+            return result;
+        } catch (error) {
+            // Clean up temp file if it exists
+            if (fs.existsSync(tempFilePath)) {
+                fs.unlinkSync(tempFilePath);
+            }
+            throw error;
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: `Error importing template from XML: ${error.message}`,
             error: error.message
         };
     }
@@ -484,8 +518,45 @@ const validateTemplate = async (filePath) => {
     }
 };
 
+/**
+ * Validate XML content as a template
+ * @param {string} xmlContent - XML content as a string
+ * @returns {Promise<Object>} - Validation result
+ */
+const validateXmlContent = async (xmlContent) => {
+    try {
+        // Create a temporary file
+        const tempFilePath = path.join(__dirname, '..', 'temp-validation.xml');
+        fs.writeFileSync(tempFilePath, xmlContent);
+
+        try {
+            // Validate the file
+            const result = await validateTemplate(tempFilePath);
+
+            // Clean up temp file
+            fs.unlinkSync(tempFilePath);
+
+            return result;
+        } catch (error) {
+            // Clean up temp file if it exists
+            if (fs.existsSync(tempFilePath)) {
+                fs.unlinkSync(tempFilePath);
+            }
+            throw error;
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: `Error validating XML content: ${error.message}`,
+            error: error.message
+        };
+    }
+};
+
 module.exports = {
     importTemplate,
+    importFromXML,
     importTemplatesFromDirectory,
-    validateTemplate
+    validateTemplate,
+    validateXmlContent
 };

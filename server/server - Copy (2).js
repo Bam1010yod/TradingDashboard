@@ -54,16 +54,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Log incoming requests
-app.use((req, res, next) => {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-    next();
-});
-
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
+app.use('/api/templates', templateRoutes);
 app.use('/api/market-data', marketDataRoutes);
 app.use('/api/prop-firm-rules', propFirmRoutes);
 app.use('/api/market-news', marketNewsRoutes);
@@ -73,10 +68,10 @@ app.use('/api/analytics', require('./routes/analytics'));
 app.use('/api/alerts', require('./routes/alerts'));
 app.use('/api/health', require('./routes/health'));
 app.use('/api/backtest', require('./routes/backtest'));
-app.use('/api/templates', templateRoutes);
+app.use('/api/templates', require('./routes/templates'));
 app.use('/api/market-conditions', marketConditionsRoutes); // Add this line
 app.use('/api/session', tradingSessionRoutes);
-app.use('/api/template-recommendations', templateRecommendationsRouter);
+app.use('/api/templates', templateRecommendationsRouter);
 
 // Home route
 app.get('/', (req, res) => {
@@ -98,7 +93,7 @@ io.on('connection', (socket) => {
         // Initialize services with socket.io for real-time updates
         await marketDataService.initialize(io);
         await propFirmService.initialize();
-        //await marketNewsService.initialize(io); // Commented out MarketNewsService
+        await marketNewsService.initialize(io);
         await backtestService.initialize();
         await riskManagementService.initialize();
         await journalService.initialize();
@@ -138,7 +133,7 @@ io.on('connection', (socket) => {
 })();
 
 // Set port and start server
-const PORT = process.env.PORT || 3008;
+const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

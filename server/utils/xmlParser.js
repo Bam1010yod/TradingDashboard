@@ -43,6 +43,25 @@ const parseXML = async (xmlString) => {
 };
 
 /**
+ * Parse an XML string into a JavaScript object
+ * This function is added for compatibility with the new template import system
+ * @param {string} xmlString - XML content as string
+ * @returns {Promise<Object>} - Parsed XML as JavaScript object
+ */
+const parseXmlString = async (xmlString) => {
+    try {
+        const parser = new xml2js.Parser({
+            explicitArray: false,
+            mergeAttrs: true
+        });
+
+        return await parser.parseStringPromise(xmlString);
+    } catch (error) {
+        throw new Error(`Error parsing XML string: ${error.message}`);
+    }
+};
+
+/**
  * Convert JavaScript object to XML string
  * @param {Object} jsObject - JavaScript object to convert
  * @param {string} rootElement - Root element name
@@ -84,32 +103,75 @@ const detectTemplateType = (parsedXML) => {
 /**
  * Extracts market condition from template name
  * @param {string} templateName - The template name
- * @returns {string} - The detected market condition
+ * @returns {Object} - The detected market conditions
  */
 const detectMarketCondition = (templateName) => {
-    // Map of known condition identifiers in template names
-    const conditionMap = {
-        'OPEN': 'Opening',
-        'MORN': 'Morning',
-        'LUNCH': 'Lunch',
+    // Session mapping
+    const sessionMap = {
+        'LM': 'Late_Morning',
         'EA': 'Early_Afternoon',
-        'LA': 'Late_Afternoon',
-        'EVE': 'Evening',
-        'NIGHT': 'Overnight',
-        'HIGH': 'High_Volatility',
-        'LOW': 'Low_Volatility',
-        'NORM': 'Normal_Volatility'
+        'PC': 'Pre_Close'
     };
 
-    // Check template name for market condition identifiers
-    for (const [key, value] of Object.entries(conditionMap)) {
+    // Volatility mapping
+    const volatilityMap = {
+        'LOW': 'Low_Volatility',
+        'MED': 'Medium_Volatility',
+        'HIGH': 'High_Volatility'
+    };
+
+    // Day of week mapping
+    const dayMap = {
+        'MON': 'Monday',
+        'TUE': 'Tuesday',
+        'WED': 'Wednesday',
+        'THU': 'Thursday',
+        'FRI': 'Friday'
+    };
+
+    // Initialize result
+    const result = {
+        session: null,
+        volatility: null,
+        dayOfWeek: null
+    };
+
+    // Detect session
+    for (const [key, value] of Object.entries(sessionMap)) {
         if (templateName.includes(key)) {
-            return value;
+            result.session = value;
+            break;
         }
     }
 
-    // Default to normal volatility if no condition is detected
-    return 'Normal_Volatility';
+    // Detect volatility
+    for (const [key, value] of Object.entries(volatilityMap)) {
+        if (templateName.includes(key)) {
+            result.volatility = value;
+            break;
+        }
+    }
+
+    // Detect day of week
+    for (const [key, value] of Object.entries(dayMap)) {
+        if (templateName.includes(key)) {
+            result.dayOfWeek = value;
+            break;
+        }
+    }
+
+    // Set defaults if not detected
+    if (!result.session) result.session = 'Unknown_Session';
+    if (!result.volatility) result.volatility = 'Normal_Volatility';
+
+    // For backward compatibility with existing code that expects a string
+    const marketCondition = `${result.session}_${result.volatility}`;
+
+    // Return both the combined string and detailed object
+    return {
+        marketCondition,
+        details: result
+    };
 };
 
 /**
@@ -228,6 +290,7 @@ const validateXmlStructure = (parsedXML) => {
 module.exports = {
     parseXmlFile,
     parseXML,
+    parseXmlString,
     generateXML,
     detectTemplateType,
     detectMarketCondition,
