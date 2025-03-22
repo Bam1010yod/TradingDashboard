@@ -1,5 +1,5 @@
 # TradingDashboard Project Status 
-Last updated: Sat 03/22/2025  8:17:53.21 
+Last updated: Sat 03/22/2025 15:21:12.05 
  
 ## Project Description 
 This is a trading system for recommending Flazh Infinity parameters and ATM settings based on market conditions for NinjaTrader 8, focusing on NQ futures. 
@@ -36,7 +36,6 @@ The project is organized in a modular architecture with server components and in
 - [x] GitHub backup integration 
 - [x] MarketDataExporter indicator for NinjaTrader (preexisting) 
 - [x] Market data service for integration with NinjaTrader 
-- [x] Prop firm monitoring service 
 - [x] Market news monitoring service 
 - [x] Backtesting module for strategy testing 
 - [x] Risk management dashboard API 
@@ -49,12 +48,10 @@ The project is organized in a modular architecture with server components and in
  
 ## In Progress 
 - [x] Trading session analysis components 
-- [ ] Parameter optimization logic 
-- [ ] Integration of market data, prop firm rules, and news into recommendation engine 
+- [x] Parameter optimization logic 
+- [x] Integration of market data and news into recommendation engine 
  
 ## Next Steps 
-3. Develop parameter recommendation algorithms 
-5. Connect market data, prop firm rules, and news services to the recommendation engine 
  
 ## Environment Setup 
 - Node.js server at C:\TradingDashboard\server 
@@ -77,9 +74,6 @@ curl http://localhost:3008/api/templates
  
 # Test market data service 
 curl http://localhost:3008/api/market-data 
- 
-# Test prop firm rules 
-curl http://localhost:3008/api/prop-firm-rules 
  
 # Test market news 
 curl http://localhost:3008/api/market-news 
@@ -174,7 +168,9 @@ journalService.js
 marketConditionsService.js
 marketDataService.js
 marketNewsService.js
+parameterOptimizationService.js
 propFirmService.js
+recommendationEngineService.js
 riskManagementService.js
 templateImport.js
 templateSelector.js
@@ -190,8 +186,10 @@ FLAZH_MORNING_TEST.xml
 healthTest.js
 journalTest.js
 marketConditionsTest.js
+parameterOptimizationTest.js
 readVolatilityFile.js
 real
+recommendationEngineTest.js
 riskManagementTest.js
 riskManagementTestSimple.js
 sample-atm.xml

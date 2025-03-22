@@ -1,58 +1,50 @@
+/**
+ * Template Recommendations Routes
+ * Provides API endpoints for recommending optimal trading templates
+ */
+
 const express = require('express');
 const router = express.Router();
-const templateSelector = require('../services/templateSelector');
+const recommendationEngineService = require('../services/recommendationEngineService');
 
-// GET recommended template based on current conditions
-router.get('/recommend', async (req, res) => {
+/**
+ * @route GET /api/recommendations
+ * @description Get recommended templates based on current market conditions and news
+ * @access Public
+ */
+router.get('/', async (req, res) => {
     try {
-        console.log('Received request to /recommend'); // Add this line
-        const { type } = req.query;
+        // Get query parameters or use defaults
+        const timeOfDay = req.query.timeOfDay || getCurrentTimeOfDay();
+        const sessionType = req.query.sessionType || 'Regular';
 
-        // Validate type parameter
-        if (!type || !['ATM', 'Flazh'].includes(type.toUpperCase())) {
-            console.log('Invalid template type:', type); // Add this line
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid template type. Must be ATM or Flazh.'
-            });
-        }
-
-        // Get recommended template
-        console.log('Getting recommended template...'); // Add this line
-        const template = await templateSelector.getRecommendedTemplate(
-            type,
-            new Date(), // Use current time
-            {}          // Empty market data for now
+        // Get comprehensive recommendations
+        const recommendations = await recommendationEngineService.generateRecommendations(
+            timeOfDay,
+            sessionType
         );
 
-        if (!template) {
-            console.log('No template found'); // Add this line
-            return res.status(404).json({
-                success: false,
-                message: `No suitable ${type} template found for the current conditions.`
-            });
-        }
-
-        // Return template information
-        console.log('Template found:', template); // Add this line
-        res.json({
-            success: true,
-            template: {
-                _id: template._id,
-                name: template.templateName,
-                session: template.session,
-                volatility: template.volatility,
-                dayOfWeek: template.dayOfWeek
-            }
-        });
+        res.json(recommendations);
     } catch (error) {
-        console.error('Error recommending template:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Error recommending template',
-            error: error.message
-        });
+        console.error('Error getting template recommendations:', error);
+        res.status(500).json({ message: 'Failed to get template recommendations' });
     }
 });
+
+/**
+ * Determine the current time of day (Morning, Afternoon, Evening)
+ * @returns {String} - Current time of day
+ */
+function getCurrentTimeOfDay() {
+    const hour = new Date().getHours();
+
+    if (hour >= 4 && hour < 12) {
+        return 'Morning';
+    } else if (hour >= 12 && hour < 17) {
+        return 'Afternoon';
+    } else {
+        return 'Evening';
+    }
+}
 
 module.exports = router;
