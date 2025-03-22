@@ -1,0 +1,45 @@
+{
+  "timeOfDay": "Morning",
+  "sessionType": "Regular",
+  "marketConditions": {
+    "data": {
+      "timestamp": "2025-03-22T22:46:46.118Z",
+      "symbol": "NQ",
+      "atr": 35,
+      "overnightRange": 50,
+      "volatilityScore": 7.5,
+      "volatilityLevel": "Medium",
+      "currentPrice": 19245,
+      "dailyVolatility": 1.8,
+      "volume": 12500,
+      "trend": "neutral",
+      "priceRange": 65
+    }
+  },
+  "recommendations": {
+    "flazh": {
+      "entryOffset": 3,
+      "stopLoss": 9,
+      "targetProfit": 19,
+      "trailingStop": 5,
+      "contractSize": 1,
+      "timeFrame": "5min"
+    },
+    "atm": {
+      "stopLoss": 14,
+      "target1": 14,
+      "target2": 28,
+      "breakEvenLevel": 6,
+      "autoBreakEven": true,
+      "activeStrategy": "Standard"
+    },
+    "confidence": "low"
+  },
+  "backtestingInsights": {
+    "sampleSize": 0,
+    "winRate": 0,
+    "profitFactor": 0
+  },
+  "relevantNews": [],
+  "generatedAt": "2025-03-22T22:46:46.151Z"
+}
