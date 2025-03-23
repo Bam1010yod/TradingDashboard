@@ -1,7 +1,7 @@
 /**
- * Recommendation Engine Service
- * This service integrates market data, news, and backtesting results
- * to provide comprehensive template recommendations
+ * Enhanced Recommendation Engine Service
+ * This service integrates improved backtesting analysis with market data and news
+ * to provide more accurate template recommendations
  */
 
 const marketDataService = require('./marketDataService');
@@ -12,6 +12,7 @@ const tradingSessionService = require('./tradingSessionService');
 
 /**
  * Generate comprehensive template recommendations based on available data
+ * with enhanced backtesting analysis
  * @param {String} timeOfDay - Time of day (Morning, Afternoon, Evening)
  * @param {String} sessionType - Session type (Regular, High Volatility, Low Volatility)
  * @returns {Object} - Complete recommendation with parameters and context
@@ -50,39 +51,48 @@ async function generateRecommendations(timeOfDay, sessionType) {
         );
         console.log('Generated optimized parameters');
 
-        // 4. Get backtesting performance metrics for these market conditions
+        // 4. Get enhanced backtesting performance metrics for these market conditions
         const backtestMetrics = await backtestingResultsService.getPerformanceMetrics(
             timeOfDay,
             sessionType,
             marketData.volatilityScore || 5
         );
-        console.log('Retrieved backtesting performance metrics');
+        console.log('Retrieved enhanced backtesting performance metrics');
 
-        // 5. Get volatility-based adjustments
+        // 5. Get performance trends to help identify patterns over time
+        const performanceTrends = await backtestingResultsService.getPerformanceTrends(
+            timeOfDay,
+            sessionType
+        );
+        console.log('Retrieved performance trend data');
+
+        // 6. Get volatility-based adjustments (fallback if insufficient backtest data)
         const volatilityAdjustments = backtestingResultsService.getVolatilityAdjustments(
             marketData.volatilityScore || 5
         );
         console.log('Generated volatility-based adjustments');
 
-        // 6. Get session-based adjustments
+        // 7. Get session-based adjustments (fallback if insufficient backtest data)
         const sessionAdjustments = backtestingResultsService.getSessionAdjustments(timeOfDay);
         console.log('Generated session-based adjustments');
 
-        // 7. Analyze market news sentiment for potential adjustments
+        // 8. Analyze market news sentiment for potential adjustments
         const newsImpact = analyzeNewsImpact(marketNews, marketData.symbol);
         console.log('Analyzed news impact');
 
-        // 8. Apply all adjustments to create final parameters
+        // 9. Apply all adjustments to create final parameters with greater weight
+        // to backtesting results when available
         const adjustedParameters = applyAllAdjustments(
             optimizedParameters,
             newsImpact,
             backtestMetrics,
             volatilityAdjustments,
-            sessionAdjustments
+            sessionAdjustments,
+            performanceTrends
         );
         console.log('Applied all adjustments to parameters');
 
-        // 9. Generate final recommendation
+        // 10. Generate final recommendation with enhanced context
         const recommendation = {
             timeOfDay,
             sessionType,
@@ -101,19 +111,286 @@ async function generateRecommendations(timeOfDay, sessionType) {
             },
             backtestingInsights: {
                 sampleSize: backtestMetrics.sampleSize || 0,
+                successfulSamples: backtestMetrics.successfulSamples || 0,
                 winRate: backtestMetrics.winRate || 0,
-                profitFactor: backtestMetrics.profitFactor || 0
+                profitFactor: backtestMetrics.profitFactor || 0,
+                averageRR: backtestMetrics.averageRR || 0,
+                similarityScore: backtestMetrics.averageSimilarity || 0
             },
+            performanceTrends: performanceTrends.success ? performanceTrends.trends : [],
             relevantNews: formatRelevantNews(marketNews, newsImpact),
+            adjustmentFactors: {
+                stopLoss: backtestMetrics.adjustmentFactors?.stopLossAdjustment || 1,
+                target: backtestMetrics.adjustmentFactors?.targetAdjustment || 1,
+                trailingStop: backtestMetrics.adjustmentFactors?.trailingStopAdjustment || 1
+            },
             generatedAt: new Date().toISOString()
         };
 
-        console.log('Recommendation generation completed');
+        console.log('Enhanced recommendation generation completed');
         return recommendation;
     } catch (error) {
-        console.error('Error generating recommendations:', error);
+        console.error('Error generating enhanced recommendations:', error);
         throw new Error('Failed to generate template recommendations');
     }
+}
+
+/**
+ * Apply all adjustments to create final parameters with improved weighting logic
+ * @param {Object} parameters - Optimized parameters
+ * @param {Object} newsImpact - News impact analysis
+ * @param {Object} backtestMetrics - Backtesting performance metrics
+ * @param {Object} volatilityAdjustments - Volatility-based adjustments
+ * @param {Object} sessionAdjustments - Session-based adjustments
+ * @param {Object} performanceTrends - Performance trends over time
+ * @returns {Object} - Adjusted parameters
+ */
+function applyAllAdjustments(
+    parameters,
+    newsImpact,
+    backtestMetrics,
+    volatilityAdjustments,
+    sessionAdjustments,
+    performanceTrends
+) {
+    // Create a deep copy of parameters to avoid modifying the original
+    const adjustedParameters = {
+        flazhParameters: { ...parameters.flazhParameters },
+        atmParameters: { ...parameters.atmParameters },
+        confidence: parameters.confidence,
+        marketConditionsSummary: parameters.marketConditionsSummary
+    };
+
+    // ENHANCED LOGIC: Dynamic weighting based on data quality
+    let backtestWeight = 0.7;  // Default high weight for backtest data
+    let volatilityWeight = 0.15;
+    let sessionWeight = 0.15;
+
+    // Adjust weights based on backtest confidence
+    if (backtestMetrics.confidenceLevel === 'low') {
+        backtestWeight = 0.3;
+        volatilityWeight = 0.4;
+        sessionWeight = 0.3;
+    } else if (backtestMetrics.confidenceLevel === 'medium') {
+        backtestWeight = 0.5;
+        volatilityWeight = 0.3;
+        sessionWeight = 0.2;
+    }
+
+    // ENHANCED LOGIC: Apply performance trend adjustments if available
+    if (performanceTrends.success && performanceTrends.trends && performanceTrends.trends.length > 0) {
+        // Check if there's a clear trend in profit factor
+        const trendAdjustment = analyzeTrends(performanceTrends.trends);
+
+        if (trendAdjustment !== 1) {
+            console.log(`Applying trend-based adjustment factor: ${trendAdjustment}`);
+            // Apply slight adjustment based on trend direction
+            adjustedParameters.flazhParameters.targetProfit = Math.round(
+                adjustedParameters.flazhParameters.targetProfit * (trendAdjustment * 0.2 + 0.8)
+            );
+            adjustedParameters.atmParameters.target1 = Math.round(
+                adjustedParameters.atmParameters.target1 * (trendAdjustment * 0.2 + 0.8)
+            );
+            adjustedParameters.atmParameters.target2 = Math.round(
+                adjustedParameters.atmParameters.target2 * (trendAdjustment * 0.2 + 0.8)
+            );
+        }
+    }
+
+    // Apply backtest-based adjustments with highest priority
+    if (backtestMetrics.success && backtestMetrics.sampleSize > 0) {
+        console.log(`Applying backtest adjustments with weight: ${backtestWeight}`);
+
+        // ENHANCED LOGIC: Use weighted blending instead of direct replacement
+        const backtestStopLossAdjustment = backtestMetrics.adjustmentFactors.stopLossAdjustment || 1;
+        const backtestTargetAdjustment = backtestMetrics.adjustmentFactors.targetAdjustment || 1;
+        const backtestTrailingStopAdjustment = backtestMetrics.adjustmentFactors.trailingStopAdjustment || 1;
+
+        // Calculate blended volatility and session adjustments
+        const blendedVolSession = {
+            stopLoss: (volatilityAdjustments.stopLoss * volatilityWeight) +
+                (sessionAdjustments.stopLoss * sessionWeight),
+            target: (volatilityAdjustments.target * volatilityWeight) +
+                (sessionAdjustments.target * sessionWeight),
+            trailingStop: (volatilityAdjustments.trailingStop * volatilityWeight) +
+                (sessionAdjustments.trailingStop * sessionWeight)
+        };
+
+        // Apply weighted adjustments (backtest + volatility/session blend)
+        const finalStopLossAdjustment = (backtestStopLossAdjustment * backtestWeight) +
+            (blendedVolSession.stopLoss * (1 - backtestWeight));
+
+        const finalTargetAdjustment = (backtestTargetAdjustment * backtestWeight) +
+            (blendedVolSession.target * (1 - backtestWeight));
+
+        const finalTrailingStopAdjustment = (backtestTrailingStopAdjustment * backtestWeight) +
+            (blendedVolSession.trailingStop * (1 - backtestWeight));
+
+        // Apply the final blended adjustments
+        adjustedParameters.flazhParameters.stopLoss = Math.round(
+            adjustedParameters.flazhParameters.stopLoss * finalStopLossAdjustment
+        );
+        adjustedParameters.flazhParameters.targetProfit = Math.round(
+            adjustedParameters.flazhParameters.targetProfit * finalTargetAdjustment
+        );
+        adjustedParameters.flazhParameters.trailingStop = Math.round(
+            adjustedParameters.flazhParameters.trailingStop * finalTrailingStopAdjustment
+        );
+
+        adjustedParameters.atmParameters.stopLoss = Math.round(
+            adjustedParameters.atmParameters.stopLoss * finalStopLossAdjustment
+        );
+        adjustedParameters.atmParameters.target1 = Math.round(
+            adjustedParameters.atmParameters.target1 * finalTargetAdjustment
+        );
+        adjustedParameters.atmParameters.target2 = Math.round(
+            adjustedParameters.atmParameters.target2 * finalTargetAdjustment
+        );
+    } else {
+        // If we don't have good backtest data, apply volatility and session adjustments instead
+        console.log('Applying volatility and session-based adjustments (no good backtest data)');
+
+        // Combine volatility and session adjustments with weighted blending
+        const combinedStopLossAdjustment =
+            (volatilityAdjustments.stopLoss * 0.6) + (sessionAdjustments.stopLoss * 0.4);
+        const combinedTargetAdjustment =
+            (volatilityAdjustments.target * 0.6) + (sessionAdjustments.target * 0.4);
+        const combinedTrailingStopAdjustment =
+            (volatilityAdjustments.trailingStop * 0.6) + (sessionAdjustments.trailingStop * 0.4);
+
+        // Apply combined adjustments
+        adjustedParameters.flazhParameters.stopLoss = Math.round(
+            adjustedParameters.flazhParameters.stopLoss * combinedStopLossAdjustment
+        );
+        adjustedParameters.flazhParameters.targetProfit = Math.round(
+            adjustedParameters.flazhParameters.targetProfit * combinedTargetAdjustment
+        );
+        adjustedParameters.flazhParameters.trailingStop = Math.round(
+            adjustedParameters.flazhParameters.trailingStop * combinedTrailingStopAdjustment
+        );
+
+        adjustedParameters.atmParameters.stopLoss = Math.round(
+            adjustedParameters.atmParameters.stopLoss * combinedStopLossAdjustment
+        );
+        adjustedParameters.atmParameters.target1 = Math.round(
+            adjustedParameters.atmParameters.target1 * combinedTargetAdjustment
+        );
+        adjustedParameters.atmParameters.target2 = Math.round(
+            adjustedParameters.atmParameters.target2 * combinedTargetAdjustment
+        );
+    }
+
+    // As a final step, apply news-based adjustments with lower priority
+    if (newsImpact.confidence !== 'low') {
+        console.log('Applying additional news-based adjustments');
+
+        // ENHANCED LOGIC: More nuanced news impact adjustments
+        const newsVolatilityImpact = newsImpact.volatilityImpact;
+        const newsTrendImpact = Math.abs(newsImpact.trendImpact);
+
+        // Apply scaled adjustments based on news impact strength
+        if (newsVolatilityImpact > 0) {
+            // Scale factor between 1.0-1.15 based on impact strength
+            const volatilityScaleFactor = 1 + (newsVolatilityImpact * 0.15);
+
+            adjustedParameters.flazhParameters.stopLoss = Math.round(
+                adjustedParameters.flazhParameters.stopLoss * volatilityScaleFactor
+            );
+            adjustedParameters.atmParameters.stopLoss = Math.round(
+                adjustedParameters.atmParameters.stopLoss * volatilityScaleFactor
+            );
+        }
+
+        // Adjust for trend bias based on news sentiment with scaled strength
+        if (newsImpact.sentiment !== 'neutral' && newsTrendImpact > 0) {
+            // Scale factor between 1.0-1.1 based on impact strength
+            const trendScaleFactor = 1 + (newsTrendImpact * 0.1);
+
+            adjustedParameters.flazhParameters.targetProfit = Math.round(
+                adjustedParameters.flazhParameters.targetProfit * trendScaleFactor
+            );
+            adjustedParameters.atmParameters.target2 = Math.round(
+                adjustedParameters.atmParameters.target2 * trendScaleFactor
+            );
+        }
+    }
+
+    // Enforce reasonable limits on parameter values
+    adjustedParameters.flazhParameters.stopLoss = enforceParameterLimits(
+        adjustedParameters.flazhParameters.stopLoss, parameters.flazhParameters.stopLoss, 0.7, 1.5
+    );
+
+    adjustedParameters.flazhParameters.targetProfit = enforceParameterLimits(
+        adjustedParameters.flazhParameters.targetProfit, parameters.flazhParameters.targetProfit, 0.7, 1.5
+    );
+
+    adjustedParameters.atmParameters.stopLoss = enforceParameterLimits(
+        adjustedParameters.atmParameters.stopLoss, parameters.atmParameters.stopLoss, 0.7, 1.5
+    );
+
+    adjustedParameters.atmParameters.target1 = enforceParameterLimits(
+        adjustedParameters.atmParameters.target1, parameters.atmParameters.target1, 0.7, 1.5
+    );
+
+    adjustedParameters.atmParameters.target2 = enforceParameterLimits(
+        adjustedParameters.atmParameters.target2, parameters.atmParameters.target2, 0.7, 1.5
+    );
+
+    return adjustedParameters;
+}
+
+/**
+ * Analyze performance trends to identify patterns
+ * @param {Array} trends - Performance trends data
+ * @returns {Number} - Trend adjustment factor
+ */
+function analyzeTrends(trends) {
+    if (!trends || trends.length < 2) {
+        return 1; // No adjustment if insufficient trend data
+    }
+
+    // Sort by period to ensure chronological order
+    trends.sort((a, b) => {
+        // Extract week number for comparison
+        const weekA = parseInt(a.period.replace('Week ', '')) || 0;
+        const weekB = parseInt(b.period.replace('Week ', '')) || 0;
+        return weekA - weekB;
+    });
+
+    // Only consider the most recent weeks (last 3 or all if fewer)
+    const recentTrends = trends.slice(-3);
+
+    if (recentTrends.length < 2) {
+        return 1; // Need at least 2 periods for trend analysis
+    }
+
+    // Calculate trend direction for profit factor (main performance indicator)
+    let trendDirection = 0;
+    for (let i = 1; i < recentTrends.length; i++) {
+        const prevPeriod = recentTrends[i - 1];
+        const currPeriod = recentTrends[i];
+
+        // Compare profit factors
+        if (currPeriod.avgProfitFactor > prevPeriod.avgProfitFactor * 1.1) {
+            // Significant improvement
+            trendDirection += 1;
+        } else if (currPeriod.avgProfitFactor < prevPeriod.avgProfitFactor * 0.9) {
+            // Significant deterioration
+            trendDirection -= 1;
+        }
+    }
+
+    // Calculate adjustment factor based on trend direction
+    if (trendDirection >= recentTrends.length - 1) {
+        // Strong positive trend - slightly more aggressive
+        return 1.1;
+    } else if (trendDirection <= -(recentTrends.length - 1)) {
+        // Strong negative trend - slightly more conservative
+        return 0.9;
+    }
+
+    // No clear trend
+    return 1;
 }
 
 /**
@@ -143,7 +420,7 @@ function createTestMarketData() {
  * @returns {Object} - Analysis of news impact
  */
 function analyzeNewsImpact(news, symbol) {
-    // [This function remains the same as before]
+    // This function remains the same as in your original code
     const impact = {
         sentiment: 'neutral',
         volatilityImpact: 0,
@@ -249,143 +526,6 @@ function analyzeNewsImpact(news, symbol) {
 }
 
 /**
- * Apply all adjustments to create final parameters
- * @param {Object} parameters - Optimized parameters
- * @param {Object} newsImpact - News impact analysis
- * @param {Object} backtestMetrics - Backtesting performance metrics
- * @param {Object} volatilityAdjustments - Volatility-based adjustments
- * @param {Object} sessionAdjustments - Session-based adjustments
- * @returns {Object} - Adjusted parameters
- */
-function applyAllAdjustments(parameters, newsImpact, backtestMetrics, volatilityAdjustments, sessionAdjustments) {
-    // Create a deep copy of parameters to avoid modifying the original
-    const adjustedParameters = {
-        flazhParameters: { ...parameters.flazhParameters },
-        atmParameters: { ...parameters.atmParameters },
-        confidence: parameters.confidence,
-        marketConditionsSummary: parameters.marketConditionsSummary
-    };
-
-    // Apply backtesting-based adjustments with highest priority
-    // Only apply if we have successful backtest data with sufficient confidence
-    if (backtestMetrics.success && backtestMetrics.confidenceLevel !== 'low') {
-        console.log('Applying adjustments based on backtest results');
-
-        adjustedParameters.flazhParameters.stopLoss = Math.round(
-            adjustedParameters.flazhParameters.stopLoss * backtestMetrics.adjustmentFactors.stopLossAdjustment
-        );
-        adjustedParameters.flazhParameters.targetProfit = Math.round(
-            adjustedParameters.flazhParameters.targetProfit * backtestMetrics.adjustmentFactors.targetAdjustment
-        );
-        adjustedParameters.flazhParameters.trailingStop = Math.round(
-            adjustedParameters.flazhParameters.trailingStop * backtestMetrics.adjustmentFactors.trailingStopAdjustment
-        );
-
-        adjustedParameters.atmParameters.stopLoss = Math.round(
-            adjustedParameters.atmParameters.stopLoss * backtestMetrics.adjustmentFactors.stopLossAdjustment
-        );
-        adjustedParameters.atmParameters.target1 = Math.round(
-            adjustedParameters.atmParameters.target1 * backtestMetrics.adjustmentFactors.targetAdjustment
-        );
-        adjustedParameters.atmParameters.target2 = Math.round(
-            adjustedParameters.atmParameters.target2 * backtestMetrics.adjustmentFactors.targetAdjustment
-        );
-    } else {
-        // If we don't have good backtest data, apply volatility and session adjustments instead
-        console.log('Applying volatility and session-based adjustments');
-
-        // Combine volatility and session adjustments with weighted blending
-        const combinedStopLossAdjustment =
-            (volatilityAdjustments.stopLoss * 0.6) + (sessionAdjustments.stopLoss * 0.4);
-        const combinedTargetAdjustment =
-            (volatilityAdjustments.target * 0.6) + (sessionAdjustments.target * 0.4);
-        const combinedTrailingStopAdjustment =
-            (volatilityAdjustments.trailingStop * 0.6) + (sessionAdjustments.trailingStop * 0.4);
-
-        // Apply combined adjustments
-        adjustedParameters.flazhParameters.stopLoss = Math.round(
-            adjustedParameters.flazhParameters.stopLoss * combinedStopLossAdjustment
-        );
-        adjustedParameters.flazhParameters.targetProfit = Math.round(
-            adjustedParameters.flazhParameters.targetProfit * combinedTargetAdjustment
-        );
-        adjustedParameters.flazhParameters.trailingStop = Math.round(
-            adjustedParameters.flazhParameters.trailingStop * combinedTrailingStopAdjustment
-        );
-
-        adjustedParameters.atmParameters.stopLoss = Math.round(
-            adjustedParameters.atmParameters.stopLoss * combinedStopLossAdjustment
-        );
-        adjustedParameters.atmParameters.target1 = Math.round(
-            adjustedParameters.atmParameters.target1 * combinedTargetAdjustment
-        );
-        adjustedParameters.atmParameters.target2 = Math.round(
-            adjustedParameters.atmParameters.target2 * combinedTargetAdjustment
-        );
-    }
-
-    // As a final step, apply news-based adjustments with lower priority
-    if (newsImpact.confidence !== 'low') {
-        console.log('Applying additional news-based adjustments');
-
-        // Apply smaller news-based adjustments on top of other adjustments
-        const newsVolatilityImpact = newsImpact.volatilityImpact;
-
-        if (newsVolatilityImpact > 0.5) {
-            // High news volatility impact
-            adjustedParameters.flazhParameters.stopLoss = Math.round(
-                adjustedParameters.flazhParameters.stopLoss * 1.1
-            );
-            adjustedParameters.atmParameters.stopLoss = Math.round(
-                adjustedParameters.atmParameters.stopLoss * 1.1
-            );
-        }
-
-        // Adjust for trend bias based on news sentiment
-        if (newsImpact.sentiment === 'positive' && newsImpact.trendImpact > 0.5) {
-            // For bullish sentiment, slightly increase targets
-            adjustedParameters.flazhParameters.targetProfit = Math.round(
-                adjustedParameters.flazhParameters.targetProfit * 1.05
-            );
-            adjustedParameters.atmParameters.target2 = Math.round(
-                adjustedParameters.atmParameters.target2 * 1.05
-            );
-        } else if (newsImpact.sentiment === 'negative' && newsImpact.trendImpact < -0.5) {
-            // For bearish sentiment, slightly increase targets (for short trades)
-            adjustedParameters.flazhParameters.targetProfit = Math.round(
-                adjustedParameters.flazhParameters.targetProfit * 1.05
-            );
-            adjustedParameters.atmParameters.target2 = Math.round(
-                adjustedParameters.atmParameters.target2 * 1.05
-            );
-        }
-    }
-
-    // Enforce reasonable limits on parameter values
-    adjustedParameters.flazhParameters.stopLoss = enforceParameterLimits(
-        adjustedParameters.flazhParameters.stopLoss, parameters.flazhParameters.stopLoss, 0.7, 1.5
-    );
-
-    adjustedParameters.flazhParameters.targetProfit = enforceParameterLimits(
-        adjustedParameters.flazhParameters.targetProfit, parameters.flazhParameters.targetProfit, 0.7, 1.5
-    );
-
-    adjustedParameters.atmParameters.stopLoss = enforceParameterLimits(
-        adjustedParameters.atmParameters.stopLoss, parameters.atmParameters.stopLoss, 0.7, 1.5
-    );
-
-    adjustedParameters.atmParameters.target1 = enforceParameterLimits(
-        adjustedParameters.atmParameters.target1, parameters.atmParameters.target1, 0.7, 1.5
-    );
-
-    adjustedParameters.atmParameters.target2 = enforceParameterLimits(
-        adjustedParameters.atmParameters.target2, parameters.atmParameters.target2, 0.7, 1.5
-    );
-
-    return adjustedParameters;
-}
-
-/**
  * Enforce reasonable limits on parameter adjustments
  * @param {Number} value - Adjusted parameter value
  * @param {Number} originalValue - Original parameter value
@@ -415,11 +555,11 @@ function calculateFinalConfidence(parameterConfidence, newsConfidence, backtestC
         'low': 1
     };
 
-    // Calculate weighted average confidence with backtest results weighted highest
+    // ENHANCED LOGIC: Weighted more heavily toward backtest results
     let confidenceScore = (
-        confidenceValues[parameterConfidence] * 0.3 +
-        confidenceValues[newsConfidence] * 0.2 +
-        confidenceValues[backtestConfidence] * 0.5
+        confidenceValues[parameterConfidence] * 0.25 +
+        confidenceValues[newsConfidence] * 0.15 +
+        confidenceValues[backtestConfidence] * 0.6
     );
 
     // Convert back to text level
@@ -439,7 +579,7 @@ function calculateFinalConfidence(parameterConfidence, newsConfidence, backtestC
  * @returns {Array} - Formatted relevant news
  */
 function formatRelevantNews(news, newsImpact) {
-    // [This function remains the same as before]
+    // This function remains the same as in your original code
     if (!news || news.length === 0) {
         return [];
     }

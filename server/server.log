@@ -23,7 +23,7 @@ Alert Service initialized
 Initializing trading session service...
 Starting periodic health check every 5 minutes
 Performing initial session analysis...
-Initial health check: System is degraded
+Initial health check: System is operational
 Initial analysis for preMarket session completed
 Initial analysis for regularHours session completed
 Initial analysis for postMarket session completed
@@ -32,24 +32,10 @@ All services initialized successfully
 Market data saved to database
 Market data updated: NQ - Volatility: LOW
 Market data update emitted to clients
-Error checking for market data updates: SyntaxError: Unexpected end of JSON input
-    at JSON.parse (<anonymous>)
-    at checkForUpdates (C:\TradingDashboard\server\services\marketDataService.js:98:33)
-    at Timeout._onTimeout (C:\TradingDashboard\server\services\marketDataService.js:61:35)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Health check warning: System is warning
-Health check warning: System is degraded
-Health check warning: System is degraded
-Health check warning: System is warning
 Health check warning: System is degraded
 Health check warning: System is degraded
 Health check warning: System is warning
 Health check warning: System is degraded
 Health check warning: System is degraded
 Health check warning: System is degraded
-Health check warning: System is degraded
-Health check warning: System is degraded
+Health check warning: System is warning
