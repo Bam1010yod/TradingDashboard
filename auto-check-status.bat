@@ -117,6 +117,10 @@ echo - Before making changes to existing files, ask to see the current file cont
 echo - Review the current project structure and state before suggesting new implementations >> %TEMP_STATUS_FILE%
 echo - Suggest any necessary preparation steps before adding new features to avoid system errors >> %TEMP_STATUS_FILE%
 echo - Remember I am not even a novice coder, so explain concepts very simply and proceed carefully >> %TEMP_STATUS_FILE%
+echo - NEVER create code that bypasses MongoDB database access with mock data. The system must always use the real MongoDB database >> %TEMP_STATUS_FILE%
+echo - If MongoDB connection issues occur, focus on fixing the connection rather than implementing workarounds >> %TEMP_STATUS_FILE%
+echo - The MarketDataExporter indicator from NinjaTrader automatically writes data to a JSON file which is then read by the server and stored in MongoDB - maintain this flow in all modifications >> %TEMP_STATUS_FILE%
+echo - Any temporary mock data or bypass code for testing must be clearly marked and include instructions for removing it once the real data access is working >> %TEMP_STATUS_FILE%
 echo. >> %TEMP_STATUS_FILE%
 
 echo ## Post-Task Verification >> %TEMP_STATUS_FILE%
@@ -230,6 +234,24 @@ echo - MongoDB running locally at mongodb://localhost:27017/trading-dashboard >>
 echo - NinjaTrader with MarketDataExporter indicator installed >> %TEMP_STATUS_FILE%
 echo - MarketDataExporter writes to C:\NinjaTraderData\VolatilityMetrics.json >> %TEMP_STATUS_FILE%
 echo - Requires the database to be running for full functionality >> %TEMP_STATUS_FILE%
+echo. >> %TEMP_STATUS_FILE%
+
+echo ## System Data Flow >> %TEMP_STATUS_FILE%
+echo This project follows a specific data flow that must be maintained in all code modifications: >> %TEMP_STATUS_FILE%
+echo. >> %TEMP_STATUS_FILE%
+echo 1. **Data Collection**: NinjaTrader with MarketDataExporter indicator exports market data to `C:\NinjaTraderData\VolatilityMetrics.json` >> %TEMP_STATUS_FILE%
+echo. >> %TEMP_STATUS_FILE%
+echo 2. **Data Processing**: The server (`marketDataService.js`) reads this JSON file and processes the data >> %TEMP_STATUS_FILE%
+echo. >> %TEMP_STATUS_FILE%
+echo 3. **MongoDB Storage**: Processed data is stored in MongoDB collections (marketdatas, templates, etc.) >> %TEMP_STATUS_FILE%
+echo. >> %TEMP_STATUS_FILE%
+echo 4. **Template Selection**: When recommendations are needed: >> %TEMP_STATUS_FILE%
+echo    - Current market conditions are analyzed (`marketConditionsService.js`) >> %TEMP_STATUS_FILE%
+echo    - MongoDB is queried for matching templates (`enhancedTemplateSelector.js`)  >> %TEMP_STATUS_FILE%
+echo    - Best templates are selected based on similarity scoring >> %TEMP_STATUS_FILE%
+echo    - Recommendations are returned through API endpoints >> %TEMP_STATUS_FILE%
+echo. >> %TEMP_STATUS_FILE%
+echo This architecture allows the system to learn and improve over time based on historical data and performance. Any code changes must maintain this flow and never implement permanent bypass solutions that use mock data instead of real database access. >> %TEMP_STATUS_FILE%
 echo. >> %TEMP_STATUS_FILE%
 
 echo ## System Test Commands >> %TEMP_STATUS_FILE%

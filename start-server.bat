@@ -55,17 +55,17 @@ echo.
 echo Server logs will appear below. Press Ctrl+C to stop the server.
 echo.
 echo TIP: To test API endpoints, open a new command prompt and run:
-echo  curl http://localhost:3001/api/market-data
-echo  curl http://localhost:3001/api/prop-firm-rules
-echo  curl http://localhost:3001/api/market-news
-echo  curl http://localhost:3001/api/templates
-echo  curl http://localhost:3001/api/backtest
-echo  curl http://localhost:3001/api/risk/dashboard
-echo  curl http://localhost:3001/api/journal
-echo  curl http://localhost:3001/api/analytics/performance
-echo  curl http://localhost:3001/api/alerts
-echo  curl http://localhost:3001/api/health
-echo  curl http://localhost:3001/api/market-conditions
+echo  curl http://localhost:3008/api/market-data
+echo  curl http://localhost:3008/api/prop-firm-rules
+echo  curl http://localhost:3008/api/market-news
+echo  curl http://localhost:3008/api/templates
+echo  curl http://localhost:3008/api/backtest
+echo  curl http://localhost:3008/api/risk/dashboard
+echo  curl http://localhost:3008/api/journal
+echo  curl http://localhost:3008/api/analytics/performance
+echo  curl http://localhost:3008/api/alerts
+echo  curl http://localhost:3008/api/health
+echo  curl http://localhost:3008/api/market-conditions
 echo.
 echo ===================================
 echo.
@@ -79,20 +79,20 @@ echo Waiting for server to initialize...
 timeout /t 5 /nobreak > nul
 
 rem Test if server is running
-curl -s http://localhost:3001/api/health > nul
+curl -s http://localhost:3008/api/health > nul
 if %ERRORLEVEL% EQU 0 (
     color 2F
     echo ✓✓✓ SERVER STARTED SUCCESSFULLY ✓✓✓
     echo.
     echo All systems are running properly:
     echo - MongoDB connection established
-    echo - Web server listening on port 3001
+    echo - Web server listening on port 3008
     echo - Services initialized successfully
     echo.
     echo Your TradingDashboard system is ready!
     echo.
     echo Testing health status:
-    curl -s http://localhost:3001/api/health
+    curl -s http://localhost:3008/api/health
     echo.
     color 07
 ) else (
@@ -108,11 +108,11 @@ rem Run a quick health check
 echo.
 echo === Running System Health Check ===
 echo.
-curl -s http://localhost:3001/api/health
+curl -s http://localhost:3008/api/health
 echo.
 
 echo Browser interface URLs:
-echo - Market Conditions Analysis: http://localhost:3001/market-conditions.html
+echo - Market Conditions Analysis: http://localhost:3008/market-conditions.html
 echo.
 
 echo === Server Status Information ===

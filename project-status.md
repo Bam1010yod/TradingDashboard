@@ -1,5 +1,5 @@
 # TradingDashboard Project Status 
-Last updated: Sun 03/23/2025  9:07:17.55 
+Last updated: Sun 03/23/2025 11:25:09.40 
  
 ## Project Description 
 This is a trading system for recommending Flazh Infinity parameters and ATM settings based on market conditions for NinjaTrader 8, focusing on NQ futures. 
@@ -23,6 +23,10 @@ IMPORTANT - Please read these notes carefully before helping:
 - Review the current project structure and state before suggesting new implementations 
 - Suggest any necessary preparation steps before adding new features to avoid system errors 
 - Remember I am not even a novice coder, so explain concepts very simply and proceed carefully 
+- NEVER create code that bypasses MongoDB database access with mock data. The system must always use the real MongoDB database 
+- If MongoDB connection issues occur, focus on fixing the connection rather than implementing workarounds 
+- The MarketDataExporter indicator from NinjaTrader automatically writes data to a JSON file which is then read by the server and stored in MongoDB - maintain this flow in all modifications 
+- Any temporary mock data or bypass code for testing must be clearly marked and include instructions for removing it once the real data access is working 
  
 ## Post-Task Verification 
 For each completed task: 
@@ -73,6 +77,23 @@ The project is organized in a modular architecture with server components and in
 - MarketDataExporter writes to C:\NinjaTraderData\VolatilityMetrics.json 
 - Requires the database to be running for full functionality 
  
+## System Data Flow 
+This project follows a specific data flow that must be maintained in all code modifications: 
+ 
+1. **Data Collection**: NinjaTrader with MarketDataExporter indicator exports market data to `C:\NinjaTraderData\VolatilityMetrics.json` 
+ 
+2. **Data Processing**: The server (`marketDataService.js`) reads this JSON file and processes the data 
+ 
+3. **MongoDB Storage**: Processed data is stored in MongoDB collections (marketdatas, templates, etc.) 
+ 
+4. **Template Selection**: When recommendations are needed: 
+   - Current market conditions are analyzed (`marketConditionsService.js`) 
+   - MongoDB is queried for matching templates (`enhancedTemplateSelector.js`)  
+   - Best templates are selected based on similarity scoring 
+   - Recommendations are returned through API endpoints 
+ 
+This architecture allows the system to learn and improve over time based on historical data and performance. Any code changes must maintain this flow and never implement permanent bypass solutions that use mock data instead of real database access. 
+ 
 ## System Test Commands 
 ```text 
 # Start MongoDB (if not running as a service) 
@@ -113,12 +134,18 @@ curl http://localhost:3008/api/health
 ## Current Directory Structure 
 ```text 
 .env
+add-route-registration.js
 analysis
 backups
+check-routes.js
+check-server-config.js
+check-template-recommendations.js
+check-template-structure.js
 config
 directory_tree.txt
 docs
 import-all.js
+list-routes.js
 models
 node_modules
 package-lock.json
@@ -133,11 +160,13 @@ server.log
 services
 src
 test
+test-fixed-template-selection.js
 test-import.js
 test-import.js.bak
 test-import.js.original
 test-improved-backtest-analysis.js
 test-market-conditions.js
+test-mongo-connection.js
 test-ninja-import.js
 test-template-selection.js
 test-xml-import.js

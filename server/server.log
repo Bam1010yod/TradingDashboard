@@ -31,15 +31,23 @@ Initial analysis for regularHours session completed
 Initial analysis for postMarket session completed
 Initial analysis for overnight session completed
 All services initialized successfully
+[2025-03-23T20:49:41.277Z] GET /api/health
+[2025-03-23T20:49:41.304Z] GET /api/health
+[2025-03-23T20:49:41.331Z] GET /api/health
 Market data saved to database
 Market data updated: NQ - Volatility: LOW
 Market data update emitted to clients
-[2025-03-23T15:37:33.756Z] GET /api/template-recommendations/Flazh
-Getting template recommendations for type: Flazh
+[2025-03-23T20:51:05.789Z] GET /api/market-conditions
+Market conditions endpoint hit
+Calling analyzeMarketConditions()
+Market conditions analysis result: {"success":true,"currentTime":"2025-03-23T20:51:05.791Z","session":"US_AFTERNOON","volatility":"MEDI...
+[2025-03-23T20:51:37.764Z] GET /api/template-recommendations
+Getting template recommendations for all templates
 Current market conditions: {
-  currentTime: '2025-03-23T15:37:33.758Z',
-  currentSession: 'US_MIDDAY',
-  volatilityCategory: 'MEDIUM_VOLATILITY',
+  success: true,
+  currentTime: '2025-03-23T20:51:37.767Z',
+  session: 'US_AFTERNOON',
+  volatility: 'MEDIUM_VOLATILITY',
   volatilityData: {
     timestamp: '2025-03-23T07:55:59.0798891-05:00',
     symbol: 'NQ',
@@ -50,10 +58,10 @@ Current market conditions: {
   },
   recommendations: {
     sessionInfo: {
-      name: 'US Midday',
+      name: 'US Afternoon',
       timeRange: [Object],
-      typicalVolatility: 'medium',
-      typicalVolume: 'medium',
+      typicalVolatility: 'medium-high',
+      typicalVolume: 'medium-high',
       noteableFeatures: [Array]
     },
     flazhParams: {
@@ -72,14 +80,27 @@ Current market conditions: {
       AutoBreakEvenProfitTrigger: 21,
       AutoBreakEvenPlus: 10
     },
-    timestamp: '2025-03-23T15:37:33.758Z',
-    rationale: 'Parameters optimized for US Midday with medium volatility'
-  }
+    timestamp: '2025-03-23T20:51:37.767Z',
+    rationale: 'Parameters optimized for US Afternoon with medium volatility'
+  },
+  isMockData: false
 }
-Selecting FLAZH template with enhanced market regime detection
-Market conditions: Session=US_MIDDAY, Volatility=MEDIUM_VOLATILITY
-Found 1 FLAZH templates to evaluate
+Selecting ATM template with enhanced market regime detection
+Market conditions: Session=undefined, Volatility=undefined
+Found 9 ATM templates to evaluate
+Top matching templates:
+1. ATM_EA_LOW (Score: 20)
+2. ATM_EA_HIGH (Score: 20)
+3. ATM_EA_MED (Score: 20)
+No template with good similarity found, using first template as fallback
+Selecting Flazh template with enhanced market regime detection
+Market conditions: Session=undefined, Volatility=undefined
+Found 9 Flazh templates to evaluate
 Top matching templates:
 1. Flazh_EA_LOW (Score: 20)
+2. Flazh_EA_HIGH (Score: 20)
+3. Flazh_EA_MED (Score: 20)
 No template with good similarity found, using first template as fallback
+ATM template found: ATM_EA_LOW
 Flazh template found: Flazh_EA_LOW
+Health check warning: System is degraded
