@@ -2,6 +2,7 @@
 > server@1.0.0 start
 > node server.js
 
+Attempting to connect to MongoDB at: mongodb://localhost:27017/trading-dashboard
 Initializing Market Data Service...
 MarketData model created
 Market data polling started (interval: 5000ms)
@@ -11,6 +12,7 @@ Initializing Prop Firm Service...
 PropFirmRules model created
 Updating prop firm rules (using mock data)...
 MongoDB connected: localhost
+Available collections: flazhinfinities, atmstrategies, marketdatas, performancerecords, marketnews, alerts, propfirmrules, sessionanalyses, riskprofiles, flazhtemplates, tradejournals, atmtemplates, templates, backtests
 Rules saved for ApexTraderFunding
 Rules saved for TakeProfitTrader
 Prop firm rules updated successfully
@@ -32,84 +34,52 @@ All services initialized successfully
 Market data saved to database
 Market data updated: NQ - Volatility: LOW
 Market data update emitted to clients
-Health check warning: System is degraded
-Health check warning: System is degraded
-Health check warning: System is warning
-Health check warning: System is degraded
-Health check warning: System is degraded
-Health check warning: System is degraded
-Health check warning: System is warning
-Health check warning: System is degraded
-Health check warning: System is warning
-Health check warning: System is warning
-Health check warning: System is degraded
-Health check warning: System is degraded
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Error checking for market data updates: SyntaxError: Unexpected end of JSON input
-    at JSON.parse (<anonymous>)
-    at checkForUpdates (C:\TradingDashboard\server\services\marketDataService.js:98:33)
-    at Timeout._onTimeout (C:\TradingDashboard\server\services\marketDataService.js:61:35)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Error checking for market data updates: SyntaxError: Unexpected end of JSON input
-    at JSON.parse (<anonymous>)
-    at checkForUpdates (C:\TradingDashboard\server\services\marketDataService.js:98:33)
-    at Timeout._onTimeout (C:\TradingDashboard\server\services\marketDataService.js:61:35)
-    at listOnTimeout (node:internal/timers:594:17)
-    at process.processTimers (node:internal/timers:529:7)
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-Health check warning: System is degraded
-Health check warning: System is degraded
-Health check warning: System is warning
+[2025-03-23T15:37:33.756Z] GET /api/template-recommendations/Flazh
+Getting template recommendations for type: Flazh
+Current market conditions: {
+  currentTime: '2025-03-23T15:37:33.758Z',
+  currentSession: 'US_MIDDAY',
+  volatilityCategory: 'MEDIUM_VOLATILITY',
+  volatilityData: {
+    timestamp: '2025-03-23T07:55:59.0798891-05:00',
+    symbol: 'NQ',
+    atr: 2.75564602906469,
+    overnightRange: 0.25,
+    volatilityScore: 0.0748903068253079,
+    volatilityLevel: 'LOW'
+  },
+  recommendations: {
+    sessionInfo: {
+      name: 'US Midday',
+      timeRange: [Object],
+      typicalVolatility: 'medium',
+      typicalVolume: 'medium',
+      noteableFeatures: [Array]
+    },
+    flazhParams: {
+      FastPeriod: 21,
+      FastRange: 3,
+      MediumPeriod: 41,
+      MediumRange: 4,
+      SlowPeriod: 70,
+      SlowRange: 5,
+      FilterMultiplier: 10,
+      MinRetracementPercent: 40
+    },
+    atmParams: {
+      StopLoss: 21,
+      Target: 42,
+      AutoBreakEvenProfitTrigger: 21,
+      AutoBreakEvenPlus: 10
+    },
+    timestamp: '2025-03-23T15:37:33.758Z',
+    rationale: 'Parameters optimized for US Midday with medium volatility'
+  }
+}
+Selecting FLAZH template with enhanced market regime detection
+Market conditions: Session=US_MIDDAY, Volatility=MEDIUM_VOLATILITY
+Found 1 FLAZH templates to evaluate
+Top matching templates:
+1. Flazh_EA_LOW (Score: 20)
+No template with good similarity found, using first template as fallback
+Flazh template found: Flazh_EA_LOW

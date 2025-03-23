@@ -1,29 +1,92 @@
-// C:\TradingDashboard\server\routes\templateRecommendations.js
-const express = require('express');
+// C:\TradingDashboard\server\add-route-registration.js
+const fs = require('fs');
+const path = require('path');
+
+// Function to update server.js to register the route
+const addRouteRegistration = () => {
+    try {
+        const serverFilePath = path.join(__dirname, 'server.js');
+
+        if (!fs.existsSync(serverFilePath)) {
+            console.error(`Main server file not found: ${serverFilePath}`);
+            return;
+        }
+
+        // Read the current server.js content
+        let serverContent = fs.readFileSync(serverFilePath, 'utf8');
+
+        // Check if templateRecommendations route is already registered
+        if (serverContent.includes('templateRecommendations')) {
+            console.log('templateRecommendations route is already registered in server.js');
+            return;
+        }
+
+        // Find where routes are registered
+        const routeRegistrationSection = serverContent.match(/\/\/ API Routes[\s\S]*?app\.use\(['"]\/api\/[^'"]+['"]/m);
+
+        if (!routeRegistrationSection) {
+            console.error('Could not find route registration section in server.js');
+            return;
+        }
+
+        // Insert our new route registration
+        const lastRoute = routeRegistrationSection[0];
+        const updatedContent = serverContent.replace(
+            lastRoute,
+            `${lastRoute}\n\n// Template Recommendations Route\napp.use('/api/templateRecommendations', require('./routes/templateRecommendations'));`
+        );
+
+        // Backup the original file
+        const backupPath = `${serverFilePath}.bak.${Date.now()}`;
+        fs.writeFileSync(backupPath, serverContent);
+        console.log(`Backed up original server.js to ${backupPath}`);
+
+        // Write the updated content
+        fs.writeFileSync(serverFilePath, updatedContent);
+        console.log('Updated server.js to register templateRecommendations route');
+
+    } catch (error) {
+        console.error(`Error updating server file: ${error.message}`);
+    }
+};
+
+// Create the templateRecommendations.js file if it doesn't exist
+const ensureTemplateRecommendationsFile = () => {
+    const filePath = path.join(__dirname, 'routes', 'templateRecommendations.js');
+
+    // Check if file already exists
+    if (fs.existsSync(filePath)) {
+        console.log('templateRecommendations.js already exists');
+        return;
+    }
+
+    // Create the routes directory if it doesn't exist
+    const routesDir = path.join(__dirname, 'routes');
+    if (!fs.existsSync(routesDir)) {
+        fs.mkdirSync(routesDir);
+        console.log('Created routes directory');
+    }
+
+    // Template for the route file
+    const routeContent = `const express = require('express');
 const router = express.Router();
 const enhancedTemplateSelector = require('../services/enhancedTemplateSelector');
 const marketConditionsService = require('../services/marketConditionsService');
 
 /**
- * @route   GET /api/template-recommendations
+ * @route   GET /api/templateRecommendations
  * @desc    Get template recommendations based on current market conditions
  * @access  Public
  */
 router.get('/', async (req, res) => {
     try {
-        console.log('Getting template recommendations for all templates');
-
         // Get current market conditions
         const marketConditions = marketConditionsService.analyzeMarketConditions();
-        console.log('Current market conditions:', marketConditions);
-
+        
         // Get recommendations for both ATM and Flazh templates
         const atmTemplate = await enhancedTemplateSelector.getRecommendedTemplate('ATM');
         const flazhTemplate = await enhancedTemplateSelector.getRecommendedTemplate('Flazh');
-
-        console.log('ATM template found:', atmTemplate ? atmTemplate.name : 'None');
-        console.log('Flazh template found:', flazhTemplate ? flazhTemplate.name : 'None');
-
+        
         // Return recommendations
         res.json({
             success: true,
@@ -61,36 +124,33 @@ router.get('/', async (req, res) => {
 });
 
 /**
- * @route   GET /api/template-recommendations/:type
+ * @route   GET /api/templateRecommendations/:type
  * @desc    Get recommendations for a specific template type
  * @access  Public
  */
 router.get('/:type', async (req, res) => {
     try {
         const { type } = req.params;
-        console.log(`Getting template recommendations for type: ${type}`);
-
-        // Validate template type (fixed to use lowercase comparison)
-        if (!['atm', 'flazh'].includes(type.toLowerCase())) {
+        
+        // Validate template type
+        if (!['ATM', 'Flazh'].includes(type.toUpperCase())) {
             return res.status(400).json({
                 success: false,
-                message: `Invalid template type: ${type}`,
+                message: \`Invalid template type: \${type}\`,
                 error: 'Template type must be either ATM or Flazh'
             });
         }
-
+        
         // Get current market conditions
         const marketConditions = marketConditionsService.analyzeMarketConditions();
-        console.log('Current market conditions:', marketConditions);
-
+        
         // Get recommendation for the specified template type
         const template = await enhancedTemplateSelector.getRecommendedTemplate(type.toUpperCase());
-        console.log(`${type} template found:`, template ? template.name : 'None');
-
+        
         // Return the recommendation
         if (template) {
             let templateData;
-
+            
             if (type.toUpperCase() === 'ATM') {
                 templateData = {
                     name: template.name,
@@ -109,7 +169,7 @@ router.get('/:type', async (req, res) => {
                     filterMultiplier: template.filterMultiplier
                 };
             }
-
+            
             res.json({
                 success: true,
                 marketConditions: {
@@ -122,7 +182,7 @@ router.get('/:type', async (req, res) => {
         } else {
             res.status(404).json({
                 success: false,
-                message: `No ${type} template found for current market conditions`,
+                message: \`No \${type} template found for current market conditions\`,
                 marketConditions: {
                     session: marketConditions.currentSession,
                     volatility: marketConditions.volatilityCategory
@@ -130,25 +190,24 @@ router.get('/:type', async (req, res) => {
             });
         }
     } catch (error) {
-        console.error(`Error getting ${req.params.type} template recommendation:`, error);
+        console.error(\`Error getting \${req.params.type} template recommendation:\`, error);
         res.status(500).json({
             success: false,
-            message: `Error getting ${req.params.type} template recommendation`,
+            message: \`Error getting \${req.params.type} template recommendation\`,
             error: error.message
         });
     }
 });
 
 /**
- * @route   POST /api/template-recommendations/custom
+ * @route   POST /api/templateRecommendations/custom
  * @desc    Get template recommendations based on custom market conditions
  * @access  Public
  */
 router.post('/custom', async (req, res) => {
     try {
         const { session, volatility, templateType } = req.body;
-        console.log(`Getting custom template recommendations: Session=${session}, Volatility=${volatility}, Type=${templateType}`);
-
+        
         // Validate required fields
         if (!session || !volatility || !templateType) {
             return res.status(400).json({
@@ -157,35 +216,33 @@ router.post('/custom', async (req, res) => {
                 error: 'Please provide session, volatility, and templateType'
             });
         }
-
-        // Validate template type (fixed variable name and using lowercase comparison)
-        if (!['atm', 'flazh'].includes(templateType.toLowerCase())) {
+        
+        // Validate template type
+        if (!['ATM', 'Flazh'].includes(templateType.toUpperCase())) {
             return res.status(400).json({
                 success: false,
-                message: `Invalid template type: ${templateType}`,
+                message: \`Invalid template type: \${templateType}\`,
                 error: 'Template type must be either ATM or Flazh'
             });
         }
-
+        
         // Create custom market conditions
         const customConditions = {
             currentSession: session,
             volatilityCategory: volatility,
             currentTime: new Date().toISOString()
         };
-
+        
         // Get recommendation based on custom conditions
         const template = await enhancedTemplateSelector.getRecommendedTemplate(
             templateType.toUpperCase(),
             customConditions
         );
-
-        console.log(`Template found for custom conditions:`, template ? template.name : 'None');
-
+        
         // Return the recommendation
         if (template) {
             let templateData;
-
+            
             if (templateType.toUpperCase() === 'ATM') {
                 templateData = {
                     name: template.name,
@@ -204,7 +261,7 @@ router.post('/custom', async (req, res) => {
                     filterMultiplier: template.filterMultiplier
                 };
             }
-
+            
             res.json({
                 success: true,
                 marketConditions: customConditions,
@@ -213,7 +270,7 @@ router.post('/custom', async (req, res) => {
         } else {
             res.status(404).json({
                 success: false,
-                message: `No ${templateType} template found for specified market conditions`,
+                message: \`No \${templateType} template found for specified market conditions\`,
                 marketConditions: customConditions
             });
         }
@@ -227,4 +284,15 @@ router.post('/custom', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = router;`;
+
+    // Write the file
+    fs.writeFileSync(filePath, routeContent);
+    console.log('Created templateRecommendations.js route file');
+};
+
+// Execute the functions
+ensureTemplateRecommendationsFile();
+addRouteRegistration();
+
+console.log('\nCompleted! Now restart your server with "npm start" to apply the changes.');
