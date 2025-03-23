@@ -1,289 +1,119 @@
 // Full path: C:\TradingDashboard\server\services\marketConditionsService.js
 
-const fs = require('fs');
-const path = require('path');
+const logger = require('../utils/logger');
+const FlazhTemplate = require('../models/flazhTemplate');
+const AtmTemplate = require('../models/atmTemplate');
 
-// Define trading sessions and their typical characteristics
-const TRADING_SESSIONS = {
-    ASIA: {
-        name: 'Asian Session',
-        timeRange: { start: '19:00:00', end: '03:00:00' }, // EST
-        typicalVolatility: 'low',
-        typicalVolume: 'low',
-        noteableFeatures: ['Range-bound often', 'Key levels established', 'Slower pace']
-    },
-    EUROPE: {
-        name: 'European Session',
-        timeRange: { start: '03:00:00', end: '08:00:00' }, // EST
-        typicalVolatility: 'medium',
-        typicalVolume: 'medium',
-        noteableFeatures: ['Increasing activity', 'Reaction to Asian session', 'Economic releases']
-    },
-    US_OPEN: {
-        name: 'US Opening',
-        timeRange: { start: '08:00:00', end: '10:00:00' }, // EST
-        typicalVolatility: 'high',
-        typicalVolume: 'high',
-        noteableFeatures: ['High momentum', 'Directional moves', 'Quick reactions to news']
-    },
-    US_MIDDAY: {
-        name: 'US Midday',
-        timeRange: { start: '10:00:00', end: '14:00:00' }, // EST
-        typicalVolatility: 'medium',
-        typicalVolume: 'medium',
-        noteableFeatures: ['Consolidation period', 'Lunch hour slowdown', 'Range-finding']
-    },
-    US_AFTERNOON: {
-        name: 'US Afternoon',
-        timeRange: { start: '14:00:00', end: '16:00:00' }, // EST
-        typicalVolatility: 'medium-high',
-        typicalVolume: 'medium-high',
-        noteableFeatures: ['Position squaring', 'Late day momentum', 'Closing trends']
-    },
-    OVERNIGHT: {
-        name: 'Overnight',
-        timeRange: { start: '16:00:00', end: '19:00:00' }, // EST
-        typicalVolatility: 'low',
-        typicalVolume: 'low',
-        noteableFeatures: ['Thinner markets', 'Can be choppy', 'Often retraces day session']
-    }
-};
+/**
+ * Service for handling market conditions and parameter recommendations
+ */
+class MarketConditionsService {
+    /**
+     * Get current market conditions based on time and volatility
+     * @returns {Promise<Object>} Current market conditions and recommendations
+     */
+    async getCurrentConditions() {
+        try {
+            // Determine current session based on time
+            const now = new Date();
+            const hour = now.getUTCHours();
 
-// Parameter adjustments based on market conditions
-const PARAMETER_ADJUSTMENTS = {
-    HIGH_VOLATILITY: {
-        flazh: {
-            FastPeriod: 14,      // Shorter for quicker response
-            FastRange: 4,
-            MediumPeriod: 28,
-            MediumRange: 5,
-            SlowPeriod: 50,
-            SlowRange: 6,
-            FilterMultiplier: 15, // Higher to filter more noise
-            MinRetracementPercent: 50, // Require deeper retracements
-        },
-        atm: {
-            StopLoss: 28,        // Wider to handle swings
-            Target: 56,          // 2:1 ratio maintained
-            AutoBreakEvenProfitTrigger: 28,
-            AutoBreakEvenPlus: 15,
-        }
-    },
-    MEDIUM_VOLATILITY: {
-        flazh: {
-            FastPeriod: 21,
-            FastRange: 3,
-            MediumPeriod: 41,
-            MediumRange: 4,
-            SlowPeriod: 70,
-            SlowRange: 5,
-            FilterMultiplier: 10,
-            MinRetracementPercent: 40,
-        },
-        atm: {
-            StopLoss: 21,
-            Target: 42,
-            AutoBreakEvenProfitTrigger: 21,
-            AutoBreakEvenPlus: 10,
-        }
-    },
-    LOW_VOLATILITY: {
-        flazh: {
-            FastPeriod: 28,      // Longer for steadier signals
-            FastRange: 2,
-            MediumPeriod: 55,
-            MediumRange: 3,
-            SlowPeriod: 89,
-            SlowRange: 4,
-            FilterMultiplier: 8,  // Lower for less filtering
-            MinRetracementPercent: 30, // Accept shallower retracements
-        },
-        atm: {
-            StopLoss: 14,        // Tighter stop to preserve capital
-            Target: 28,          // 2:1 ratio maintained
-            AutoBreakEvenProfitTrigger: 14,
-            AutoBreakEvenPlus: 7,
-        }
-    }
-};
-
-// Function to identify current trading session
-function getCurrentSession(timeStr = null) {
-    // Use provided time or current time
-    const now = timeStr ? new Date(`2025-01-01T${timeStr}`) : new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const timeInHHMM = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:00`;
-
-    // Determine which session we're in
-    for (const [sessionKey, session] of Object.entries(TRADING_SESSIONS)) {
-        // Handle overnight session that crosses midnight
-        if (sessionKey === 'ASIA' &&
-            ((timeInHHMM >= session.timeRange.start) || (timeInHHMM < session.timeRange.end))) {
-            return sessionKey;
-        }
-        // Handle normal sessions
-        else if (timeInHHMM >= session.timeRange.start && timeInHHMM < session.timeRange.end) {
-            return sessionKey;
-        }
-    }
-    return 'UNKNOWN';
-}
-
-// Function to analyze volatility from NinjaTrader exported data
-function analyzeVolatility(volatilityData) {
-    // Default to medium if no data available
-    if (!volatilityData || !volatilityData.metrics || volatilityData.metrics.length === 0) {
-        return 'MEDIUM_VOLATILITY';
-    }
-
-    // Extract relevant metrics
-    const atr = volatilityData.metrics.find(m => m.name === 'ATR');
-    const volume = volatilityData.metrics.find(m => m.name === 'Volume');
-    const range = volatilityData.metrics.find(m => m.name === 'Range');
-
-    // Simple scoring system based on ATR and volume
-    let volatilityScore = 0;
-
-    if (atr) {
-        const atrValue = atr.value;
-        const atrAvg = atr.average;
-
-        if (atrValue > atrAvg * 1.5) volatilityScore += 2;
-        else if (atrValue > atrAvg * 1.1) volatilityScore += 1;
-        else if (atrValue < atrAvg * 0.7) volatilityScore -= 2;
-        else if (atrValue < atrAvg * 0.9) volatilityScore -= 1;
-    }
-
-    if (volume) {
-        const volumeValue = volume.value;
-        const volumeAvg = volume.average;
-
-        if (volumeValue > volumeAvg * 1.5) volatilityScore += 2;
-        else if (volumeValue > volumeAvg * 1.1) volatilityScore += 1;
-        else if (volumeValue < volumeAvg * 0.7) volatilityScore -= 2;
-        else if (volumeValue < volumeAvg * 0.9) volatilityScore -= 1;
-    }
-
-    // Determine volatility category based on score
-    if (volatilityScore >= 2) return 'HIGH_VOLATILITY';
-    else if (volatilityScore <= -2) return 'LOW_VOLATILITY';
-    else return 'MEDIUM_VOLATILITY';
-}
-
-// Function to get recommended parameters based on current conditions
-function getRecommendedParameters(session, volatilityCategory) {
-    // Default to US_MIDDAY if session is UNKNOWN
-    const safeSession = (session === 'UNKNOWN') ? 'US_MIDDAY' : session;
-    const sessionInfo = TRADING_SESSIONS[safeSession];
-
-    // Default to MEDIUM_VOLATILITY if volatilityCategory is invalid
-    const safeVolatility = PARAMETER_ADJUSTMENTS[volatilityCategory] ?
-        volatilityCategory : 'MEDIUM_VOLATILITY';
-    const volatilityParams = PARAMETER_ADJUSTMENTS[safeVolatility];
-
-    return {
-        sessionInfo,
-        flazhParams: volatilityParams.flazh,
-        atmParams: volatilityParams.atm,
-        timestamp: new Date().toISOString(),
-        rationale: `Parameters optimized for ${sessionInfo.name} with ${safeVolatility.toLowerCase().replace('_', ' ')}`
-    };
-}
-
-// Function to read volatility data from NinjaTrader output
-function getVolatilityData() {
-    try {
-        const volatilityFile = path.resolve('C:\\NinjaTraderData\\VolatilityMetrics.json');
-        if (fs.existsSync(volatilityFile)) {
-            const rawData = fs.readFileSync(volatilityFile, 'utf8');
-            try {
-                return JSON.parse(rawData);
-            } catch (parseError) {
-                console.error('Error parsing volatility metrics file:', parseError.message);
-                return createDefaultVolatilityData();
+            // Simple mapping of hours to sessions (adjust as needed for your timezone)
+            let currentSession;
+            if (hour >= 1 && hour < 8) {
+                currentSession = "ASIA";
+            } else if (hour >= 8 && hour < 13) {
+                currentSession = "EUROPE";
+            } else if (hour >= 13 && hour < 15) {
+                currentSession = "US_OPEN";
+            } else if (hour >= 15 && hour < 18) {
+                currentSession = "US_MIDDAY";
+            } else if (hour >= 18 && hour < 21) {
+                currentSession = "US_AFTERNOON";
+            } else {
+                currentSession = "OVERNIGHT";
             }
-        } else {
-            console.log('Volatility metrics file not found, using mock data');
-            return createDefaultVolatilityData();
+
+            // For demo purposes, setting a fixed volatility
+            // In a real system, this would be determined from market data
+            const volatilityCategory = "MEDIUM_VOLATILITY";
+
+            // Get recommendations based on current conditions
+            const recommendations = await this.getParametersForConditions(currentSession, volatilityCategory);
+
+            return {
+                currentSession,
+                volatilityCategory,
+                currentTime: now.toISOString(),
+                recommendations
+            };
+        } catch (error) {
+            logger.error(`Error determining current market conditions: ${error.message}`);
+            throw error;
         }
-    } catch (error) {
-        console.error('Error reading volatility metrics:', error.message);
-        return createDefaultVolatilityData();
+    }
+
+    /**
+     * Get parameters for specific market conditions
+     * @param {string} session - Market session (e.g., "US_OPEN")
+     * @param {string} volatility - Volatility level (e.g., "MEDIUM_VOLATILITY")
+     * @returns {Promise<Object>} Parameters for Flazh and ATM
+     */
+    async getParametersForConditions(session, volatility) {
+        try {
+            logger.info(`Finding parameters for session: ${session}, volatility: ${volatility}`);
+
+            // Get session information
+            const sessionInfo = this.getSessionInfo(session);
+
+            // Format the parameters to return
+            // These are simplified parameters for the UI display
+            // In a real implementation, these would be pulled from database
+            const flazhParams = {
+                FastPeriod: 21,
+                FastRange: 3,
+                MediumPeriod: 41,
+                MediumRange: 4,
+                SlowPeriod: 70,
+                SlowRange: 5
+            };
+
+            const atmParams = {
+                StopLoss: 21,
+                Target: 42,
+                AutoBreakEvenProfitTrigger: 21,
+                AutoBreakEvenPlus: 10
+            };
+
+            return {
+                success: true,
+                sessionInfo,
+                flazhParams,
+                atmParams
+            };
+        } catch (error) {
+            logger.error(`Error getting parameters for conditions: ${error.message}`);
+            throw new Error(`Error loading parameters for selected session and volatility: ${error.message}`);
+        }
+    }
+
+    /**
+     * Get session information
+     * @param {string} session - Session code
+     * @returns {Object} Session information
+     */
+    getSessionInfo(session) {
+        const sessionMap = {
+            "ASIA": { name: "Asian Session", startTime: "21:00", endTime: "04:00" },
+            "EUROPE": { name: "European Session", startTime: "03:00", endTime: "08:00" },
+            "US_OPEN": { name: "US Opening", startTime: "08:00", endTime: "10:00" },
+            "US_MIDDAY": { name: "US Midday", startTime: "10:00", endTime: "13:00" },
+            "US_AFTERNOON": { name: "US Afternoon", startTime: "13:00", endTime: "16:00" },
+            "OVERNIGHT": { name: "Overnight", startTime: "16:00", endTime: "21:00" }
+        };
+
+        return sessionMap[session] || { name: "Unknown Session", startTime: "00:00", endTime: "00:00" };
     }
 }
 
-// Function to create default volatility data
-function createDefaultVolatilityData() {
-    return {
-        symbol: 'NQ',
-        timeframe: 'M1',
-        timestamp: new Date().toISOString(),
-        metrics: [
-            {
-                name: 'ATR',
-                value: 15.5,
-                average: 15.0,
-                description: 'Average True Range'
-            },
-            {
-                name: 'Volume',
-                value: 1000,
-                average: 1000,
-                description: 'Trading Volume'
-            },
-            {
-                name: 'Range',
-                value: 24.8,
-                average: 25.0,
-                description: 'Price Range'
-            }
-        ],
-        isMockData: true
-    };
-}
-
-// Main function to analyze current market conditions
-function analyzeMarketConditions() {
-    try {
-        // Get current session
-        const currentSession = getCurrentSession();
-
-        // Get volatility data and analyze
-        const volatilityData = getVolatilityData();
-        const volatilityCategory = analyzeVolatility(volatilityData);
-
-        // Get recommended parameters
-        const recommendations = getRecommendedParameters(currentSession, volatilityCategory);
-
-        return {
-            success: true,
-            currentTime: new Date().toISOString(),
-            session: currentSession,
-            volatility: volatilityCategory,
-            volatilityData: volatilityData,
-            recommendations: recommendations,
-            isMockData: volatilityData.isMockData || false
-        };
-    } catch (error) {
-        console.error('Error analyzing market conditions:', error);
-        // Return a minimal response with fallback data
-        return {
-            success: true,  // Changed to true so client still gets data
-            session: getCurrentSession(),
-            volatility: 'MEDIUM_VOLATILITY',
-            isFallback: true,
-            currentTime: new Date().toISOString(),
-            recommendations: getRecommendedParameters('US_MIDDAY', 'MEDIUM_VOLATILITY')
-        };
-    }
-}
-
-module.exports = {
-    analyzeMarketConditions,
-    getCurrentSession,
-    analyzeVolatility,
-    getRecommendedParameters,
-    TRADING_SESSIONS,
-    PARAMETER_ADJUSTMENTS
-};
+module.exports = new MarketConditionsService();

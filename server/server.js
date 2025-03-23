@@ -35,6 +35,7 @@ const marketNewsRoutes = require('./routes/marketNews');
 const marketConditionsRoutes = require('./routes/marketConditions'); // Add this line
 const tradingSessionRoutes = require('./routes/tradingSession');
 const templateRecommendationsRouter = require('./routes/templateRecommendations');
+const ninjaTraderIntegrationRoutes = require('./routes/ninjaTraderIntegration');
 
 // Initialize Express app
 const app = express();
@@ -77,6 +78,7 @@ app.use('/api/templates', templateRoutes);
 app.use('/api/market-conditions', marketConditionsRoutes); // Add this line
 app.use('/api/session', tradingSessionRoutes);
 app.use('/api/template-recommendations', templateRecommendationsRouter);
+app.use('/api/ninja-trader', ninjaTraderIntegrationRoutes);
 
 // Home route
 app.get('/', (req, res) => {

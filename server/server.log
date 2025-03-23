@@ -31,76 +31,22 @@ Initial analysis for regularHours session completed
 Initial analysis for postMarket session completed
 Initial analysis for overnight session completed
 All services initialized successfully
-[2025-03-23T20:49:41.277Z] GET /api/health
-[2025-03-23T20:49:41.304Z] GET /api/health
-[2025-03-23T20:49:41.331Z] GET /api/health
+[2025-03-23T21:56:09.186Z] GET /api/health
+[2025-03-23T21:56:09.214Z] GET /api/health
+[2025-03-23T21:56:09.243Z] GET /api/health
 Market data saved to database
 Market data updated: NQ - Volatility: LOW
 Market data update emitted to clients
-[2025-03-23T20:51:05.789Z] GET /api/market-conditions
-Market conditions endpoint hit
-Calling analyzeMarketConditions()
-Market conditions analysis result: {"success":true,"currentTime":"2025-03-23T20:51:05.791Z","session":"US_AFTERNOON","volatility":"MEDI...
-[2025-03-23T20:51:37.764Z] GET /api/template-recommendations
-Getting template recommendations for all templates
-Current market conditions: {
-  success: true,
-  currentTime: '2025-03-23T20:51:37.767Z',
-  session: 'US_AFTERNOON',
-  volatility: 'MEDIUM_VOLATILITY',
-  volatilityData: {
-    timestamp: '2025-03-23T07:55:59.0798891-05:00',
-    symbol: 'NQ',
-    atr: 2.75564602906469,
-    overnightRange: 0.25,
-    volatilityScore: 0.0748903068253079,
-    volatilityLevel: 'LOW'
-  },
-  recommendations: {
-    sessionInfo: {
-      name: 'US Afternoon',
-      timeRange: [Object],
-      typicalVolatility: 'medium-high',
-      typicalVolume: 'medium-high',
-      noteableFeatures: [Array]
-    },
-    flazhParams: {
-      FastPeriod: 21,
-      FastRange: 3,
-      MediumPeriod: 41,
-      MediumRange: 4,
-      SlowPeriod: 70,
-      SlowRange: 5,
-      FilterMultiplier: 10,
-      MinRetracementPercent: 40
-    },
-    atmParams: {
-      StopLoss: 21,
-      Target: 42,
-      AutoBreakEvenProfitTrigger: 21,
-      AutoBreakEvenPlus: 10
-    },
-    timestamp: '2025-03-23T20:51:37.767Z',
-    rationale: 'Parameters optimized for US Afternoon with medium volatility'
-  },
-  isMockData: false
-}
-Selecting ATM template with enhanced market regime detection
-Market conditions: Session=undefined, Volatility=undefined
-Found 9 ATM templates to evaluate
-Top matching templates:
-1. ATM_EA_LOW (Score: 20)
-2. ATM_EA_HIGH (Score: 20)
-3. ATM_EA_MED (Score: 20)
-No template with good similarity found, using first template as fallback
-Selecting Flazh template with enhanced market regime detection
-Market conditions: Session=undefined, Volatility=undefined
-Found 9 Flazh templates to evaluate
-Top matching templates:
-1. Flazh_EA_LOW (Score: 20)
-2. Flazh_EA_HIGH (Score: 20)
-3. Flazh_EA_MED (Score: 20)
-No template with good similarity found, using first template as fallback
-ATM template found: ATM_EA_LOW
-Flazh template found: Flazh_EA_LOW
-Health check warning: System is degraded
+[2025-03-23T21:56:18.526Z] GET /market-conditions.html
+[2025-03-23T21:56:18.557Z] GET /api/market-conditions
+[2025-03-23T21:56:18.558Z] [INFO] Finding parameters for session: OVERNIGHT, volatility: MEDIUM_VOLATILITY
+[2025-03-23T21:56:34.780Z] GET /api/market-conditions/parameters/OVERNIGHT/MEDIUM_VOLATILITY
+[2025-03-23T21:56:34.789Z] POST /api/ninja-trader/apply-settings
+[2025-03-23T21:56:34.790Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-23T21:56:34.791Z] [DEBUG] Flazh parameters: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"MEDIUM_VOLATILITY"}
+[2025-03-23T21:56:34.791Z] [DEBUG] ATM parameters: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"MEDIUM_VOLATILITY"}
+[2025-03-23T21:56:34.793Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: MEDIUM_VOLATILITY
+[2025-03-23T21:56:34.793Z] [INFO] Finding parameters for session: OVERNIGHT, volatility: MEDIUM_VOLATILITY
+[2025-03-23T21:56:34.797Z] [INFO] Flazh parameters written to C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Flazh_OVERNIGHT_MEDIUM_VOLATILITY.xml
+[2025-03-23T21:56:34.800Z] [INFO] ATM parameters written to C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\ATM_OVERNIGHT_MEDIUM_VOLATILITY.xml
+[2025-03-23T21:56:34.801Z] [INFO] Successfully applied settings to NinjaTrader

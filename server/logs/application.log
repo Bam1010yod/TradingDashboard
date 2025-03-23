@@ -1,0 +1,11 @@
+[2025-03-23T21:36:20.777Z] [INFO] Flazh parameters written to C:\NinjaTraderData\FlazhSettings.json
+[2025-03-23T21:36:20.779Z] [INFO] ATM parameters written to C:\NinjaTraderData\ATMSettings.json
+[2025-03-23T21:56:18.558Z] [INFO] Finding parameters for session: OVERNIGHT, volatility: MEDIUM_VOLATILITY
+[2025-03-23T21:56:34.790Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-23T21:56:34.791Z] [DEBUG] Flazh parameters: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"MEDIUM_VOLATILITY"}
+[2025-03-23T21:56:34.791Z] [DEBUG] ATM parameters: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"MEDIUM_VOLATILITY"}
+[2025-03-23T21:56:34.793Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: MEDIUM_VOLATILITY
+[2025-03-23T21:56:34.793Z] [INFO] Finding parameters for session: OVERNIGHT, volatility: MEDIUM_VOLATILITY
+[2025-03-23T21:56:34.797Z] [INFO] Flazh parameters written to C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Flazh_OVERNIGHT_MEDIUM_VOLATILITY.xml
+[2025-03-23T21:56:34.800Z] [INFO] ATM parameters written to C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\ATM_OVERNIGHT_MEDIUM_VOLATILITY.xml
+[2025-03-23T21:56:34.801Z] [INFO] Successfully applied settings to NinjaTrader
