@@ -32,10 +32,11 @@ const templateRoutes = require('./routes/templates');
 const marketDataRoutes = require('./routes/marketData');
 const propFirmRoutes = require('./routes/propFirm');
 const marketNewsRoutes = require('./routes/marketNews');
-const marketConditionsRoutes = require('./routes/marketConditions'); // Add this line
+const marketConditionsRoutes = require('./routes/marketConditions');
 const tradingSessionRoutes = require('./routes/tradingSession');
 const templateRecommendationsRouter = require('./routes/templateRecommendations');
 const ninjaTraderIntegrationRoutes = require('./routes/ninjaTraderIntegration');
+const enhancedTemplateRecommendationsRoutes = require('./routes/enhancedTemplateRecommendations');
 
 // Initialize Express app
 const app = express();
@@ -75,10 +76,14 @@ app.use('/api/alerts', require('./routes/alerts'));
 app.use('/api/health', require('./routes/health'));
 app.use('/api/backtest', require('./routes/backtest'));
 app.use('/api/templates', templateRoutes);
-app.use('/api/market-conditions', marketConditionsRoutes); // Add this line
+app.use('/api/market-conditions', marketConditionsRoutes);
 app.use('/api/session', tradingSessionRoutes);
 app.use('/api/template-recommendations', templateRecommendationsRouter);
 app.use('/api/ninja-trader', ninjaTraderIntegrationRoutes);
+app.use('/api/enhanced-recommendations', enhancedTemplateRecommendationsRoutes);
+
+// IMPORTANT FIX: Add the route with the path that the frontend is trying to access
+app.use('/api/enhancedTemplateRecommendations', enhancedTemplateRecommendationsRoutes);
 
 // Home route
 app.get('/', (req, res) => {

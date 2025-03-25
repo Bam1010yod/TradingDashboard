@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Recommendations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .loading {
+            color: #888;
+            font-style: italic;
+        }
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .template-table {
+            width: 100%;
+        }
+        .template-table th {
+            background-color: #f8f9fa;
+        }
+        .template-table td, .template-table th {
+            padding: 8px;
+            border: 1px solid #dee2e6;
+        }
+        .nav-tabs {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Market Conditions Analysis</h1>
+    
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="market-conditions.html">Market Conditions Analysis</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="recommendations.html">Template Recommendations</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="risk-dashboard.html">Risk Management Dashboard</a>
+        </li>
+    </ul>
+
+    <button class="btn btn-success mb-3" id="refreshBtn">Refresh Recommendations</button>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Current Market Conditions</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <strong>Session:</strong> <span id="session" class="loading">Loading...</span>
+                </div>
+                <div class="col-md-4">
+                    <strong>Volatility:</strong> <span id="volatility" class="loading">Loading...</span>
+                </div>
+                <div class="col-md-4">
+                    <strong>Last Updated:</strong> <span id="lastUpdated" class="loading">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Custom Recommendation Parameters</h2>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="sessionSelector">Session:</label>
+                    <select id="sessionSelector" class="form-select">
+                        <option value="US_OPENING">US Opening</option>
+                        <option value="US_MORNING">US Morning</option>
+                        <option value="US_MIDDAY">US Midday</option>
+                        <option value="US_AFTERNOON">US Afternoon</option>
+                        <option value="US_CLOSING">US Closing</option>
+                        <option value="OVERNIGHT">Overnight</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="volatilitySelector">Volatility:</label>
+                    <select id="volatilitySelector" class="form-select">
+                        <option value="HIGH_VOLATILITY">High Volatility</option>
+                        <option value="NORMAL_VOLATILITY">Normal Volatility</option>
+                        <option value="LOW_VOLATILITY">Low Volatility</option>
+                    </select>
+                </div>
+            </div>
+            <button id="getRecommendationsBtn" class="btn btn-primary">Get Recommendations</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Flazh Infinity Recommendation</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Template Name:</strong> <span id="flazhName" class="loading">Loading...</span></p>
+                    <table class="template-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="flazhTable">
+                            <tr>
+                                <td>FastPeriod</td>
+                                <td class="loading">-</td>
+                            </tr>
+                            <tr>
+                                <td>FastRange</td>
+                                <td class="loading">-</td>
+                            </tr>
+                            <tr>
+                                <td>MediumPeriod</td>
+                                <td class="loading">-</td>
+                            </tr>
+                            <tr>
+                                <td>MediumRange</td>
+                                <td class="loading">-</td>
+                            </tr>
+                            <tr>
+                                <td>SlowPeriod</td>
+                                <td class="loading">-</td>
+                            </tr>
+                            <tr>
+                                <td>SlowRange</td>
+                                <td class="loading">-</td>
+                            </tr>
+                            <tr>
+                                <td>FilterMultiplier</td>
+                                <td class="loading">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2>ATM Strategy Recommendation</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Template Name:</strong> <span id="atmName" class="loading">Loading...</span></p>
+                    <table class="template-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="atmTable">
+                            <tr>
+                                <td>Brackets</td>
+                                <td class="loading">-</td>
+                            </tr>
+                            <tr>
+                                <td>CalculationMode</td>
+                                <td class="loading">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Common utility functions
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString();
+        }
+
+        function setLoading(isLoading) {
+            // Update loading state for UI elements
+            document.querySelectorAll('.loading').forEach(el => {
+                if (isLoading) {
+                    el.innerHTML = 'Loading...';
+                    el.classList.add('text-muted');
+                } else {
+                    el.classList.remove('text-muted');
+                }
+            });
+        }
+
+        // Display error message
+        function showError(message) {
+            console.error(message);
+            alert('Error: ' + message);
+        }
+
+        // Populate market conditions section
+        function displayMarketConditions(marketConditions) {
+            if (!marketConditions) return;
+            
+            document.getElementById('session').textContent = marketConditions.currentSession || 'Unknown';
+            document.getElementById('volatility').textContent = marketConditions.volatilityCategory || 'Unknown';
+            document.getElementById('lastUpdated').textContent = formatTimestamp(marketConditions.currentTime) || 'Unknown';
+        }
+
+        // Populate Flazh template data
+        function displayFlazhTemplate(flazh) {
+            if (!flazh) return;
+            
+            document.getElementById('flazhName').textContent = flazh.templateName || flazh.name || 'Unknown';
+            
+            // Build table content
+            const tableBody = document.getElementById('flazhTable');
+            tableBody.innerHTML = ''; // Clear existing rows
+            
+            // Add rows for each parameter
+            const params = flazh.parameters || flazh;
+            const paramKeys = [
+                'fastPeriod', 'FastPeriod',
+                'fastRange', 'FastRange',
+                'mediumPeriod', 'MediumPeriod',
+                'mediumRange', 'MediumRange',
+                'slowPeriod', 'SlowPeriod',
+                'slowRange', 'SlowRange',
+                'filterMultiplier', 'FilterMultiplier'
+            ];
+            
+            // Add rows for each parameter
+            for (let i = 0; i < paramKeys.length; i += 2) {
+                const key1 = paramKeys[i];
+                const key2 = paramKeys[i + 1];
+                const value = params[key1] || params[key2];
+                if (value !== undefined) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${key2}</td>
+                        <td>${value}</td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            }
+        }
+
+        // Populate ATM template data
+        function displayATMTemplate(atm) {
+            if (!atm) return;
+            
+            document.getElementById('atmName').textContent = atm.templateName || atm.name || 'Unknown';
+            
+            // Build table content
+            const tableBody = document.getElementById('atmTable');
+            tableBody.innerHTML = ''; // Clear existing rows
+            
+            // Add rows for each parameter
+            const params = atm.parameters || atm;
+            const paramMap = {
+                'brackets': 'Brackets',
+                'Brackets': 'Brackets',
+                'calculationMode': 'CalculationMode',
+                'CalculationMode': 'CalculationMode',
+                'stopLoss': 'StopLoss',
+                'StopLoss': 'StopLoss',
+                'profit1': 'Profit1',
+                'Profit1': 'Profit1',
+                'profit2': 'Profit2',
+                'Profit2': 'Profit2',
+                'autoBreakEven': 'AutoBreakEven',
+                'AutoBreakEven': 'AutoBreakEven',
+                'breakEvenTicks': 'BreakEvenTicks',
+                'BreakEvenTicks': 'BreakEvenTicks'
+            };
+            
+            // Add rows for each parameter
+            Object.entries(paramMap).forEach(([key, displayName]) => {
+                const value = params[key];
+                if (value !== undefined) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${displayName}</td>
+                        <td>${value}</td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            });
+        }
+
+        // Fetch template recommendations from API
+        async function fetchTemplateRecommendations() {
+            setLoading(true);
+            
+            try {
+                const response = await fetch('/api/enhancedTemplateRecommendations');
+                
+                if (!response.ok) {
+                    throw new Error(`API returned status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('API Response:', data);
+                
+                // Display the data
+                displayMarketConditions(data.marketConditions);
+                displayFlazhTemplate(data.flazh);
+                displayATMTemplate(data.atm);
+                
+                setLoading(false);
+            } catch (error) {
+                showError('Failed to fetch recommendations: ' + error.message);
+                setLoading(false);
+            }
+        }
+
+        // Fetch custom recommendations
+        async function fetchCustomRecommendations() {
+            setLoading(true);
+            
+            try {
+                const session = document.getElementById('sessionSelector').value;
+                const volatility = document.getElementById('volatilitySelector').value;
+                
+                const response = await fetch('/api/enhancedTemplateRecommendations/custom', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        session: session,
+                        volatility: volatility
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`API returned status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Custom Recommendations:', data);
+                
+                // Display the data
+                const customMarketConditions = {
+                    currentSession: session,
+                    volatilityCategory: volatility,
+                    currentTime: new Date().toISOString()
+                };
+                
+                displayMarketConditions(customMarketConditions);
+                
+                if (data.flazh) {
+                    displayFlazhTemplate(data.flazh);
+                }
+                
+                if (data.atm) {
+                    displayATMTemplate(data.atm);
+                }
+                
+                setLoading(false);
+            } catch (error) {
+                showError('Failed to fetch custom recommendations: ' + error.message);
+                setLoading(false);
+            }
+        }
+
+        // Event listeners
+        document.getElementById('refreshBtn').addEventListener('click', fetchTemplateRecommendations);
+        document.getElementById('getRecommendationsBtn').addEventListener('click', fetchCustomRecommendations);
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', fetchTemplateRecommendations);
+    </script>
+</body>
+</html>

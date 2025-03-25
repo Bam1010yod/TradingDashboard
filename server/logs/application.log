@@ -9,3 +9,370 @@
 [2025-03-23T21:56:34.797Z] [INFO] Flazh parameters written to C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Flazh_OVERNIGHT_MEDIUM_VOLATILITY.xml
 [2025-03-23T21:56:34.800Z] [INFO] ATM parameters written to C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\ATM_OVERNIGHT_MEDIUM_VOLATILITY.xml
 [2025-03-23T21:56:34.801Z] [INFO] Successfully applied settings to NinjaTrader
+[2025-03-24T01:28:11.042Z] [INFO] Finding parameters for session: ASIA, volatility: MEDIUM_VOLATILITY
+[2025-03-24T01:28:23.185Z] [INFO] Finding parameters for session: ASIA, volatility: MEDIUM_VOLATILITY
+[2025-03-24T01:28:37.393Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T01:28:37.393Z] [DEBUG] Flazh parameters: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"ASIA","volatility":"MEDIUM_VOLATILITY"}
+[2025-03-24T01:28:37.394Z] [DEBUG] ATM parameters: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"ASIA","volatility":"MEDIUM_VOLATILITY"}
+[2025-03-24T01:28:37.395Z] [INFO] Getting parameters for session: ASIA, volatility: MEDIUM_VOLATILITY
+[2025-03-24T01:28:37.396Z] [INFO] Finding parameters for session: ASIA, volatility: MEDIUM_VOLATILITY
+[2025-03-24T01:28:37.399Z] [INFO] Flazh parameters written to C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Flazh_ASIA_MEDIUM_VOLATILITY.xml
+[2025-03-24T01:28:37.401Z] [INFO] ATM parameters written to C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\ATM_ASIA_MEDIUM_VOLATILITY.xml
+[2025-03-24T01:28:37.402Z] [INFO] Successfully applied settings to NinjaTrader
+[2025-03-24T01:44:57.448Z] [INFO] Created directory: C:\Users\bridg\Documents\NinjaTrader 8\atm\templates
+[2025-03-24T01:44:57.450Z] [INFO] Created directory: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings
+[2025-03-24T01:45:36.420Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T01:46:01.086Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T01:46:01.087Z] [DEBUG] Flazh parameters: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T01:46:01.087Z] [DEBUG] ATM parameters: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T01:46:01.088Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: LOW_VOLATILITY
+[2025-03-24T01:46:01.091Z] [INFO] Flazh parameters written to C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings\Flazh_OVERNIGHT_LOW_VOLATILITY.xml and C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings\Flazh_OVERNIGHT_LOW_VOLATILITY.fzit
+[2025-03-24T01:46:01.094Z] [INFO] ATM parameters written to C:\Users\bridg\Documents\NinjaTrader 8\atm\templates\ATM_OVERNIGHT_LOW_VOLATILITY.xml and C:\Users\bridg\Documents\NinjaTrader 8\atm\templates\ATM_OVERNIGHT_LOW_VOLATILITY.atm
+[2025-03-24T01:46:01.094Z] [INFO] Successfully applied settings to NinjaTrader
+[2025-03-24T02:03:17.686Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T02:03:24.660Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: LOW_VOLATILITY
+[2025-03-24T02:03:24.673Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T02:03:24.673Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T02:03:24.674Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T02:03:24.675Z] [INFO] Selected Flazh template: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:03:24.676Z] [INFO] Copied template to active file: C:\Users\bridg\Documents\NinjaTrader 8\templates\activeIndicator.xml
+[2025-03-24T02:03:24.676Z] [INFO] Copied template to: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Active.xml
+[2025-03-24T02:03:24.677Z] [INFO] Created activation file: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\active_template.txt
+[2025-03-24T02:03:24.679Z] [INFO] Selected ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:03:24.680Z] [INFO] Copied template to active file: C:\Users\bridg\Documents\NinjaTrader 8\templates\activeATM.xml
+[2025-03-24T02:03:24.681Z] [INFO] Copied template to: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\Active.xml
+[2025-03-24T02:03:24.682Z] [INFO] Created activation file: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\active_template.txt
+[2025-03-24T02:03:24.682Z] [INFO] Successfully applied templates to NinjaTrader
+[2025-03-24T02:11:30.144Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T02:11:32.117Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T02:11:48.677Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: LOW_VOLATILITY
+[2025-03-24T02:11:48.692Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T02:11:48.692Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T02:11:48.692Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T02:11:48.694Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T02:11:48.694Z] [INFO] Found session match: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:11:48.695Z] [INFO] Selected Flazh template: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:11:48.695Z] [INFO] Copied template to active file: C:\Users\bridg\Documents\NinjaTrader 8\templates\activeIndicator.xml
+[2025-03-24T02:11:48.696Z] [INFO] Copied template to: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Active.xml
+[2025-03-24T02:11:48.697Z] [INFO] Created activation file: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\active_template.txt
+[2025-03-24T02:11:48.698Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T02:11:48.698Z] [INFO] Found session match: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:11:48.698Z] [INFO] Selected ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:11:48.699Z] [INFO] Copied template to active file: C:\Users\bridg\Documents\NinjaTrader 8\templates\activeATM.xml
+[2025-03-24T02:11:48.700Z] [INFO] Copied template to: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\Active.xml
+[2025-03-24T02:11:48.701Z] [INFO] Created activation file: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\active_template.txt
+[2025-03-24T02:11:48.701Z] [INFO] Successfully applied templates to NinjaTrader
+[2025-03-24T02:22:34.822Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T02:22:53.932Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: MEDIUM_VOLATILITY
+[2025-03-24T02:22:53.947Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T02:22:53.948Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"MEDIUM_VOLATILITY"}
+[2025-03-24T02:22:53.948Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"MEDIUM_VOLATILITY"}
+[2025-03-24T02:22:53.949Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: MEDIUM_VOLATILITY (MED)
+[2025-03-24T02:22:53.950Z] [INFO] Found exact match: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:22:53.950Z] [INFO] Selected Flazh template: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:22:53.951Z] [INFO] Copied Flazh template to Active.xml: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Active.xml
+[2025-03-24T02:22:53.953Z] [INFO] Created LastTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\LastTemplate.txt
+[2025-03-24T02:22:53.954Z] [INFO] Created ActiveIndicator.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\ActiveIndicator.txt
+[2025-03-24T02:22:53.955Z] [INFO] Created lastFlazhTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\db\lastFlazhTemplate.txt
+[2025-03-24T02:22:53.955Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\020825.xml
+[2025-03-24T02:22:53.956Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0211.xml
+[2025-03-24T02:22:53.956Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0218 Optimize.xml
+[2025-03-24T02:22:53.957Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0218.xml
+[2025-03-24T02:22:53.957Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0222 Optimize.xml
+[2025-03-24T02:22:53.958Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Easy Flazh.xml
+[2025-03-24T02:22:53.958Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Easy Keltner RSI.xml
+[2025-03-24T02:22:53.958Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume AMA.xml
+[2025-03-24T02:22:53.959Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Easy.xml
+[2025-03-24T02:22:53.959Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Keltner RSI.xml
+[2025-03-24T02:22:53.959Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Keltner.xml
+[2025-03-24T02:22:53.960Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume MA Crossover.xml
+[2025-03-24T02:22:53.960Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume MA Vidya for GC.xml
+[2025-03-24T02:22:53.960Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Vidya.xml
+[2025-03-24T02:22:53.961Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity Combined.xml
+[2025-03-24T02:22:53.961Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity Combined2.xml
+[2025-03-24T02:22:53.961Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity.xml
+[2025-03-24T02:22:53.962Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\KingRenkoScalping.xml
+[2025-03-24T02:22:53.962Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Untitled.xml
+[2025-03-24T02:22:53.962Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\_Workspaces.xml
+[2025-03-24T02:22:53.963Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: MEDIUM_VOLATILITY (MED)
+[2025-03-24T02:22:53.964Z] [INFO] Found exact match: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:22:53.964Z] [INFO] Selected ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:22:53.965Z] [INFO] Copied ATM template to Active.xml: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\Active.xml
+[2025-03-24T02:22:53.966Z] [INFO] Created LastTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\LastTemplate.txt
+[2025-03-24T02:22:53.967Z] [INFO] Created lastATMTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\db\lastATMTemplate.txt
+[2025-03-24T02:22:53.967Z] [INFO] Updated Flazh Active.xml to use ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:22:53.968Z] [INFO] Successfully applied templates to NinjaTrader
+[2025-03-24T02:23:46.415Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T02:23:59.185Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T02:23:59.186Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"HIGH_VOLATILITY"}
+[2025-03-24T02:23:59.186Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"HIGH_VOLATILITY"}
+[2025-03-24T02:23:59.187Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: HIGH_VOLATILITY (HIGH)
+[2025-03-24T02:23:59.188Z] [INFO] Found session match: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:23:59.188Z] [INFO] Selected Flazh template: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:23:59.189Z] [INFO] Copied Flazh template to Active.xml: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Active.xml
+[2025-03-24T02:23:59.190Z] [INFO] Created LastTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\LastTemplate.txt
+[2025-03-24T02:23:59.190Z] [INFO] Created ActiveIndicator.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\ActiveIndicator.txt
+[2025-03-24T02:23:59.191Z] [INFO] Created lastFlazhTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\db\lastFlazhTemplate.txt
+[2025-03-24T02:23:59.191Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\020825.xml
+[2025-03-24T02:23:59.192Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0211.xml
+[2025-03-24T02:23:59.192Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0218 Optimize.xml
+[2025-03-24T02:23:59.192Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0218.xml
+[2025-03-24T02:23:59.193Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0222 Optimize.xml
+[2025-03-24T02:23:59.193Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Easy Flazh.xml
+[2025-03-24T02:23:59.193Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Easy Keltner RSI.xml
+[2025-03-24T02:23:59.194Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume AMA.xml
+[2025-03-24T02:23:59.194Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Easy.xml
+[2025-03-24T02:23:59.194Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Keltner RSI.xml
+[2025-03-24T02:23:59.195Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Keltner.xml
+[2025-03-24T02:23:59.195Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume MA Crossover.xml
+[2025-03-24T02:23:59.195Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume MA Vidya for GC.xml
+[2025-03-24T02:23:59.196Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Vidya.xml
+[2025-03-24T02:23:59.196Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity Combined.xml
+[2025-03-24T02:23:59.196Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity Combined2.xml
+[2025-03-24T02:23:59.197Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity.xml
+[2025-03-24T02:23:59.197Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\KingRenkoScalping.xml
+[2025-03-24T02:23:59.197Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Untitled.xml
+[2025-03-24T02:23:59.197Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\_Workspaces.xml
+[2025-03-24T02:23:59.198Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: HIGH_VOLATILITY (HIGH)
+[2025-03-24T02:23:59.198Z] [INFO] Found session match: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:23:59.199Z] [INFO] Selected ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:23:59.200Z] [INFO] Copied ATM template to Active.xml: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\Active.xml
+[2025-03-24T02:23:59.200Z] [INFO] Created LastTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\LastTemplate.txt
+[2025-03-24T02:23:59.201Z] [INFO] Created lastATMTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\db\lastATMTemplate.txt
+[2025-03-24T02:23:59.202Z] [INFO] Updated Flazh Active.xml to use ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:23:59.202Z] [INFO] Successfully applied templates to NinjaTrader
+[2025-03-24T02:23:59.204Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: HIGH_VOLATILITY
+[2025-03-24T02:24:06.831Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T02:24:06.831Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T02:24:06.832Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T02:24:06.832Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T02:24:06.833Z] [INFO] Found session match: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:24:06.833Z] [INFO] Selected Flazh template: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:24:06.835Z] [INFO] Copied Flazh template to Active.xml: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Active.xml
+[2025-03-24T02:24:06.835Z] [INFO] Created LastTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\LastTemplate.txt
+[2025-03-24T02:24:06.836Z] [INFO] Created ActiveIndicator.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\ActiveIndicator.txt
+[2025-03-24T02:24:06.836Z] [INFO] Created lastFlazhTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\db\lastFlazhTemplate.txt
+[2025-03-24T02:24:06.837Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\020825.xml
+[2025-03-24T02:24:06.837Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0211.xml
+[2025-03-24T02:24:06.837Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0218 Optimize.xml
+[2025-03-24T02:24:06.838Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0218.xml
+[2025-03-24T02:24:06.838Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0222 Optimize.xml
+[2025-03-24T02:24:06.839Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Easy Flazh.xml
+[2025-03-24T02:24:06.839Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Easy Keltner RSI.xml
+[2025-03-24T02:24:06.840Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume AMA.xml
+[2025-03-24T02:24:06.840Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Easy.xml
+[2025-03-24T02:24:06.841Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Keltner RSI.xml
+[2025-03-24T02:24:06.841Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Keltner.xml
+[2025-03-24T02:24:06.841Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume MA Crossover.xml
+[2025-03-24T02:24:06.842Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume MA Vidya for GC.xml
+[2025-03-24T02:24:06.842Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Vidya.xml
+[2025-03-24T02:24:06.842Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity Combined.xml
+[2025-03-24T02:24:06.843Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity Combined2.xml
+[2025-03-24T02:24:06.843Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity.xml
+[2025-03-24T02:24:06.843Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\KingRenkoScalping.xml
+[2025-03-24T02:24:06.844Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Untitled.xml
+[2025-03-24T02:24:06.844Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\_Workspaces.xml
+[2025-03-24T02:24:06.845Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T02:24:06.845Z] [INFO] Found session match: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:24:06.845Z] [INFO] Selected ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:24:06.846Z] [INFO] Copied ATM template to Active.xml: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\Active.xml
+[2025-03-24T02:24:06.847Z] [INFO] Created LastTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\LastTemplate.txt
+[2025-03-24T02:24:06.847Z] [INFO] Created lastATMTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\db\lastATMTemplate.txt
+[2025-03-24T02:24:06.848Z] [INFO] Updated Flazh Active.xml to use ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:24:06.848Z] [INFO] Successfully applied templates to NinjaTrader
+[2025-03-24T02:24:06.850Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: LOW_VOLATILITY
+[2025-03-24T02:24:16.072Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T02:24:16.072Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"US_OPEN","volatility":"LOW_VOLATILITY"}
+[2025-03-24T02:24:16.073Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"US_OPEN","volatility":"LOW_VOLATILITY"}
+[2025-03-24T02:24:16.073Z] [INFO] Looking for template matching session: US_OPEN (US_OPEN, US, OPEN, EA) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T02:24:16.074Z] [INFO] Found abbreviated match: Flazh_EA_LOW
+[2025-03-24T02:24:16.074Z] [INFO] Selected Flazh template: Flazh_EA_LOW
+[2025-03-24T02:24:16.085Z] [INFO] Copied Flazh template to Active.xml: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Active.xml
+[2025-03-24T02:24:16.086Z] [INFO] Created LastTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\LastTemplate.txt
+[2025-03-24T02:24:16.087Z] [INFO] Created ActiveIndicator.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\ActiveIndicator.txt
+[2025-03-24T02:24:16.088Z] [INFO] Created lastFlazhTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\db\lastFlazhTemplate.txt
+[2025-03-24T02:24:16.088Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\020825.xml
+[2025-03-24T02:24:16.088Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0211.xml
+[2025-03-24T02:24:16.089Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0218 Optimize.xml
+[2025-03-24T02:24:16.089Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0218.xml
+[2025-03-24T02:24:16.089Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0222 Optimize.xml
+[2025-03-24T02:24:16.090Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Easy Flazh.xml
+[2025-03-24T02:24:16.090Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Easy Keltner RSI.xml
+[2025-03-24T02:24:16.090Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume AMA.xml
+[2025-03-24T02:24:16.090Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Easy.xml
+[2025-03-24T02:24:16.091Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Keltner RSI.xml
+[2025-03-24T02:24:16.091Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Keltner.xml
+[2025-03-24T02:24:16.091Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume MA Crossover.xml
+[2025-03-24T02:24:16.092Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume MA Vidya for GC.xml
+[2025-03-24T02:24:16.092Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Vidya.xml
+[2025-03-24T02:24:16.092Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity Combined.xml
+[2025-03-24T02:24:16.092Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity Combined2.xml
+[2025-03-24T02:24:16.093Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity.xml
+[2025-03-24T02:24:16.093Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\KingRenkoScalping.xml
+[2025-03-24T02:24:16.093Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Untitled.xml
+[2025-03-24T02:24:16.094Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\_Workspaces.xml
+[2025-03-24T02:24:16.094Z] [INFO] Looking for template matching session: US_OPEN (US_OPEN, US, OPEN, EA) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T02:24:16.094Z] [INFO] Found abbreviated match: ATM_EA_LOW
+[2025-03-24T02:24:16.095Z] [INFO] Selected ATM template: ATM_EA_LOW
+[2025-03-24T02:24:16.096Z] [INFO] Copied ATM template to Active.xml: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\Active.xml
+[2025-03-24T02:24:16.096Z] [INFO] Created LastTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\LastTemplate.txt
+[2025-03-24T02:24:16.097Z] [INFO] Created lastATMTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\db\lastATMTemplate.txt
+[2025-03-24T02:24:16.098Z] [INFO] Updated Flazh Active.xml to use ATM template: ATM_EA_LOW
+[2025-03-24T02:24:16.098Z] [INFO] Successfully applied templates to NinjaTrader
+[2025-03-24T02:24:16.100Z] [INFO] Getting parameters for session: US_OPEN, volatility: LOW_VOLATILITY
+[2025-03-24T02:24:25.232Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T02:24:25.232Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"US_OPEN","volatility":"MEDIUM_VOLATILITY"}
+[2025-03-24T02:24:25.232Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"US_OPEN","volatility":"MEDIUM_VOLATILITY"}
+[2025-03-24T02:24:25.233Z] [INFO] Looking for template matching session: US_OPEN (US_OPEN, US, OPEN, EA) and volatility: MEDIUM_VOLATILITY (MED)
+[2025-03-24T02:24:25.233Z] [INFO] Found abbreviated match: Flazh_EA_MED
+[2025-03-24T02:24:25.233Z] [INFO] Selected Flazh template: Flazh_EA_MED
+[2025-03-24T02:24:25.235Z] [INFO] Copied Flazh template to Active.xml: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\Active.xml
+[2025-03-24T02:24:25.236Z] [INFO] Created LastTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\LastTemplate.txt
+[2025-03-24T02:24:25.236Z] [INFO] Created ActiveIndicator.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\ActiveIndicator.txt
+[2025-03-24T02:24:25.237Z] [INFO] Created lastFlazhTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\db\lastFlazhTemplate.txt
+[2025-03-24T02:24:25.238Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\020825.xml
+[2025-03-24T02:24:25.238Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0211.xml
+[2025-03-24T02:24:25.238Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0218 Optimize.xml
+[2025-03-24T02:24:25.239Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0218.xml
+[2025-03-24T02:24:25.239Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\0222 Optimize.xml
+[2025-03-24T02:24:25.239Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Easy Flazh.xml
+[2025-03-24T02:24:25.240Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Easy Keltner RSI.xml
+[2025-03-24T02:24:25.240Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume AMA.xml
+[2025-03-24T02:24:25.240Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Easy.xml
+[2025-03-24T02:24:25.241Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Keltner RSI.xml
+[2025-03-24T02:24:25.241Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Keltner.xml
+[2025-03-24T02:24:25.241Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume MA Crossover.xml
+[2025-03-24T02:24:25.242Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume MA Vidya for GC.xml
+[2025-03-24T02:24:25.242Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Captian Optimus Volume Vidya.xml
+[2025-03-24T02:24:25.242Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity Combined.xml
+[2025-03-24T02:24:25.243Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity Combined2.xml
+[2025-03-24T02:24:25.243Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Flash Infinity.xml
+[2025-03-24T02:24:25.243Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\KingRenkoScalping.xml
+[2025-03-24T02:24:25.244Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\Untitled.xml
+[2025-03-24T02:24:25.244Z] [INFO] Found workspace file: C:\Users\bridg\Documents\NinjaTrader 8\workspaces\_Workspaces.xml
+[2025-03-24T02:24:25.245Z] [INFO] Looking for template matching session: US_OPEN (US_OPEN, US, OPEN, EA) and volatility: MEDIUM_VOLATILITY (MED)
+[2025-03-24T02:24:25.245Z] [INFO] Found abbreviated match: ATM_EA_MED
+[2025-03-24T02:24:25.245Z] [INFO] Selected ATM template: ATM_EA_MED
+[2025-03-24T02:24:25.246Z] [INFO] Copied ATM template to Active.xml: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\Active.xml
+[2025-03-24T02:24:25.247Z] [INFO] Created LastTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\LastTemplate.txt
+[2025-03-24T02:24:25.248Z] [INFO] Created lastATMTemplate.txt: C:\Users\bridg\Documents\NinjaTrader 8\db\lastATMTemplate.txt
+[2025-03-24T02:24:25.249Z] [INFO] Updated Flazh Active.xml to use ATM template: ATM_EA_MED
+[2025-03-24T02:24:25.249Z] [INFO] Successfully applied templates to NinjaTrader
+[2025-03-24T02:24:25.250Z] [INFO] Getting parameters for session: US_OPEN, volatility: MEDIUM_VOLATILITY
+[2025-03-24T02:46:59.784Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T02:47:05.378Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T02:47:18.435Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: LOW_VOLATILITY
+[2025-03-24T02:47:18.450Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T02:47:18.450Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T02:47:18.450Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T02:47:18.451Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T02:47:18.452Z] [INFO] Found session match: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:47:18.452Z] [INFO] Selected Flazh template: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:47:18.454Z] [INFO] Created standardized Flazh template: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\TradingDashboard_Current_Flazh.xml
+[2025-03-24T02:47:18.455Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T02:47:18.456Z] [INFO] Found session match: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:47:18.456Z] [INFO] Selected ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T02:47:18.458Z] [INFO] Created standardized ATM template: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\TradingDashboard_Current_ATM.xml
+[2025-03-24T02:47:18.458Z] [INFO] Successfully created standardized template files
+[2025-03-24T02:48:00.551Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T07:00:04.385Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T07:06:57.406Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T07:07:05.125Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: LOW_VOLATILITY
+[2025-03-24T07:07:05.142Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T07:07:05.142Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T07:07:05.142Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T07:07:05.144Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T07:07:05.145Z] [INFO] Found session match: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T07:07:05.145Z] [INFO] Selected Flazh template: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T07:07:05.146Z] [INFO] Created standardized Flazh template: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\TradingDashboard_Current_Flazh.xml
+[2025-03-24T07:07:05.147Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T07:07:05.148Z] [INFO] Found session match: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T07:07:05.148Z] [INFO] Selected ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T07:07:05.149Z] [INFO] Created standardized ATM template: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\TradingDashboard_Current_ATM.xml
+[2025-03-24T07:07:05.149Z] [INFO] Successfully created standardized template files
+[2025-03-24T07:07:51.924Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: LOW_VOLATILITY
+[2025-03-24T07:07:51.930Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T07:07:51.931Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T07:07:51.933Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T07:07:51.934Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T07:07:51.935Z] [INFO] Found session match: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T07:07:51.935Z] [INFO] Selected Flazh template: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T07:07:51.937Z] [INFO] Created standardized Flazh template: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\TradingDashboard_Current_Flazh.xml
+[2025-03-24T07:07:51.938Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T07:07:51.938Z] [INFO] Found session match: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T07:07:51.939Z] [INFO] Selected ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T07:07:51.940Z] [INFO] Created standardized ATM template: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\TradingDashboard_Current_ATM.xml
+[2025-03-24T07:07:51.941Z] [INFO] Successfully created standardized template files
+[2025-03-24T10:13:28.387Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T11:24:06.149Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T11:24:06.150Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T11:24:06.150Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"OVERNIGHT","volatility":"LOW_VOLATILITY"}
+[2025-03-24T11:24:06.152Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T11:24:06.153Z] [INFO] Found session match: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T11:24:06.153Z] [INFO] Selected Flazh template: Flazh_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T11:24:06.154Z] [INFO] Created standardized Flazh template: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\TradingDashboard_Current_Flazh.xml
+[2025-03-24T11:24:06.155Z] [INFO] Looking for template matching session: OVERNIGHT (OVERNIGHT, NIGHT, ON) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T11:24:06.156Z] [INFO] Found session match: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T11:24:06.156Z] [INFO] Selected ATM template: ATM_OVERNIGHT_MEDIUM_VOLATILITY
+[2025-03-24T11:24:06.157Z] [INFO] Created standardized ATM template: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\TradingDashboard_Current_ATM.xml
+[2025-03-24T11:24:06.158Z] [INFO] Successfully created standardized template files
+[2025-03-24T11:24:06.160Z] [INFO] Getting parameters for session: OVERNIGHT, volatility: LOW_VOLATILITY
+[2025-03-24T14:48:11.076Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T16:31:27.403Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T17:44:31.561Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T19:57:32.123Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T19:57:54.772Z] [INFO] Received request to apply settings to NinjaTrader
+[2025-03-24T19:57:54.773Z] [DEBUG] Flazh parameters context: {"FastPeriod":21,"FastRange":3,"MediumPeriod":41,"MediumRange":4,"SlowPeriod":70,"SlowRange":5,"session":"US_AFTERNOON","volatility":"LOW_VOLATILITY"}
+[2025-03-24T19:57:54.774Z] [DEBUG] ATM parameters context: {"StopLoss":21,"Target":42,"AutoBreakEvenProfitTrigger":21,"AutoBreakEvenPlus":10,"session":"US_AFTERNOON","volatility":"LOW_VOLATILITY"}
+[2025-03-24T19:57:54.775Z] [INFO] Looking for template matching session: US_AFTERNOON (US_AFTERNOON, US, AFTERNOON, PC) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T19:57:54.775Z] [INFO] Found abbreviated match: Flazh_PC_LOW
+[2025-03-24T19:57:54.775Z] [INFO] Selected Flazh template: Flazh_PC_LOW
+[2025-03-24T19:57:54.779Z] [INFO] Created standardized Flazh template: C:\Users\bridg\Documents\NinjaTrader 8\templates\Indicator\RenkoKings_FlazhInfinity\TradingDashboard_Current_Flazh.xml
+[2025-03-24T19:57:54.780Z] [INFO] Looking for template matching session: US_AFTERNOON (US_AFTERNOON, US, AFTERNOON, PC) and volatility: LOW_VOLATILITY (LOW)
+[2025-03-24T19:57:54.781Z] [INFO] Found abbreviated match: ATM_PC_LOW
+[2025-03-24T19:57:54.781Z] [INFO] Selected ATM template: ATM_PC_LOW
+[2025-03-24T19:57:54.783Z] [INFO] Created standardized ATM template: C:\Users\bridg\Documents\NinjaTrader 8\templates\ATM\TradingDashboard_Current_ATM.xml
+[2025-03-24T19:57:54.783Z] [INFO] Successfully created standardized template files
+[2025-03-24T19:57:54.785Z] [INFO] Getting parameters for session: US_AFTERNOON, volatility: LOW_VOLATILITY
+[2025-03-24T21:36:42.413Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T21:36:56.320Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T21:38:09.361Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T21:43:53.210Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T21:47:37.085Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T21:47:43.663Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T22:05:37.408Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T22:05:51.534Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-24T22:06:53.766Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T05:26:29.313Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T05:27:46.718Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T05:28:45.162Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T05:29:12.840Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T05:39:17.347Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T05:41:53.634Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T05:43:11.194Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T05:43:56.930Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T05:48:14.446Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T08:41:55.565Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T08:42:11.489Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T08:42:18.115Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:09:19.259Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:09:30.564Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:10:49.293Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:11:14.793Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:12:26.021Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:44:53.003Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:45:03.821Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:45:13.267Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:45:14.899Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:45:34.488Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:46:07.604Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:52:33.310Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:53:46.238Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T09:55:01.152Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T10:03:56.069Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T10:04:00.863Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T10:04:02.525Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T10:04:30.694Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T10:05:29.955Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T10:05:32.392Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-25T10:05:40.290Z] [INFO] Getting market conditions for timezone: US_CENTRAL

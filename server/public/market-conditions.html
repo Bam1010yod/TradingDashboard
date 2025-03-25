@@ -25,7 +25,7 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
         .parameter-table {
@@ -40,7 +40,7 @@
         .parameter-table th {
             background-color: #f5f5f5;
         }
-        .refresh-btn {
+        .btn {
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -53,105 +53,209 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        .session-selector {
+        .btn-secondary {
+            background-color: #007bff;
+        }
+        .timezone-selector {
             margin: 10px 0;
-            padding: 8px;
-            font-size: 16px;
+            padding: 5px;
+            font-size: 14px;
             border-radius: 4px;
             border: 1px solid #ddd;
         }
-        .volatility-selector {
-            margin: 10px 10px;
-            padding: 8px;
-            font-size: 16px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
+        .navigation-links {
+            margin-bottom: 20px;
+        }
+        .navigation-links a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .navigation-links a:hover {
+            text-decoration: underline;
+        }
+        .market-stat {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .volatility-indicator {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .low-volatility {
+            background-color: #28a745;
+        }
+        .medium-volatility {
+            background-color: #ffc107;
+        }
+        .high-volatility {
+            background-color: #dc3545;
+        }
+        .metrics-container {
+            margin-top: 15px;
+        }
+        .metric-box {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .metric-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .chart-container {
+            height: 200px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            position: relative;
+        }
+        .chart-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #6c757d;
         }
     </style>
 </head>
 <body>
     <h1>Market Conditions Analysis</h1>
     
-    <button id="refresh-btn" class="refresh-btn refresh-button">Refresh Analysis</button>
-    
-    <div class="card">
-        <h3>Current Market Conditions</h3>
-        <div id="current-conditions">
-            <p><strong>Session:</strong> <span id="current-session">undefined (Overnight)</span></p>
-            <p><strong>Volatility:</strong> <span id="current-volatility">undefined</span></p>
-            <p><strong>Last Updated:</strong> <span id="last-updated">3/23/2025, 4:17:02 PM</span></p>
-        </div>
+    <div class="navigation-links">
+        <a href="http://localhost:3008/market-conditions.html" style="font-weight: bold;">Market Conditions Analysis</a>
+        <a href="http://localhost:3008/recommendations.html">Template Recommendations</a>
+        <a href="http://localhost:3008/risk-management.html">Risk Management Dashboard</a>
     </div>
     
-    <div class="card">
-        <h3>Parameter Recommendations</h3>
+    <div class="grid">
         <div>
-            <label for="session-selector">Session:</label>
-            <select id="session-selector" class="session-selector">
-                <option value="ASIA">Asian Session</option>
-                <option value="EUROPE">European Session</option>
-                <option value="US_OPEN">US Opening</option>
-                <option value="US_MIDDAY">US Midday</option>
-                <option value="US_AFTERNOON">US Afternoon</option>
-                <option value="OVERNIGHT">Overnight</option>
-            </select>
+            <div class="card">
+                <h3>Current Market Conditions</h3>
+                <div>
+                    <label for="timezone-selector">Your Timezone:</label>
+                    <select id="timezone-selector" class="timezone-selector">
+                        <option value="US_CENTRAL">US Central</option>
+                        <option value="US_EASTERN">US Eastern</option>
+                        <option value="US_MOUNTAIN">US Mountain</option>
+                        <option value="US_PACIFIC">US Pacific</option>
+                        <option value="ASIA">Asia</option>
+                        <option value="EUROPE">Europe</option>
+                    </select>
+                </div>
+                <div id="current-conditions">
+                    <p><strong>Session:</strong> <span id="current-session">Loading...</span></p>
+                    <p>
+                        <strong>Volatility:</strong> 
+                        <span id="volatility-indicator" class="volatility-indicator low-volatility"></span>
+                        <span id="current-volatility">Loading...</span>
+                    </p>
+                    <p><strong>Last Updated:</strong> <span id="last-updated">Loading...</span></p>
+                </div>
+                <button id="refresh-btn" class="btn">Refresh Analysis</button>
+                <a href="http://localhost:3008/recommendations.html" class="btn btn-secondary">View Recommendations</a>
+            </div>
             
-            <label for="volatility-selector">Volatility:</label>
-            <select id="volatility-selector" class="volatility-selector">
-                <option value="HIGH_VOLATILITY">High Volatility</option>
-                <option value="MEDIUM_VOLATILITY">Medium Volatility</option>
-                <option value="LOW_VOLATILITY">Low Volatility</option>
-            </select>
-            
-            <button id="apply-filters" class="refresh-btn apply-button">Apply</button>
+            <div class="card">
+                <h3>Market Metrics</h3>
+                <div class="metrics-container">
+                    <div class="metric-box">
+                        <div class="metric-title">Range (Points)</div>
+                        <div class="metric-value" id="range-value">...</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-title">Average Volume</div>
+                        <div class="metric-value" id="volume-value">...</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-title">Trend Strength</div>
+                        <div class="metric-value" id="trend-strength">...</div>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <div class="grid">
+        <div>
             <div class="card">
-                <h3>Flazh Infinity Parameters</h3>
-                <div id="flazh-params">
-                    <table id="flazh-table" class="parameter-table">
-                        <tr><th>Parameter</th><th>Value</th></tr>
-                        <tr><td>FastPeriod</td><td>21</td></tr>
-                        <tr><td>FastRange</td><td>3</td></tr>
-                        <tr><td>MediumPeriod</td><td>41</td></tr>
-                        <tr><td>MediumRange</td><td>4</td></tr>
-                        <tr><td>SlowPeriod</td><td>70</td></tr>
-                        <tr><td>SlowRange</td><td>5</td></tr>
-                    </table>
+                <h3>Volatility Trend (24h)</h3>
+                <div class="chart-container" id="volatility-chart">
+                    <div class="chart-placeholder">
+                        <i>Volatility trend data will appear here</i>
+                    </div>
                 </div>
             </div>
             
             <div class="card">
-                <h3>ATM Parameters</h3>
-                <div id="atm-params">
-                    <table id="atm-table" class="parameter-table">
-                        <tr><th>Parameter</th><th>Value</th></tr>
-                        <tr><td>StopLoss</td><td>21</td></tr>
-                        <tr><td>Target</td><td>42</td></tr>
-                        <tr><td>AutoBreakEvenProfitTrigger</td><td>21</td></tr>
-                        <tr><td>AutoBreakEvenPlus</td><td>10</td></tr>
-                    </table>
+                <h3>Volume Profile</h3>
+                <div class="chart-container" id="volume-chart">
+                    <div class="chart-placeholder">
+                        <i>Volume profile data will appear here</i>
+                    </div>
                 </div>
+            </div>
+            
+            <div class="card">
+                <h3>Session Analysis</h3>
+                <table class="parameter-table">
+                    <tr>
+                        <th>Session</th>
+                        <th>Average Volatility</th>
+                        <th>Trade Count</th>
+                    </tr>
+                    <tr>
+                        <td>US Opening</td>
+                        <td id="us-open-volatility">...</td>
+                        <td id="us-open-trades">...</td>
+                    </tr>
+                    <tr>
+                        <td>US Midday</td>
+                        <td id="us-midday-volatility">...</td>
+                        <td id="us-midday-trades">...</td>
+                    </tr>
+                    <tr>
+                        <td>US Afternoon</td>
+                        <td id="us-afternoon-volatility">...</td>
+                        <td id="us-afternoon-trades">...</td>
+                    </tr>
+                    <tr>
+                        <td>Overnight</td>
+                        <td id="overnight-volatility">...</td>
+                        <td id="overnight-trades">...</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Set default timezone to US Central
+            document.getElementById('timezone-selector').value = 'US_CENTRAL';
+            
             // Initial load
             loadMarketConditions();
             
             // Setup event listeners
             document.getElementById('refresh-btn').addEventListener('click', loadMarketConditions);
-            document.getElementById('apply-filters').addEventListener('click', function() {
-                loadFilteredParameters();
-                applySettingsToNinjaTrader();
-            });
+            document.getElementById('timezone-selector').addEventListener('change', loadMarketConditions);
             
             // Function to load current market conditions
             function loadMarketConditions() {
-                fetch('/api/market-conditions')
+                const timezone = document.getElementById('timezone-selector').value;
+                
+                fetch(`/api/market-conditions?timezone=${timezone}`)
                     .then(response => response.json())
                     .then(data => {
                         // Display current conditions
@@ -162,153 +266,79 @@
                         document.getElementById('last-updated').textContent = 
                             new Date(data.currentTime).toLocaleString();
                         
-                        // Update parameter displays
-                        if (data.recommendations) {
-                            if (data.recommendations.flazhParams) {
-                                displayFlazhParams(data.recommendations.flazhParams);
-                            }
-                            if (data.recommendations.atmParams) {
-                                displayAtmParams(data.recommendations.atmParams);
-                            }
-                            
-                            // Update selectors if session info exists
-                            if (data.currentSession) {
-                                document.getElementById('session-selector').value = data.currentSession;
-                            }
-                            if (data.volatilityCategory) {
-                                document.getElementById('volatility-selector').value = data.volatilityCategory;
-                            }
+                        // Update volatility indicator
+                        updateVolatilityIndicator(data.volatilityCategory);
+                        
+                        // Update market metrics
+                        if (data.metrics) {
+                            document.getElementById('range-value').textContent = 
+                                data.metrics.range ? data.metrics.range.toFixed(1) : '...';
+                            document.getElementById('volume-value').textContent = 
+                                data.metrics.averageVolume ? data.metrics.averageVolume.toLocaleString() : '...';
+                            document.getElementById('trend-strength').textContent = 
+                                data.metrics.trendStrength ? data.metrics.trendStrength.toFixed(2) : '...';
                         }
+                        
+                        // Update session analysis
+                        if (data.sessionAnalysis) {
+                            updateSessionMetrics(data.sessionAnalysis);
+                        }
+                        
+                        // Mock update charts (in real implementation, you would use a charting library)
+                        updateMockCharts(data);
                     })
                     .catch(error => {
                         console.error('Error fetching market conditions:', error);
-                        alert('Error loading market conditions. Check server connection.');
                     });
             }
             
-            // Function to load filtered parameters
-            function loadFilteredParameters() {
-                const session = document.getElementById('session-selector').value;
-                const volatility = document.getElementById('volatility-selector').value;
+            // Function to update volatility indicator
+            function updateVolatilityIndicator(volatilityCategory) {
+                const indicator = document.getElementById('volatility-indicator');
+                indicator.className = 'volatility-indicator';
                 
-                fetch(`/api/market-conditions/parameters/${session}/${volatility}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.flazhParams) {
-                            displayFlazhParams(data.flazhParams);
-                        }
-                        if (data.atmParams) {
-                            displayAtmParams(data.atmParams);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching filtered parameters:', error);
-                        alert('Error loading parameters for selected session and volatility.');
-                    });
-            }
-            
-            // Function to apply settings to NinjaTrader
-            function applySettingsToNinjaTrader() {
-                try {
-                    // Get current parameter values from tables
-                    const flazhParameters = {};
-                    document.querySelectorAll('#flazh-table tr').forEach(row => {
-                        const cells = row.querySelectorAll('td');
-                        if (cells.length >= 2) {
-                            const paramName = cells[0].textContent.trim();
-                            const paramValue = parseInt(cells[1].textContent.trim());
-                            if (paramName && !isNaN(paramValue)) {
-                                flazhParameters[paramName] = paramValue;
-                            }
-                        }
-                    });
-                    
-                    const atmParameters = {};
-                    document.querySelectorAll('#atm-table tr').forEach(row => {
-                        const cells = row.querySelectorAll('td');
-                        if (cells.length >= 2) {
-                            const paramName = cells[0].textContent.trim();
-                            const paramValue = parseInt(cells[1].textContent.trim());
-                            if (paramName && !isNaN(paramValue)) {
-                                atmParameters[paramName] = paramValue;
-                            }
-                        }
-                    });
-                    
-                    // Add session and volatility information
-                    const sessionValue = document.getElementById('session-selector').value;
-                    const volatilityValue = document.getElementById('volatility-selector').value;
-                    
-                    flazhParameters.session = sessionValue;
-                    flazhParameters.volatility = volatilityValue;
-                    atmParameters.session = sessionValue;
-                    atmParameters.volatility = volatilityValue;
-                    
-                    // Show loading indicator
-                    const applyButton = document.getElementById('apply-filters');
-                    const originalText = applyButton.textContent;
-                    applyButton.textContent = 'Applying...';
-                    applyButton.disabled = true;
-                    
-                    // Send parameters to the server
-                    fetch('/api/ninja-trader/apply-settings', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ flazhParameters, atmParameters })
-                    })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.success) {
-                            alert('Settings successfully applied to NinjaTrader!');
-                        } else {
-                            alert('Failed to apply settings: ' + result.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error applying settings:', error);
-                        alert('Error applying settings. See console for details.');
-                    })
-                    .finally(() => {
-                        // Reset button state
-                        applyButton.textContent = originalText;
-                        applyButton.disabled = false;
-                    });
-                } catch (error) {
-                    console.error('Error processing parameters:', error);
-                    alert('Error processing parameters. See console for details.');
+                if (volatilityCategory === 'LOW_VOLATILITY') {
+                    indicator.classList.add('low-volatility');
+                } else if (volatilityCategory === 'MEDIUM_VOLATILITY') {
+                    indicator.classList.add('medium-volatility');
+                } else if (volatilityCategory === 'HIGH_VOLATILITY') {
+                    indicator.classList.add('high-volatility');
                 }
             }
             
-            // Function to display Flazh parameters
-            function displayFlazhParams(params) {
-                const paramsDiv = document.getElementById('flazh-params');
+            // Function to update session metrics
+            function updateSessionMetrics(sessionData) {
+                // This would use actual data in a real implementation
+                // For now, using placeholder values if no data is available
+                document.getElementById('us-open-volatility').textContent = 
+                    sessionData.usOpen ? sessionData.usOpen.volatility : 'Medium';
+                document.getElementById('us-open-trades').textContent = 
+                    sessionData.usOpen ? sessionData.usOpen.tradeCount : '32';
                 
-                let html = '<table id="flazh-table" class="parameter-table">';
-                html += '<tr><th>Parameter</th><th>Value</th></tr>';
+                document.getElementById('us-midday-volatility').textContent = 
+                    sessionData.usMidDay ? sessionData.usMidDay.volatility : 'Low';
+                document.getElementById('us-midday-trades').textContent = 
+                    sessionData.usMidDay ? sessionData.usMidDay.tradeCount : '18';
                 
-                for (const [key, value] of Object.entries(params)) {
-                    html += `<tr><td>${key}</td><td>${value}</td></tr>`;
-                }
+                document.getElementById('us-afternoon-volatility').textContent = 
+                    sessionData.usAfternoon ? sessionData.usAfternoon.volatility : 'Medium';
+                document.getElementById('us-afternoon-trades').textContent = 
+                    sessionData.usAfternoon ? sessionData.usAfternoon.tradeCount : '24';
                 
-                html += '</table>';
-                paramsDiv.innerHTML = html;
+                document.getElementById('overnight-volatility').textContent = 
+                    sessionData.overnight ? sessionData.overnight.volatility : 'Low';
+                document.getElementById('overnight-trades').textContent = 
+                    sessionData.overnight ? sessionData.overnight.tradeCount : '12';
             }
             
-            // Function to display ATM parameters
-            function displayAtmParams(params) {
-                const paramsDiv = document.getElementById('atm-params');
-                
-                let html = '<table id="atm-table" class="parameter-table">';
-                html += '<tr><th>Parameter</th><th>Value</th></tr>';
-                
-                for (const [key, value] of Object.entries(params)) {
-                    html += `<tr><td>${key}</td><td>${value}</td></tr>`;
-                }
-                
-                html += '</table>';
-                paramsDiv.innerHTML = html;
+            // Function to update mock charts
+            function updateMockCharts(data) {
+                // In a real implementation, you would use a charting library like Chart.js
+                // For now, just update the placeholder text
+                document.querySelector('#volatility-chart .chart-placeholder').innerHTML = 
+                    `<i>Volatility data for ${data.currentSession || 'current session'} loaded</i>`;
+                document.querySelector('#volume-chart .chart-placeholder').innerHTML = 
+                    `<i>Volume profile for ${data.currentSession || 'current session'} loaded</i>`;
             }
         });
     </script>

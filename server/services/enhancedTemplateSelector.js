@@ -1,410 +1,462 @@
-// Full path: C:\TradingDashboard\server\services\enhancedTemplateSelector.js
+// C:\TradingDashboard\server\services\enhancedTemplateSelector.js
 
-const mongoose = require('mongoose');
-const AtmStrategy = require('../models/atmStrategy');
-const FlazhInfinity = require('../models/flazhInfinity');
-const marketConditionsService = require('./marketConditionsService');
+const templateSelector = require('../services/templateSelector');;
+const marketDataService = require('./marketDataService');
+const backtestingResultsService = require('./backtestingResultsService');
 
 /**
  * Enhanced Template Selector Service
- * Integrates market regime detection to improve template selection
+ * Provides enhanced template recommendations based on market conditions and performance data
  */
+const enhancedTemplateSelector = {
+    /**
+     * Overloaded getRecommendedTemplate function that supports both:
+     * - Single parameter: market conditions (used by the root endpoint)
+     * - Two parameters: template type and market conditions (used by your existing endpoints)
+     * 
+     * @param {string|object} param1 - Either template type (string) or market conditions (object)
+     * @param {object|null} param2 - Market conditions object or null
+     * @returns {Promise<object>} - Template object or object with both template types
+     */
+    getRecommendedTemplate: async function (param1, param2 = null) {
+        // Case 1: Called with just market conditions (from root endpoint)
+        if (typeof param1 === 'object' && param1 !== null && param2 === null) {
+            const marketConditions = param1;
+            console.log('Enhanced template selector called with market conditions:', marketConditions);
 
-/**
- * Calculate similarity score between two market conditions
- * @param {Object} conditionA - First market condition
- * @param {Object} conditionB - Second market condition
- * @returns {Number} - Similarity score (0-100)
- */
-const calculateMarketSimilarity = (conditionA, conditionB) => {
-    if (!conditionA || !conditionB) {
-        return 0; // No similarity if either condition is missing
-    }
+            // Validate market conditions
+            const validatedConditions = marketConditions || {
+                volatility: 'medium',
+                trend: 'neutral',
+                volume: 'normal',
+                session: 'regular',
+                timestamp: new Date().toISOString()
+            };
 
-    let similarityScore = 0;
-    let totalFactors = 0;
+            try {
+                // Get both template types
+                const basicSelector = require('./templateSelector');
 
-    // Calculate session similarity
-    if (conditionA.session && conditionB.session) {
-        totalFactors += 40; // Sessions are very important
+                // Get Flazh template
+                let flazhTemplate;
+                try {
+                    flazhTemplate = await basicSelector.getTemplateForConditions(
+                        'Flazh',
+                        validatedConditions.session || 'regular',
+                        validatedConditions.volatility || 'medium'
+                    );
+                } catch (flazhError) {
+                    console.error('Error getting Flazh template:', flazhError);
+                    flazhTemplate = null;
+                }
 
-        // Exact session match
-        if (conditionA.session === conditionB.session) {
-            similarityScore += 40;
-        } else {
-            // Check related sessions (morning sessions are similar, afternoon sessions are similar)
-            const morningGroups = ['ASIA', 'EUROPE', 'US_OPEN'];
-            const afternoonGroups = ['US_MIDDAY', 'US_AFTERNOON', 'OVERNIGHT'];
+                // Get ATM template
+                let atmTemplate;
+                try {
+                    atmTemplate = await basicSelector.getTemplateForConditions(
+                        'ATM',
+                        validatedConditions.session || 'regular',
+                        validatedConditions.volatility || 'medium'
+                    );
+                } catch (atmError) {
+                    console.error('Error getting ATM template:', atmError);
+                    atmTemplate = null;
+                }
 
-            const isAMorning = morningGroups.includes(conditionA.session);
-            const isBMorning = morningGroups.includes(conditionB.session);
-            const isAAfternoon = afternoonGroups.includes(conditionA.session);
-            const isBAfternoon = afternoonGroups.includes(conditionB.session);
+                // Ensure we have templates, use fallbacks if needed
+                if (!flazhTemplate) {
+                    console.warn('No Flazh template found, using fallback');
+                    flazhTemplate = this._getFallbackTemplate('Flazh', validatedConditions);
+                }
 
-            if ((isAMorning && isBMorning) || (isAAfternoon && isBAfternoon)) {
-                similarityScore += 20; // Related session match
+                if (!atmTemplate) {
+                    console.warn('No ATM template found, using fallback');
+                    atmTemplate = this._getFallbackTemplate('ATM', validatedConditions);
+                }
+
+                // Return both templates in the expected format
+                return {
+                    flazh: flazhTemplate,
+                    atm: atmTemplate,
+                    marketConditions: validatedConditions
+                };
+            } catch (error) {
+                console.error('Error in getRecommendedTemplate:', error);
+
+                // Return fallback templates in case of error
+                return {
+                    flazh: this._getFallbackTemplate('Flazh', validatedConditions),
+                    atm: this._getFallbackTemplate('ATM', validatedConditions),
+                    marketConditions: validatedConditions,
+                    error: 'Error retrieving templates, using fallbacks'
+                };
             }
         }
-    }
+        // Case 2: Called with template type and market conditions (existing behavior)
+        else {
+            const templateType = param1;
+            const marketConditions = param2;
 
-    // Calculate volatility similarity
-    if (conditionA.volatilityCategory && conditionB.volatilityCategory) {
-        totalFactors += 40; // Volatility is very important
+            try {
+                // This is the original implementation
+                const basicSelector = require('./templateSelector');
+                let template;
 
-        // Exact volatility match
-        if (conditionA.volatilityCategory === conditionB.volatilityCategory) {
-            similarityScore += 40;
+                if (marketConditions) {
+                    // If custom market conditions are provided, use them
+                    template = await basicSelector.getTemplateForConditions(
+                        templateType,
+                        marketConditions.currentSession || marketConditions.session,
+                        marketConditions.volatilityCategory || marketConditions.volatility
+                    );
+                } else {
+                    // Otherwise get for current conditions
+                    template = await basicSelector.getRecommendedTemplate(templateType);
+                }
+
+                return template || this._getFallbackTemplate(templateType, marketConditions);
+            } catch (error) {
+                console.error(`Error in getRecommendedTemplate for ${templateType}:`, error);
+                return this._getFallbackTemplate(templateType, marketConditions);
+            }
+        }
+    },
+
+    /**
+     * Get enhanced template with performance-based adjustments
+     * 
+     * @param {string} templateType - Type of template (ATM or Flazh)
+     * @param {Date} timestamp - Timestamp for market conditions
+     * @param {object} marketData - Current market data
+     * @returns {Promise<object>} - Enhanced template object
+     */
+    getEnhancedTemplate: async (templateType, timestamp, marketData) => {
+        try {
+            // Get base template from the basic selector
+            const basicSelector = require('./templateSelector');
+            const baseTemplate = await basicSelector.getRecommendedTemplate(templateType);
+
+            if (!baseTemplate) {
+                console.log(`No base template found for ${templateType}`);
+                return null;
+            }
+
+            // Determine market conditions
+            const conditions = basicSelector.determineMarketConditions(timestamp, marketData);
+
+            // Map conditions to performance metrics
+            const timeOfDay = enhancedTemplateSelector.mapSessionToTimeOfDay(conditions.session);
+            const sessionType = enhancedTemplateSelector.mapVolatilityToSessionType(conditions.volatility);
+            const volatilityScore = enhancedTemplateSelector.calculateVolatilityScore(conditions.volatility, marketData);
+
+            // Get performance metrics for these conditions
+            const performanceMetrics = await backtestingResultsService.getPerformanceMetrics(
+                timeOfDay,
+                sessionType,
+                volatilityScore
+            );
+
+            // Apply adjustments to template based on performance metrics
+            const adjustedTemplate = enhancedTemplateSelector.adjustTemplateParameters(
+                baseTemplate,
+                performanceMetrics,
+                volatilityScore
+            );
+
+            return {
+                originalTemplate: baseTemplate,
+                adjustedTemplate,
+                performanceMetrics,
+                adjustmentNote: "Enhanced template adjusted based on historical performance"
+            };
+        } catch (error) {
+            console.error(`Error in getEnhancedTemplate for ${templateType}:`, error);
+            return null;
+        }
+    },
+
+    /**
+     * Get custom enhanced template based on specified conditions
+     * 
+     * @param {object} options - Template options
+     * @param {string} options.templateType - Type of template (ATM or Flazh)
+     * @param {string} options.session - Market session
+     * @param {string} options.volatility - Volatility level
+     * @returns {Promise<object>} - Enhanced template object
+     */
+    getCustomEnhancedTemplate: async (options) => {
+        try {
+            const { templateType, session, volatility } = options;
+
+            // Get base template for these conditions
+            const basicSelector = require('./templateSelector');
+            const baseTemplate = await basicSelector.getTemplateForConditions(
+                templateType,
+                session,
+                volatility
+            );
+
+            if (!baseTemplate) {
+                console.log(`No base template found for ${templateType} with session=${session}, volatility=${volatility}`);
+                return null;
+            }
+
+            // Map conditions to performance metrics
+            const timeOfDay = enhancedTemplateSelector.mapSessionToTimeOfDay(session);
+            const sessionType = enhancedTemplateSelector.mapVolatilityToSessionType(volatility);
+
+            // Calculate volatility score (mocked here, would be based on real data)
+            let volatilityScore = 5; // Medium default
+            if (volatility.includes('HIGH')) {
+                volatilityScore = 8;
+            } else if (volatility.includes('LOW')) {
+                volatilityScore = 2;
+            }
+
+            // Get performance metrics for these conditions
+            const performanceMetrics = await backtestingResultsService.getPerformanceMetrics(
+                timeOfDay,
+                sessionType,
+                volatilityScore
+            );
+
+            // Apply adjustments to template based on performance metrics
+            const adjustedTemplate = enhancedTemplateSelector.adjustTemplateParameters(
+                baseTemplate,
+                performanceMetrics,
+                volatilityScore
+            );
+
+            return {
+                originalTemplate: baseTemplate,
+                adjustedTemplate,
+                performanceMetrics,
+                adjustmentNote: "Custom enhanced template adjusted based on historical performance"
+            };
+        } catch (error) {
+            console.error('Error in getCustomEnhancedTemplate:', error);
+            return null;
+        }
+    },
+
+    /**
+     * Map session to time of day for performance analysis
+     * 
+     * @param {string} session - Market session
+     * @returns {string} - Time of day category
+     */
+    mapSessionToTimeOfDay: (session) => {
+        if (session.includes('US_OPEN') || session.includes('MORNING')) {
+            return 'Morning';
+        } else if (session.includes('US_MIDDAY') || session.includes('US_AFTERNOON')) {
+            return 'Afternoon';
+        } else if (session.includes('OVERNIGHT') || session.includes('ASIA') || session.includes('EUROPE')) {
+            return 'Evening';
         } else {
-            // Check for adjacent volatility levels
-            const volatilityLevels = ['LOW_VOLATILITY', 'MEDIUM_VOLATILITY', 'HIGH_VOLATILITY'];
-            const indexA = volatilityLevels.indexOf(conditionA.volatilityCategory);
-            const indexB = volatilityLevels.indexOf(conditionB.volatilityCategory);
+            return 'Morning'; // Default fallback
+        }
+    },
 
-            if (indexA !== -1 && indexB !== -1) {
-                // Check how far apart they are (0=same, 1=adjacent, 2=opposite)
-                const difference = Math.abs(indexA - indexB);
-                if (difference === 1) {
-                    similarityScore += 20; // Adjacent volatility
+    /**
+     * Map volatility to session type for performance analysis
+     * 
+     * @param {string} volatility - Volatility level
+     * @returns {string} - Session type category
+     */
+    mapVolatilityToSessionType: (volatility) => {
+        if (volatility.includes('HIGH')) {
+            return 'High Volatility';
+        } else if (volatility.includes('LOW')) {
+            return 'Low Volatility';
+        } else {
+            return 'Regular';
+        }
+    },
+
+    /**
+     * Calculate volatility score based on market data
+     * 
+     * @param {string} volatilityCategory - Volatility category
+     * @param {object} marketData - Market data
+     * @returns {number} - Volatility score (1-10)
+     */
+    calculateVolatilityScore: (volatilityCategory, marketData) => {
+        // In a real implementation, this would use actual market data
+        // For now, use category as a rough proxy
+        if (volatilityCategory.includes('HIGH')) {
+            return 7 + (Math.random() * 3); // 7-10
+        } else if (volatilityCategory.includes('MEDIUM')) {
+            return 4 + (Math.random() * 3); // 4-7
+        } else {
+            return 1 + (Math.random() * 3); // 1-4
+        }
+    },
+
+    /**
+     * Adjust template parameters based on performance metrics
+     * 
+     * @param {object} baseTemplate - Original template
+     * @param {object} performanceMetrics - Performance metrics
+     * @param {number} volatilityScore - Volatility score
+     * @returns {object} - Adjusted template
+     */
+    adjustTemplateParameters: (baseTemplate, performanceMetrics, volatilityScore) => {
+        // Create a deep copy of the template to avoid modifying the original
+        const adjustedTemplate = JSON.parse(JSON.stringify(baseTemplate));
+
+        // If we don't have performance metrics, return the original template
+        if (!performanceMetrics || !performanceMetrics.adjustmentFactors) {
+            return adjustedTemplate;
+        }
+
+        // Rename the template to indicate it's enhanced
+        if (adjustedTemplate.name) {
+            adjustedTemplate.templateName = `${adjustedTemplate.name} (Enhanced)`;
+        } else if (adjustedTemplate.templateName) {
+            adjustedTemplate.templateName = `${adjustedTemplate.templateName} (Enhanced)`;
+        }
+
+        // Apply adjustment factors to different parameters based on template type
+        const { stopLossAdjustment, targetAdjustment, trailingStopAdjustment } = performanceMetrics.adjustmentFactors;
+
+        // Apply common adjustments for both template types
+        if (adjustedTemplate.stopLoss) {
+            adjustedTemplate.stopLoss = Math.round(adjustedTemplate.stopLoss * stopLossAdjustment);
+        }
+
+        if (adjustedTemplate.target) {
+            adjustedTemplate.target = Math.round(adjustedTemplate.target * targetAdjustment);
+        }
+
+        if (adjustedTemplate.trailingStop) {
+            adjustedTemplate.trailingStop = Math.round(adjustedTemplate.trailingStop * trailingStopAdjustment);
+        }
+
+        // Apply template-specific adjustments
+        if (baseTemplate.fastPeriod) {
+            // This is a Flazh template
+
+            // Adjust periods based on volatility
+            if (volatilityScore > 6) {
+                // Higher volatility - decrease periods
+                adjustedTemplate.fastPeriod = Math.max(3, Math.round(adjustedTemplate.fastPeriod * 0.8));
+                adjustedTemplate.mediumPeriod = Math.max(6, Math.round(adjustedTemplate.mediumPeriod * 0.85));
+                adjustedTemplate.slowPeriod = Math.max(10, Math.round(adjustedTemplate.slowPeriod * 0.9));
+            } else if (volatilityScore < 4) {
+                // Lower volatility - increase periods
+                adjustedTemplate.fastPeriod = Math.round(adjustedTemplate.fastPeriod * 1.2);
+                adjustedTemplate.mediumPeriod = Math.round(adjustedTemplate.mediumPeriod * 1.15);
+                adjustedTemplate.slowPeriod = Math.round(adjustedTemplate.slowPeriod * 1.1);
+            }
+
+            // Adjust ranges based on performance
+            const winRateAdjustment = performanceMetrics.winRate > 60 ? 0.9 : 1.1;
+            adjustedTemplate.fastRange = Math.round(adjustedTemplate.fastRange * winRateAdjustment);
+            adjustedTemplate.mediumRange = Math.round(adjustedTemplate.mediumRange * winRateAdjustment);
+            adjustedTemplate.slowRange = Math.round(adjustedTemplate.slowRange * winRateAdjustment);
+
+            // Adjust filter multiplier based on profit factor
+            if (performanceMetrics.profitFactor < 1.3) {
+                // Increase filter to reduce false signals
+                adjustedTemplate.filterMultiplier = Math.min(5, Math.round(adjustedTemplate.filterMultiplier * 1.2));
+            } else if (performanceMetrics.profitFactor > 1.8) {
+                // Decrease filter to capture more opportunities
+                adjustedTemplate.filterMultiplier = Math.max(1, Math.round(adjustedTemplate.filterMultiplier * 0.9));
+            }
+        } else if (baseTemplate.brackets || baseTemplate.calculationMode) {
+            // This is an ATM template
+
+            // Adjust brackets based on volatility
+            if (adjustedTemplate.brackets) {
+                if (volatilityScore > 7) {
+                    // For high volatility, use wider brackets
+                    adjustedTemplate.brackets = "Wide";
+                } else if (volatilityScore < 3) {
+                    // For low volatility, use narrower brackets
+                    adjustedTemplate.brackets = "Narrow";
+                } else {
+                    // For medium volatility, use standard brackets
+                    adjustedTemplate.brackets = "Standard";
+                }
+            }
+
+            // Adjust calculation mode based on win rate
+            if (adjustedTemplate.calculationMode && performanceMetrics.winRate) {
+                if (performanceMetrics.winRate > 65) {
+                    // Higher win rate - use percentage-based calculation
+                    adjustedTemplate.calculationMode = "Percentage";
+                } else {
+                    // Lower win rate - use tick-based calculation
+                    adjustedTemplate.calculationMode = "Ticks";
                 }
             }
         }
-    }
 
-    // Add additional factors if available
-
-    // Check for day of week similarity (5% weight)
-    if (conditionA.dayOfWeek && conditionB.dayOfWeek) {
-        totalFactors += 10;
-        if (conditionA.dayOfWeek === conditionB.dayOfWeek) {
-            similarityScore += 10;
-        }
-    }
-
-    // Check for volume similarity (5% weight)
-    if (conditionA.volume && conditionB.volume) {
-        totalFactors += 10;
-        if (conditionA.volume === conditionB.volume) {
-            similarityScore += 10;
-        }
-    }
-
-    // If we don't have enough factors, return a low score
-    if (totalFactors < 50) {
-        return 20; // Base similarity score
-    }
-
-    // Convert to 0-100 scale
-    return Math.round((similarityScore / totalFactors) * 100);
-};
-
-/**
- * Helper function to extract session and volatility information from template name
- * @param {Object} template - The template document from database
- * @returns {Object} - Extracted market conditions 
- */
-const extractMarketConditionsFromTemplate = (template) => {
-    // Default values
-    const conditions = {
-        session: null,
-        volatilityCategory: null,
-        dayOfWeek: null,
-        volume: null
-    };
-
-    if (!template || !template.name) {
-        return conditions;
-    }
-
-    // Extract from template name (e.g., "ATM_EA_LOW" or "Flazh_EA_LOW")
-    const nameParts = template.name.split('_');
-
-    // Look for session indicators (EA = Early Afternoon, etc.)
-    if (nameParts.includes('EA')) {
-        conditions.session = 'US_AFTERNOON';
-    } else if (nameParts.includes('MO')) {
-        conditions.session = 'US_OPEN';
-    } else if (nameParts.includes('MI')) {
-        conditions.session = 'US_MIDDAY';
-    }
-
-    // Look for volatility indicators
-    if (nameParts.includes('LOW')) {
-        conditions.volatilityCategory = 'LOW_VOLATILITY';
-    } else if (nameParts.includes('MED')) {
-        conditions.volatilityCategory = 'MEDIUM_VOLATILITY';
-    } else if (nameParts.includes('HIGH')) {
-        conditions.volatilityCategory = 'HIGH_VOLATILITY';
-    }
-
-    return conditions;
-};
-
-/**
- * Selects the best template based on current market conditions using enhanced similarity matching
- * @param {string} templateType - 'ATM' or 'Flazh'
- * @param {Object} marketConditions - Current market conditions
- * @returns {Promise<Object>} - The selected template
- */
-const selectBestTemplate = async (templateType, marketConditions) => {
-    console.log(`Selecting ${templateType} template with enhanced market regime detection`);
-    console.log(`Market conditions: Session=${marketConditions.currentSession}, Volatility=${marketConditions.volatilityCategory}`);
-
-    try {
-        // Select the appropriate collection based on template type
-        const collection = templateType.toUpperCase() === 'ATM'
-            ? mongoose.connection.db.collection('atmtemplates')
-            : mongoose.connection.db.collection('flazhtemplates');
-
-        // Get all templates from the database
-        const templates = await collection.find({}).toArray();
-
-        if (!templates || templates.length === 0) {
-            console.log(`No ${templateType} templates found in database`);
-            return null;
-        }
-
-        console.log(`Found ${templates.length} ${templateType} templates to evaluate`);
-
-        // Calculate similarity scores for each template
-        const templatesWithScores = templates.map(template => {
-            // Extract template market conditions from name and metadata
-            const templateConditions = extractMarketConditionsFromTemplate(template);
-
-            // Calculate similarity score
-            const similarityScore = calculateMarketSimilarity(marketConditions, templateConditions);
-
-            return {
-                template,
-                similarityScore
-            };
-        });
-
-        // Sort by similarity score (highest first)
-        templatesWithScores.sort((a, b) => b.similarityScore - a.similarityScore);
-
-        // Log the top 3 templates for debugging
-        const topTemplates = templatesWithScores.slice(0, Math.min(3, templatesWithScores.length));
-        console.log('Top matching templates:');
-        topTemplates.forEach((item, index) => {
-            console.log(`${index + 1}. ${item.template.name} (Score: ${item.similarityScore})`);
-        });
-
-        // Select the best template
-        const bestMatch = templatesWithScores[0];
-
-        if (bestMatch && bestMatch.similarityScore > 40) {
-            console.log(`Selected template: ${bestMatch.template.name} with similarity score: ${bestMatch.similarityScore}`);
-            return bestMatch.template;
-        }
-
-        // If no good match found, use first template as fallback
-        console.log('No template with good similarity found, using first template as fallback');
-        return templates[0];
-    } catch (error) {
-        console.error(`Error selecting best template: ${error.message}`);
-        console.error('Using fallback to mock templates as temporary measure');
-
-        // Use mock templates as fallback in case of database error
-        const mockTemplates = createMockTemplates(templateType);
-        return mockTemplates[0];
-    }
-};
-
-/**
- * Helper function to create mock templates (used as fallback only)
- * @param {string} templateType - 'ATM' or 'Flazh'
- * @returns {Array} - Array of mock templates
- */
-function createMockTemplates(templateType) {
-    if (templateType.toUpperCase() === 'ATM') {
-        return [
-            {
-                name: 'ATM_MO_HIGH',
-                calculationMode: 'Ticks',
-                brackets: [
-                    {
-                        quantity: 1,
-                        stopLoss: 28,
-                        target: 56,
-                        stopStrategy: {
-                            autoBreakEvenPlus: 15,
-                            autoBreakEvenProfitTrigger: 28
-                        }
-                    }
-                ]
-            },
-            {
-                name: 'ATM_MO_MED',
-                calculationMode: 'Ticks',
-                brackets: [
-                    {
-                        quantity: 1,
-                        stopLoss: 21,
-                        target: 42,
-                        stopStrategy: {
-                            autoBreakEvenPlus: 10,
-                            autoBreakEvenProfitTrigger: 21
-                        }
-                    }
-                ]
-            },
-            {
-                name: 'ATM_EA_MED',
-                calculationMode: 'Ticks',
-                brackets: [
-                    {
-                        quantity: 1,
-                        stopLoss: 19,
-                        target: 38,
-                        stopStrategy: {
-                            autoBreakEvenPlus: 9,
-                            autoBreakEvenProfitTrigger: 19
-                        }
-                    }
-                ]
-            }
-        ];
-    } else {
-        return [
-            {
-                name: 'Flazh_MO_HIGH',
-                fastPeriod: 14,
-                fastRange: 4,
-                mediumPeriod: 28,
-                mediumRange: 5,
-                slowPeriod: 50,
-                slowRange: 6,
-                filterMultiplier: 15
-            },
-            {
-                name: 'Flazh_MO_MED',
-                fastPeriod: 21,
-                fastRange: 3,
-                mediumPeriod: 41,
-                mediumRange: 4,
-                slowPeriod: 70,
-                slowRange: 5,
-                filterMultiplier: 10
-            },
-            {
-                name: 'Flazh_EA_MED',
-                fastPeriod: 24,
-                fastRange: 3,
-                mediumPeriod: 45,
-                mediumRange: 4,
-                slowPeriod: 75,
-                slowRange: 5,
-                filterMultiplier: 9
-            }
-        ];
-    }
-}
-
-/**
- * Gets the recommended template based on current market conditions
- * @param {string} templateType - 'ATM' or 'Flazh'
- * @param {Object} [overrideConditions] - Optional market conditions override
- * @returns {Promise<Object>} - The recommended template
- */
-const getRecommendedTemplate = async (templateType, overrideConditions = null) => {
-    // Get current market conditions from service or use override
-    const marketConditions = overrideConditions || marketConditionsService.analyzeMarketConditions();
-
-    // Select the best template based on conditions
-    return await selectBestTemplate(templateType, marketConditions);
-};
-
-/**
- * Adjust template parameters based on market conditions
- * @param {Object} template - Template to adjust
- * @param {Object} marketConditions - Current market conditions
- * @returns {Object} - Adjusted template
- */
-const adjustTemplateForMarketConditions = (template, marketConditions) => {
-    if (!template || !marketConditions) {
-        return template;
-    }
-
-    // Determine template type
-    const templateType = template.name && template.name.startsWith('ATM_') ? 'ATM' : 'Flazh';
-    const volatility = marketConditions.volatilityCategory || 'MEDIUM_VOLATILITY';
-
-    // Create a deep copy of the template to avoid modifying the original
-    const adjustedTemplate = JSON.parse(JSON.stringify(template));
-
-    // Get parameter adjustments from market conditions service
-    const volatilityAdjustments = marketConditionsService.PARAMETER_ADJUSTMENTS[volatility];
-
-    if (!volatilityAdjustments) {
-        console.log(`No adjustments found for volatility: ${volatility}`);
         return adjustedTemplate;
+    },
+
+    /**
+     * Internal helper to create fallback templates
+     * @private
+     */
+    _getFallbackTemplate: function (templateType, marketConditions = {}) {
+        // Create sensible defaults based on provided market conditions
+        const volatility = marketConditions?.volatility || 'medium';
+        const trend = marketConditions?.trend || 'neutral';
+
+        if (templateType.toLowerCase().includes('flazh')) {
+            return {
+                name: `Fallback Flazh (${volatility} volatility)`,
+                description: "System-generated fallback template when no matching templates found",
+                conditions: {
+                    volatility: volatility,
+                    trend: trend,
+                    volume: 'normal',
+                    session: 'regular'
+                },
+                parameters: {
+                    stopLoss: volatility === 'high' ? 15 : (volatility === 'low' ? 8 : 12),
+                    takeProfit: volatility === 'high' ? 30 : (volatility === 'low' ? 16 : 24),
+                    trailStop: volatility === 'high' ? 8 : (volatility === 'low' ? 4 : 6),
+                    entryFilter: 50,
+                    marketNoiseFilter: volatility === 'high' ? 70 : (volatility === 'low' ? 30 : 50),
+                    trendStrengthThreshold: trend.includes('strong') ? 80 : 50,
+                    fastPeriod: 5,
+                    mediumPeriod: 10,
+                    slowPeriod: 20,
+                    fastRange: 6,
+                    mediumRange: 12,
+                    slowRange: 24,
+                    filterMultiplier: 2
+                },
+                matchScore: 0,
+                isFallback: true
+            };
+        } else {
+            // ATM template
+            return {
+                name: `Fallback ATM (${volatility} volatility)`,
+                description: "System-generated fallback template when no matching templates found",
+                conditions: {
+                    volatility: volatility,
+                    trend: trend,
+                    volume: 'normal',
+                    session: 'regular'
+                },
+                parameters: {
+                    stopLoss: volatility === 'high' ? 12 : (volatility === 'low' ? 6 : 9),
+                    profit1: volatility === 'high' ? 20 : (volatility === 'low' ? 10 : 15),
+                    profit2: volatility === 'high' ? 30 : (volatility === 'low' ? 18 : 25),
+                    autoBreakEven: true,
+                    breakEvenTicks: volatility === 'high' ? 8 : (volatility === 'low' ? 4 : 6),
+                    brackets: volatility === 'high' ? "Wide" : (volatility === 'low' ? "Narrow" : "Standard"),
+                    calculationMode: "Ticks"
+                },
+                matchScore: 0,
+                isFallback: true
+            };
+        }
     }
-
-    console.log(`Applying ${volatility} adjustments to ${templateType} template`);
-
-    // Apply adjustments based on template type
-    if (templateType.toUpperCase() === 'ATM') {
-        const atmAdjustments = volatilityAdjustments.atm;
-
-        // Apply ATM-specific adjustments (adjusting for your structure)
-        if (adjustedTemplate.brackets && adjustedTemplate.brackets.length > 0) {
-            if (atmAdjustments.StopLoss) {
-                adjustedTemplate.brackets[0].stopLoss = atmAdjustments.StopLoss;
-            }
-
-            if (atmAdjustments.Target) {
-                adjustedTemplate.brackets[0].target = atmAdjustments.Target;
-            }
-
-            if (adjustedTemplate.brackets[0].stopStrategy && atmAdjustments.AutoBreakEvenProfitTrigger) {
-                adjustedTemplate.brackets[0].stopStrategy.autoBreakEvenProfitTrigger = atmAdjustments.AutoBreakEvenProfitTrigger;
-            }
-
-            if (adjustedTemplate.brackets[0].stopStrategy && atmAdjustments.AutoBreakEvenPlus) {
-                adjustedTemplate.brackets[0].stopStrategy.autoBreakEvenPlus = atmAdjustments.AutoBreakEvenPlus;
-            }
-        }
-    } else {
-        // Flazh template adjustments
-        const flazhAdjustments = volatilityAdjustments.flazh;
-
-        // Apply Flazh-specific adjustments
-        if (adjustedTemplate.fastPeriod && flazhAdjustments.FastPeriod) {
-            adjustedTemplate.fastPeriod = flazhAdjustments.FastPeriod;
-        }
-
-        if (adjustedTemplate.fastRange && flazhAdjustments.FastRange) {
-            adjustedTemplate.fastRange = flazhAdjustments.FastRange;
-        }
-
-        if (adjustedTemplate.mediumPeriod && flazhAdjustments.MediumPeriod) {
-            adjustedTemplate.mediumPeriod = flazhAdjustments.MediumPeriod;
-        }
-
-        if (adjustedTemplate.mediumRange && flazhAdjustments.MediumRange) {
-            adjustedTemplate.mediumRange = flazhAdjustments.MediumRange;
-        }
-
-        if (adjustedTemplate.slowPeriod && flazhAdjustments.SlowPeriod) {
-            adjustedTemplate.slowPeriod = flazhAdjustments.SlowPeriod;
-        }
-
-        if (adjustedTemplate.slowRange && flazhAdjustments.SlowRange) {
-            adjustedTemplate.slowRange = flazhAdjustments.SlowRange;
-        }
-
-        if (adjustedTemplate.filterMultiplier && flazhAdjustments.FilterMultiplier) {
-            adjustedTemplate.filterMultiplier = flazhAdjustments.FilterMultiplier;
-        }
-    }
-
-    console.log(`Template adjusted for ${volatility}`);
-    return adjustedTemplate;
 };
 
-module.exports = {
-    getRecommendedTemplate,
-    selectBestTemplate,
-    calculateMarketSimilarity,
-    adjustTemplateForMarketConditions
-};
+module.exports = enhancedTemplateSelector;
