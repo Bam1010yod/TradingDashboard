@@ -25,30 +25,75 @@ Alert Service initialized
 Initializing trading session service...
 Starting periodic health check every 5 minutes
 Performing initial session analysis...
-Initial health check: System is operational
+Initial health check: System is degraded
 Initial analysis for preMarket session completed
 Initial analysis for regularHours session completed
 Initial analysis for postMarket session completed
 Initial analysis for overnight session completed
 All services initialized successfully
-[2025-03-25T10:03:05.169Z] GET /api/health
-[2025-03-25T10:03:05.202Z] GET /api/health
-[2025-03-25T10:03:05.234Z] GET /api/health
+[2025-03-26T05:37:10.260Z] GET /api/health
+[2025-03-26T05:37:10.312Z] GET /api/health
+[2025-03-26T05:37:10.349Z] GET /api/health
 Market data saved to database
 Market data updated: NQ - Volatility: LOW
 Market data update emitted to clients
-[2025-03-25T10:03:41.268Z] GET /recommendations.html
-[2025-03-25T10:03:41.498Z] GET /api/enhancedTemplateRecommendations
-Selecting Flazh template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
+[2025-03-26T05:37:17.293Z] GET /market-conditions.html
+[2025-03-26T05:37:17.334Z] GET /api/market-conditions?timezone=US_CENTRAL
+[2025-03-26T05:37:17.336Z] [INFO] Getting market conditions for timezone: US_CENTRAL
+[2025-03-26T05:37:32.806Z] GET /recommendations.html
+[2025-03-26T05:37:32.878Z] GET /api/enhancedTemplateRecommendations
+Selecting Flazh template for: Day=Wednesday, Session=Pre_Market, Volatility=Medium_Volatility
 Found fallback template: EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 2.6227087201148707
-Selecting ATM template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
+Getting performance metrics for Morning, Regular, volatility: 2.1379958504425396
+Selecting ATM template for: Day=Wednesday, Session=Pre_Market, Volatility=Medium_Volatility
 Found fallback template: ATM_EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 2.910115766818449
-[2025-03-25T10:03:50.198Z] POST /api/enhancedTemplateRecommendations/custom
+Getting performance metrics for Morning, Regular, volatility: 3.8089852417564565
+[2025-03-26T05:37:50.876Z] GET /recommendations.html
+[2025-03-26T05:37:50.947Z] GET /api/enhancedTemplateRecommendations
+Selecting Flazh template for: Day=Wednesday, Session=Pre_Market, Volatility=Medium_Volatility
+Found fallback template: EA_HIGH
+Getting performance metrics for Morning, Regular, volatility: 1.8158989407332244
+Selecting ATM template for: Day=Wednesday, Session=Pre_Market, Volatility=Medium_Volatility
+Found fallback template: ATM_EA_HIGH
+Getting performance metrics for Morning, Regular, volatility: 1.3795560146363541
+[2025-03-26T05:39:09.204Z] GET /risk-dashboard.html
+[2025-03-26T05:39:23.193Z] GET /risk-management.html
+[2025-03-26T05:39:23.235Z] GET /api/risk/dashboard
+Error getting dashboard data: Error: No active risk profile found
+    at RiskManagementService.getDashboardData (C:\TradingDashboard\server\services\riskManagementService.js:171:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\TradingDashboard\server\routes\riskManagement.js:16:31
+Error in risk dashboard route: Error: No active risk profile found
+    at RiskManagementService.getDashboardData (C:\TradingDashboard\server\services\riskManagementService.js:171:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\TradingDashboard\server\routes\riskManagement.js:16:31
+Health check warning: System is degraded
+[2025-03-26T05:44:00.074Z] GET /api/enhancedTemplateRecommendations
+Selecting Flazh template for: Day=Wednesday, Session=Pre_Market, Volatility=Medium_Volatility
+Found fallback template: EA_HIGH
+Getting performance metrics for Morning, Regular, volatility: 3.3847469348394754
+Selecting ATM template for: Day=Wednesday, Session=Pre_Market, Volatility=Medium_Volatility
+Found fallback template: ATM_EA_HIGH
+Getting performance metrics for Morning, Regular, volatility: 2.7485845886204654
+Health check warning: System is degraded
+[2025-03-26T05:48:12.921Z] GET /api/enhancedTemplateRecommendations
+Selecting Flazh template for: Day=Wednesday, Session=Pre_Market, Volatility=Medium_Volatility
+Found fallback template: EA_HIGH
+Getting performance metrics for Morning, Regular, volatility: 3.3134681351430566
+Selecting ATM template for: Day=Wednesday, Session=Pre_Market, Volatility=Medium_Volatility
+Found fallback template: ATM_EA_HIGH
+Getting performance metrics for Morning, Regular, volatility: 1.0595112800181963
+[2025-03-26T05:48:15.188Z] GET /api/enhancedTemplateRecommendations
+Selecting Flazh template for: Day=Wednesday, Session=Pre_Market, Volatility=Medium_Volatility
+Found fallback template: EA_HIGH
+Getting performance metrics for Morning, Regular, volatility: 2.6652924917551264
+Selecting ATM template for: Day=Wednesday, Session=Pre_Market, Volatility=Medium_Volatility
+Found fallback template: ATM_EA_HIGH
+Getting performance metrics for Morning, Regular, volatility: 2.767585438479348
+[2025-03-26T05:48:16.569Z] POST /api/enhancedTemplateRecommendations/custom
 Error in getCustomEnhancedTemplate: TypeError: basicSelector.getTemplateForConditions is not a function
     at Object.getCustomEnhancedTemplate (C:\TradingDashboard\server\services\enhancedTemplateSelector.js:193:54)
-    at C:\TradingDashboard\server\routes\enhancedTemplateRecommendations.js:207:76
+    at C:\TradingDashboard\server\routes\enhancedTemplateRecommendations.js:226:76
     at Layer.handle [as handle_request] (C:\TradingDashboard\server\node_modules\express\lib\router\layer.js:95:5)
     at next (C:\TradingDashboard\server\node_modules\express\lib\router\route.js:149:13)
     at Route.dispatch (C:\TradingDashboard\server\node_modules\express\lib\router\route.js:119:3)
@@ -59,78 +104,6 @@ Error in getCustomEnhancedTemplate: TypeError: basicSelector.getTemplateForCondi
     at Function.handle (C:\TradingDashboard\server\node_modules\express\lib\router\index.js:175:3)
 Error in getCustomEnhancedTemplate: TypeError: basicSelector.getTemplateForConditions is not a function
     at Object.getCustomEnhancedTemplate (C:\TradingDashboard\server\services\enhancedTemplateSelector.js:193:54)
-    at C:\TradingDashboard\server\routes\enhancedTemplateRecommendations.js:218:74
+    at C:\TradingDashboard\server\routes\enhancedTemplateRecommendations.js:238:74
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-[2025-03-25T10:03:56.053Z] GET /market-conditions.html
-[2025-03-25T10:03:56.068Z] GET /api/market-conditions?timezone=US_CENTRAL
-[2025-03-25T10:03:56.069Z] [INFO] Getting market conditions for timezone: US_CENTRAL
-[2025-03-25T10:03:57.987Z] GET /recommendations.html
-[2025-03-25T10:03:58.006Z] GET /api/enhancedTemplateRecommendations
-Selecting Flazh template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
-Found fallback template: EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 1.554867159394272
-Selecting ATM template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
-Found fallback template: ATM_EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 2.423036321230028
-[2025-03-25T10:04:00.847Z] GET /market-conditions.html
-[2025-03-25T10:04:00.862Z] GET /api/market-conditions?timezone=US_CENTRAL
-[2025-03-25T10:04:00.863Z] [INFO] Getting market conditions for timezone: US_CENTRAL
-[2025-03-25T10:04:02.525Z] GET /api/market-conditions?timezone=US_CENTRAL
-[2025-03-25T10:04:02.525Z] [INFO] Getting market conditions for timezone: US_CENTRAL
-[2025-03-25T10:04:05.733Z] GET /recommendations.html
-[2025-03-25T10:04:05.749Z] GET /api/enhancedTemplateRecommendations
-Selecting Flazh template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
-Found fallback template: EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 3.1147554697362905
-Selecting ATM template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
-Found fallback template: ATM_EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 2.1563323806722354
-[2025-03-25T10:04:15.048Z] GET /risk-dashboard.html
-[2025-03-25T10:04:26.996Z] GET /recommendations.html
-[2025-03-25T10:04:27.011Z] GET /api/enhancedTemplateRecommendations
-Selecting Flazh template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
-Found fallback template: EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 3.617794527295998
-Selecting ATM template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
-Found fallback template: ATM_EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 2.3906695107856857
-[2025-03-25T10:04:30.674Z] GET /market-conditions.html
-[2025-03-25T10:04:30.694Z] GET /api/market-conditions?timezone=US_CENTRAL
-[2025-03-25T10:04:30.694Z] [INFO] Getting market conditions for timezone: US_CENTRAL
-[2025-03-25T10:04:35.876Z] GET /recommendations.html
-[2025-03-25T10:04:35.894Z] GET /api/enhancedTemplateRecommendations
-Selecting Flazh template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
-Found fallback template: EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 1.7683040764315903
-Selecting ATM template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
-Found fallback template: ATM_EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 3.176119645947029
-Market data saved to database
-Market data updated: NQ - Volatility: LOW
-Market data update emitted to clients
-[2025-03-25T10:05:29.935Z] GET /market-conditions.html
-[2025-03-25T10:05:29.954Z] GET /api/market-conditions?timezone=US_CENTRAL
-[2025-03-25T10:05:29.955Z] [INFO] Getting market conditions for timezone: US_CENTRAL
-[2025-03-25T10:05:32.392Z] GET /api/market-conditions?timezone=US_CENTRAL
-[2025-03-25T10:05:32.392Z] [INFO] Getting market conditions for timezone: US_CENTRAL
-[2025-03-25T10:05:37.450Z] GET /recommendations.html
-[2025-03-25T10:05:37.464Z] GET /api/enhancedTemplateRecommendations
-Selecting Flazh template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
-Found fallback template: EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 3.7978769861937596
-Selecting ATM template for: Day=Tuesday, Session=Pre_Market, Volatility=Medium_Volatility
-Found fallback template: ATM_EA_HIGH
-Getting performance metrics for Morning, Regular, volatility: 3.0407272484242593
-[2025-03-25T10:05:40.272Z] GET /market-conditions.html
-[2025-03-25T10:05:40.289Z] GET /api/market-conditions?timezone=US_CENTRAL
-[2025-03-25T10:05:40.290Z] [INFO] Getting market conditions for timezone: US_CENTRAL
-[2025-03-25T10:06:01.038Z] GET /risk-management.html
-[2025-03-25T10:06:01.053Z] GET /api/risk/dashboard
-Error getting dashboard data: Error: No active risk profile found
-    at RiskManagementService.getDashboardData (C:\TradingDashboard\server\services\riskManagementService.js:171:23)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async C:\TradingDashboard\server\routes\riskManagement.js:16:31
-Error in risk dashboard route: Error: No active risk profile found
-    at RiskManagementService.getDashboardData (C:\TradingDashboard\server\services\riskManagementService.js:171:23)
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async C:\TradingDashboard\server\routes\riskManagement.js:16:31
+Health check warning: System is degraded

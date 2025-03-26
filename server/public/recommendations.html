@@ -31,6 +31,31 @@
         .nav-tabs {
             margin-bottom: 20px;
         }
+        /* Data source indicator styles */
+        .data-source-indicator {
+            padding: 5px 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .live-data {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .fallback-data {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        .timestamp {
+            display: block;
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+            font-weight: normal;
+        }
     </style>
 </head>
 <body>
@@ -47,6 +72,9 @@
             <a class="nav-link" href="risk-dashboard.html">Risk Management Dashboard</a>
         </li>
     </ul>
+
+    <!-- Data Source Indicator -->
+    <div id="data-source-indicator" class="data-source-indicator fallback-data">Loading data source information...</div>
 
     <button class="btn btn-success mb-3" id="refreshBtn">Refresh Recommendations</button>
 
@@ -203,6 +231,37 @@
             alert('Error: ' + message);
         }
 
+        // Update data source indicator
+        function updateDataSourceIndicator(data) {
+            const indicator = document.getElementById('data-source-indicator');
+            
+            // Determine if data is fallback
+            const isFallback = data.dataSource === 'fallback' || 
+                               !data.data ||
+                               (data.flazh && data.flazh.isFallback) ||
+                               (data.atm && data.atm.isFallback);
+            
+            if (isFallback) {
+                indicator.className = 'data-source-indicator fallback-data';
+                indicator.innerHTML = '⚠️ FALLBACK DATA (using backup templates)';
+            } else {
+                indicator.className = 'data-source-indicator live-data';
+                indicator.innerHTML = '✅ LIVE MARKET DATA';
+            }
+            
+            // Add timestamp if available
+            if (data.lastUpdated || (data.marketConditions && data.marketConditions.timestamp)) {
+                const timestamp = data.lastUpdated ? 
+                    formatTimestamp(data.lastUpdated) : 
+                    formatTimestamp(data.marketConditions.timestamp);
+                
+                const timeSpan = document.createElement('span');
+                timeSpan.className = 'timestamp';
+                timeSpan.textContent = `Last updated: ${timestamp}`;
+                indicator.appendChild(timeSpan);
+            }
+        }
+
         // Populate market conditions section
         function displayMarketConditions(marketConditions) {
             if (!marketConditions) return;
@@ -307,6 +366,9 @@
                 const data = await response.json();
                 console.log('API Response:', data);
                 
+                // Update data source indicator
+                updateDataSourceIndicator(data);
+                
                 // Display the data
                 displayMarketConditions(data.marketConditions);
                 displayFlazhTemplate(data.flazh);
@@ -316,6 +378,9 @@
             } catch (error) {
                 showError('Failed to fetch recommendations: ' + error.message);
                 setLoading(false);
+                
+                // Show fallback indicator on error
+                updateDataSourceIndicator({dataSource: 'fallback'});
             }
         }
 
@@ -345,6 +410,9 @@
                 const data = await response.json();
                 console.log('Custom Recommendations:', data);
                 
+                // Update data source indicator
+                updateDataSourceIndicator(data);
+                
                 // Display the data
                 const customMarketConditions = {
                     currentSession: session,
@@ -366,6 +434,9 @@
             } catch (error) {
                 showError('Failed to fetch custom recommendations: ' + error.message);
                 setLoading(false);
+                
+                // Show fallback indicator on error
+                updateDataSourceIndicator({dataSource: 'fallback'});
             }
         }
 

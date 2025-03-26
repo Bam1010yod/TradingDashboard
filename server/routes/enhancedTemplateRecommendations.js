@@ -16,6 +16,8 @@ router.get('/', async (req, res) => {
     try {
         // Get current market conditions
         let marketConditions;
+        let isRealData = true;
+
         try {
             marketConditions = await marketConditionsService.getCurrentMarketConditions();
         } catch (conditionsError) {
@@ -28,6 +30,7 @@ router.get('/', async (req, res) => {
                 session: 'regular',
                 timestamp: new Date().toISOString()
             };
+            isRealData = false;
         }
 
         // Create fallback templates based on market conditions
@@ -35,6 +38,8 @@ router.get('/', async (req, res) => {
 
         // Create response object with fallback templates
         const response = {
+            dataSource: 'fallback',
+            lastUpdated: new Date().toISOString(),
             flazh: {
                 name: `Fallback Flazh (${volatility} volatility)`,
                 description: "System-generated fallback template",
@@ -76,6 +81,8 @@ router.get('/', async (req, res) => {
 
                 if (flazhRecommendation && flazhRecommendation.adjustedTemplate) {
                     response.flazh = flazhRecommendation.adjustedTemplate;
+                    response.flazh.isFallback = false;
+                    isRealData = true;
                 }
 
                 // Try to get ATM template
@@ -87,11 +94,19 @@ router.get('/', async (req, res) => {
 
                 if (atmRecommendation && atmRecommendation.adjustedTemplate) {
                     response.atm = atmRecommendation.adjustedTemplate;
+                    response.atm.isFallback = false;
+                    isRealData = true;
+                }
+
+                // Update data source indicator if both templates are real
+                if (!response.flazh.isFallback && !response.atm.isFallback) {
+                    response.dataSource = 'live';
                 }
             }
         } catch (templateError) {
             console.error('Error getting templates:', templateError);
-            // Fallback templates are already set, no need to do anything here
+            // Keep fallback templates already set
+            isRealData = false;
         }
 
         // Return recommendations
@@ -109,6 +124,8 @@ router.get('/', async (req, res) => {
         };
 
         const fallbackResponse = {
+            dataSource: 'fallback',
+            lastUpdated: new Date().toISOString(),
             flazh: {
                 name: "Emergency Fallback Flazh Template",
                 description: "System-generated emergency fallback when an error occurred",
@@ -168,6 +185,8 @@ router.post('/custom', async (req, res) => {
 
         // Create response with fallback templates
         const response = {
+            dataSource: 'fallback',
+            lastUpdated: new Date().toISOString(),
             flazh: {
                 name: `Custom Fallback Flazh (${volatility})`,
                 parameters: {
@@ -212,6 +231,7 @@ router.post('/custom', async (req, res) => {
 
                 if (flazhRecommendation && flazhRecommendation.adjustedTemplate) {
                     response.flazh = flazhRecommendation.adjustedTemplate;
+                    response.flazh.isFallback = false;
                 }
 
                 // Get enhanced ATM template
@@ -223,6 +243,12 @@ router.post('/custom', async (req, res) => {
 
                 if (atmRecommendation && atmRecommendation.adjustedTemplate) {
                     response.atm = atmRecommendation.adjustedTemplate;
+                    response.atm.isFallback = false;
+                }
+
+                // Update data source indicator if both templates are real
+                if (!response.flazh.isFallback && !response.atm.isFallback) {
+                    response.dataSource = 'live';
                 }
             }
         } catch (templateError) {
@@ -233,8 +259,38 @@ router.post('/custom', async (req, res) => {
         return res.json(response);
     } catch (error) {
         console.error('Error in custom template recommendations route:', error);
-        return res.status(500).json({
-            error: 'Server error getting custom template recommendations'
+
+        // Return fallback data with fallback indicator
+        return res.status(200).json({
+            dataSource: 'fallback',
+            lastUpdated: new Date().toISOString(),
+            error: 'Server error getting custom template recommendations',
+            flazh: {
+                name: "Emergency Fallback Flazh Template",
+                parameters: {
+                    fastPeriod: 5,
+                    mediumPeriod: 10,
+                    slowPeriod: 20,
+                    fastRange: 3,
+                    mediumRange: 4,
+                    slowRange: 5,
+                    filterMultiplier: 2
+                },
+                isFallback: true
+            },
+            atm: {
+                name: "Emergency Fallback ATM Template",
+                parameters: {
+                    stopLoss: 9,
+                    profit1: 15,
+                    profit2: 25,
+                    autoBreakEven: true,
+                    breakEvenTicks: 6,
+                    brackets: "Standard",
+                    calculationMode: "Ticks"
+                },
+                isFallback: true
+            }
         });
     }
 });
@@ -257,22 +313,47 @@ router.get('/atm', async (req, res) => {
         );
 
         if (!recommendation) {
-            return res.status(404).json({
-                success: false,
-                message: 'No suitable template found'
+            return res.status(200).json({
+                success: true,
+                dataSource: 'fallback',
+                message: 'No suitable template found',
+                recommendation: {
+                    name: "Fallback ATM Template",
+                    parameters: {
+                        stopLoss: 9,
+                        profit1: 15,
+                        profit2: 25,
+                        autoBreakEven: true,
+                        breakEvenTicks: 6
+                    },
+                    isFallback: true
+                }
             });
         }
 
         res.json({
             success: true,
+            dataSource: 'live',
             recommendation
         });
     } catch (error) {
         console.error('Error getting enhanced ATM recommendation:', error);
-        res.status(500).json({
-            success: false,
+        res.status(200).json({
+            success: true,
+            dataSource: 'fallback',
             message: 'Server error getting enhanced ATM recommendation',
-            error: error.message
+            error: error.message,
+            recommendation: {
+                name: "Fallback ATM Template",
+                parameters: {
+                    stopLoss: 9,
+                    profit1: 15,
+                    profit2: 25,
+                    autoBreakEven: true,
+                    breakEvenTicks: 6
+                },
+                isFallback: true
+            }
         });
     }
 });
@@ -295,74 +376,51 @@ router.get('/flazh', async (req, res) => {
         );
 
         if (!recommendation) {
-            return res.status(404).json({
-                success: false,
-                message: 'No suitable template found'
+            return res.status(200).json({
+                success: true,
+                dataSource: 'fallback',
+                message: 'No suitable template found',
+                recommendation: {
+                    name: "Fallback Flazh Template",
+                    parameters: {
+                        fastPeriod: 5,
+                        mediumPeriod: 10,
+                        slowPeriod: 20,
+                        fastRange: 3,
+                        mediumRange: 4,
+                        slowRange: 5,
+                        filterMultiplier: 2
+                    },
+                    isFallback: true
+                }
             });
         }
 
         res.json({
             success: true,
+            dataSource: 'live',
             recommendation
         });
     } catch (error) {
         console.error('Error getting enhanced Flazh recommendation:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Server error getting enhanced Flazh recommendation',
-            error: error.message
-        });
-    }
-});
-
-/**
- * @route GET /api/enhanced-recommendations/performance-analysis
- * @description Get performance analysis for current market conditions
- * @access Public
- */
-router.get('/performance-analysis', async (req, res) => {
-    try {
-        // Get latest market data
-        const marketData = await marketDataService.getLatestMarketData();
-
-        // Get market conditions directly
-        const marketConditions = await marketConditionsService.getCurrentMarketConditions();
-
-        // Map conditions to backtest service parameters
-        const timeOfDay = enhancedTemplateSelector.mapSessionToTimeOfDay(marketConditions.session);
-        const sessionType = enhancedTemplateSelector.mapVolatilityToSessionType(marketConditions.volatility);
-        const volatilityScore = enhancedTemplateSelector.calculateVolatilityScore(marketConditions.volatility, marketData);
-
-        // Get performance metrics for this market condition
-        const performanceMetrics = await backtestingResultsService.getPerformanceMetrics(
-            timeOfDay,
-            sessionType,
-            volatilityScore
-        );
-
-        // Get performance trends
-        const performanceTrends = await backtestingResultsService.getPerformanceTrends(
-            timeOfDay,
-            sessionType
-        );
-
-        res.json({
+        res.status(200).json({
             success: true,
-            marketConditions: marketConditions,
-            mappedConditions: {
-                timeOfDay,
-                sessionType,
-                volatilityScore
-            },
-            performanceMetrics,
-            performanceTrends
-        });
-    } catch (error) {
-        console.error('Error getting performance analysis:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Server error getting performance analysis',
-            error: error.message
+            dataSource: 'fallback',
+            message: 'Server error getting enhanced Flazh recommendation',
+            error: error.message,
+            recommendation: {
+                name: "Fallback Flazh Template",
+                parameters: {
+                    fastPeriod: 5,
+                    mediumPeriod: 10,
+                    slowPeriod: 20,
+                    fastRange: 3,
+                    mediumRange: 4,
+                    slowRange: 5,
+                    filterMultiplier: 2
+                },
+                isFallback: true
+            }
         });
     }
 });

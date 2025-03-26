@@ -117,6 +117,28 @@
         .progress-bar-danger {
             background-color: #dc3545;
         }
+        /* Data source indicator styles */
+        .data-source-panel {
+            text-align: center;
+            padding: 8px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .live-data {
+            background-color: #e8f5e9;
+            color: #1b5e20;
+            border: 1px solid #c8e6c9;
+        }
+        .fallback-data {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        .last-update-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -126,6 +148,11 @@
         <a href="/market-conditions.html">Market Conditions Analysis</a>
         <a href="/recommendations.html">Template Recommendations</a>
         <a href="/risk-management.html" style="font-weight: bold;">Risk Management Dashboard</a>
+    </div>
+    
+    <!-- Data Source Indicator -->
+    <div id="risk-data-status" class="data-source-panel fallback-data">
+        Loading data source information...
     </div>
     
     <button id="refresh-btn" class="refresh-btn">Refresh Dashboard</button>
@@ -213,128 +240,169 @@
             
             // Function to load risk dashboard data
             function loadRiskDashboard() {
+                showStatusMessage('Loading risk dashboard data...', true);
+                
                 fetch('/api/risk/dashboard')
-                    .then(response => response.json())
+                    .then(response => {
+                        // Always attempt to parse the response, even if it's not a 200 status
+                        return response.json();
+                    })
                     .then(data => {
-                        if (data.success) {
-                            // Update daily performance
-                            if (data.dailyPerformance) {
-                                const dailyPnl = document.getElementById('daily-pnl');
-                                dailyPnl.textContent = formatCurrency(data.dailyPerformance.profitLoss);
-                                dailyPnl.className = 'metric ' + 
-                                    (data.dailyPerformance.profitLoss >= 0 ? 'positive' : 'negative');
-                                
-                                const winRate = document.getElementById('daily-win-rate');
-                                winRate.textContent = (data.dailyPerformance.winRate * 100).toFixed(1) + '%';
-                                
-                                document.getElementById('daily-trade-count').textContent = 
-                                    data.dailyPerformance.tradeCount;
-                                
-                                const avgTrade = document.getElementById('daily-avg-trade');
-                                avgTrade.textContent = formatCurrency(data.dailyPerformance.averageTrade);
-                                avgTrade.className = 'metric ' + 
-                                    (data.dailyPerformance.averageTrade >= 0 ? 'positive' : 'negative');
-                            }
+                        console.log('Dashboard data:', data);
+                        
+                        // Update data source indicator
+                        updateDataSourceIndicator(data);
+                        
+                        // Always consider the request successful, even if the backend returned an error
+                        // The backend should always return data, either real or fallback
+                        
+                        // Update daily performance
+                        if (data.dailyPerformance) {
+                            const dailyPnl = document.getElementById('daily-pnl');
+                            dailyPnl.textContent = formatCurrency(data.dailyPerformance.profitLoss);
+                            dailyPnl.className = 'metric ' + 
+                                (data.dailyPerformance.profitLoss >= 0 ? 'positive' : 'negative');
                             
-                            // Update position sizing
-                            if (data.positionSizing) {
-                                document.getElementById('recommended-size').textContent = 
-                                    data.positionSizing.recommendedSize;
-                                document.getElementById('daily-risk-limit').textContent = 
-                                    formatCurrency(data.positionSizing.dailyRiskLimit);
-                                document.getElementById('risk-used').textContent = 
-                                    formatCurrency(data.positionSizing.riskUsed) + 
-                                    ' (' + (data.positionSizing.riskPercentage * 100).toFixed(1) + '%)';
-                                
-                                // Update progress bar
-                                const riskPercentage = data.positionSizing.riskPercentage * 100;
-                                const progressBar = document.getElementById('risk-progress');
-                                progressBar.style.width = riskPercentage + '%';
-                                progressBar.textContent = riskPercentage.toFixed(1) + '%';
-                                
-                                if (riskPercentage < 50) {
-                                    progressBar.className = 'progress-bar progress-bar-good';
-                                } else if (riskPercentage < 80) {
-                                    progressBar.className = 'progress-bar progress-bar-warning';
-                                } else {
-                                    progressBar.className = 'progress-bar progress-bar-danger';
-                                }
-                            }
+                            const winRate = document.getElementById('daily-win-rate');
+                            winRate.textContent = (data.dailyPerformance.winRate * 100).toFixed(1) + '%';
                             
-                            // Update risk parameters
-                            if (data.riskParameters) {
-                                document.getElementById('max-daily-loss').textContent = 
-                                    formatCurrency(data.riskParameters.maxDailyLoss);
-                                document.getElementById('max-position-size').textContent = 
-                                    data.riskParameters.maxPositionSize;
-                                document.getElementById('max-loss-per-trade').textContent = 
-                                    formatCurrency(data.riskParameters.maxLossPerTrade);
-                                document.getElementById('max-open-positions').textContent = 
-                                    data.riskParameters.maxOpenPositions;
-                                
-                                // Update status indicators
-                                updateStatusIndicator('max-daily-loss-status', 
-                                    data.riskParameters.maxDailyLossStatus);
-                                updateStatusIndicator('max-position-size-status',
-                                    data.riskParameters.maxPositionSizeStatus);
-                                updateStatusIndicator('max-loss-per-trade-status',
-                                    data.riskParameters.maxLossPerTradeStatus);
-                                updateStatusIndicator('max-open-positions-status',
-                                    data.riskParameters.maxOpenPositionsStatus);
-                            }
+                            document.getElementById('daily-trade-count').textContent = 
+                                data.dailyPerformance.tradeCount;
                             
-                            // Update recent trades
-                            if (data.recentTrades && data.recentTrades.length > 0) {
-                                const tradesTable = document.getElementById('recent-trades');
-                                let tradesHtml = `
-                                    <tr>
-                                        <th>Time</th>
-                                        <th>Instrument</th>
-                                        <th>Direction</th>
-                                        <th>Size</th>
-                                        <th>Profit/Loss</th>
-                                    </tr>
-                                `;
-                                
-                                data.recentTrades.forEach(trade => {
-                                    const tradeTime = new Date(trade.timestamp).toLocaleTimeString();
-                                    const profitLossClass = trade.profitLoss >= 0 ? 'positive' : 'negative';
-                                    
-                                    tradesHtml += `
-                                        <tr>
-                                            <td>${tradeTime}</td>
-                                            <td>${trade.instrument}</td>
-                                            <td>${trade.direction}</td>
-                                            <td>${trade.size}</td>
-                                            <td class="${profitLossClass}">${formatCurrency(trade.profitLoss)}</td>
-                                        </tr>
-                                    `;
-                                });
-                                
-                                tradesTable.innerHTML = tradesHtml;
-                            } else {
-                                document.getElementById('recent-trades').innerHTML = `
-                                    <tr>
-                                        <th>Time</th>
-                                        <th>Instrument</th>
-                                        <th>Direction</th>
-                                        <th>Size</th>
-                                        <th>Profit/Loss</th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5">No recent trades found</td>
-                                    </tr>
-                                `;
-                            }
-                        } else {
-                            showStatusMessage('Error loading risk dashboard: ' + 
-                                (data.message || 'Unknown error'), false);
+                            const avgTrade = document.getElementById('daily-avg-trade');
+                            avgTrade.textContent = formatCurrency(data.dailyPerformance.averageTrade);
+                            avgTrade.className = 'metric ' + 
+                                (data.dailyPerformance.averageTrade >= 0 ? 'positive' : 'negative');
                         }
+                        
+                        // Update position sizing
+                        if (data.positionSizing) {
+                            document.getElementById('recommended-size').textContent = 
+                                data.positionSizing.recommendedSize;
+                            document.getElementById('daily-risk-limit').textContent = 
+                                formatCurrency(data.positionSizing.dailyRiskLimit);
+                            document.getElementById('risk-used').textContent = 
+                                formatCurrency(data.positionSizing.riskUsed) + 
+                                ' (' + (data.positionSizing.riskPercentage * 100).toFixed(1) + '%)';
+                            
+                            // Update progress bar
+                            const riskPercentage = data.positionSizing.riskPercentage * 100;
+                            const progressBar = document.getElementById('risk-progress');
+                            progressBar.style.width = riskPercentage + '%';
+                            progressBar.textContent = riskPercentage.toFixed(1) + '%';
+                            
+                            if (riskPercentage < 50) {
+                                progressBar.className = 'progress-bar progress-bar-good';
+                            } else if (riskPercentage < 80) {
+                                progressBar.className = 'progress-bar progress-bar-warning';
+                            } else {
+                                progressBar.className = 'progress-bar progress-bar-danger';
+                            }
+                        }
+                        
+                        // Update risk parameters
+                        if (data.riskParameters) {
+                            document.getElementById('max-daily-loss').textContent = 
+                                formatCurrency(data.riskParameters.maxDailyLoss);
+                            document.getElementById('max-position-size').textContent = 
+                                data.riskParameters.maxPositionSize;
+                            document.getElementById('max-loss-per-trade').textContent = 
+                                formatCurrency(data.riskParameters.maxLossPerTrade);
+                            document.getElementById('max-open-positions').textContent = 
+                                data.riskParameters.maxOpenPositions;
+                            
+                            // Update status indicators
+                            updateStatusIndicator('max-daily-loss-status', 
+                                data.riskParameters.maxDailyLossStatus);
+                            updateStatusIndicator('max-position-size-status',
+                                data.riskParameters.maxPositionSizeStatus);
+                            updateStatusIndicator('max-loss-per-trade-status',
+                                data.riskParameters.maxLossPerTradeStatus);
+                            updateStatusIndicator('max-open-positions-status',
+                                data.riskParameters.maxOpenPositionsStatus);
+                        }
+                        
+                        // Update recent trades
+                        if (data.recentTrades && data.recentTrades.length > 0) {
+                            const tradesTable = document.getElementById('recent-trades');
+                            let tradesHtml = `
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Instrument</th>
+                                    <th>Direction</th>
+                                    <th>Size</th>
+                                    <th>Profit/Loss</th>
+                                </tr>
+                            `;
+                            
+                            data.recentTrades.forEach(trade => {
+                                const tradeTime = new Date(trade.timestamp).toLocaleTimeString();
+                                const profitLossClass = trade.profitLoss >= 0 ? 'positive' : 'negative';
+                                
+                                tradesHtml += `
+                                    <tr>
+                                        <td>${tradeTime}</td>
+                                        <td>${trade.instrument}</td>
+                                        <td>${trade.direction}</td>
+                                        <td>${trade.size}</td>
+                                        <td class="${profitLossClass}">${formatCurrency(trade.profitLoss)}</td>
+                                    </tr>
+                                `;
+                            });
+                            
+                            tradesTable.innerHTML = tradesHtml;
+                        } else {
+                            document.getElementById('recent-trades').innerHTML = `
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Instrument</th>
+                                    <th>Direction</th>
+                                    <th>Size</th>
+                                    <th>Profit/Loss</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">No recent trades found</td>
+                                </tr>
+                            `;
+                        }
+                        
+                        showStatusMessage('Dashboard updated successfully', true);
                     })
                     .catch(error => {
                         console.error('Error fetching risk dashboard:', error);
-                        showStatusMessage('Error connecting to the server. Please check your connection.', false);
+                        showStatusMessage('Unable to load dashboard data. Using cached data if available.', false);
+                        
+                        // Even in case of network errors, show the data source as fallback
+                        updateDataSourceIndicator({ dataSource: 'fallback' });
+                        
+                        // Even in case of network errors, don't leave the UI in a loading state
+                        // You could potentially set default values here if needed
                     });
+            }
+            
+            // Function to update the data source indicator
+            function updateDataSourceIndicator(data) {
+                const statusPanel = document.getElementById('risk-data-status');
+                
+                // Check if this is fallback data
+                const isFallback = data.dataSource === 'fallback' || !data.dailyPerformance;
+                
+                if (isFallback) {
+                    statusPanel.className = 'data-source-panel fallback-data';
+                    statusPanel.innerHTML = '<strong>NOTICE:</strong> Showing fallback risk data (not connected to live trading system)';
+                } else {
+                    statusPanel.className = 'data-source-panel live-data';
+                    statusPanel.innerHTML = '<strong>LIVE DATA:</strong> Connected to trading system - showing real-time risk metrics';
+                }
+                
+                // Add timestamp if available
+                if (data.lastUpdated) {
+                    const timestamp = new Date(data.lastUpdated).toLocaleString();
+                    const timeInfo = document.createElement('div');
+                    timeInfo.className = 'last-update-info';
+                    timeInfo.textContent = `Last updated: ${timestamp}`;
+                    statusPanel.appendChild(timeInfo);
+                }
             }
             
             // Helper functions
